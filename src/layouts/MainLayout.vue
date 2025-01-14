@@ -105,7 +105,7 @@ const linksList = [
     title: 'I-485',
     caption: '',
     icon: '',
-    link: '/client/485',
+    link: '/client/i-485',
   },
   {
     title: 'Messages',

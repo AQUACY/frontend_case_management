@@ -13,6 +13,30 @@ const routes = [
         path: '/client/clientrecord',
         component: () => import('src/pages/client/ClientRecord.vue'),
       },
+      {
+        path: '/client/profile',
+        component: () => import('src/pages/client/MyProfile.vue'),
+      },
+      {
+        path: '/client/recommenders',
+        component: () => import('src/pages/client/RecommenderView.vue'),
+      },
+      {
+        path: '/client/pubrecords',
+        component: () => import('src/pages/client/PublicationRecord.vue'),
+      },
+      {
+        path: '/client/documents',
+        component: () => import('src/pages/client/DocumentView.vue'),
+      },
+      {
+        path: '/client/i-485',
+        component: () => import('src/pages/client/i-485View.vue'),
+      },
+      {
+        path: '/client/messages',
+        component: () => import('src/pages/client/MessagesView.vue'),
+      },
     ],
   },
   {
@@ -23,6 +47,7 @@ const routes = [
       // { path: '/login', component: () => import('pages/LoginView.vue') }
     ],
   },
+
   // Always leave this as last one,
   // but you can also remove it
   {

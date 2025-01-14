@@ -289,7 +289,7 @@ export default {
 
         // Check if petitionTypes is now an array
         if (Array.isArray(petitionTypes)) {
-          petitionTypes.forEach(type => {
+          petitionTypes.forEach((type) => {
             if (petitionMapping[type]) {
               petitionMapping[type].value = true
             }
@@ -297,7 +297,6 @@ export default {
         } else {
           console.error('petitionTypes is not an array:', petitionTypes)
         }
-
       } catch (error) {
         console.error('Error fetching petition types:', error)
       }
