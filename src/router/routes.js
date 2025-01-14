@@ -37,6 +37,10 @@ const routes = [
         path: '/client/messages',
         component: () => import('src/pages/client/MessagesView.vue'),
       },
+      {
+        path: '/client/casepreparation',
+        component: () => import('src/pages/client/CasePreparation.vue'),
+      },
     ],
   },
   {

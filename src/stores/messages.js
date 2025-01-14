@@ -14,8 +14,11 @@ export const useMessagesStore = defineStore('messages', {
       this.loading = true
       try {
         const response = await api.get(`/api/cases/${this.cases.data.id}/messages`)
-        this.messages = response.data
-        return response.data
+        if (response.data.success) {
+          this.messages = response.data.messages
+          return response.data.messages
+        }
+        throw new Error('Failed to fetch messages')
       } catch (error) {
         this.error = error.message
         throw error
@@ -28,7 +31,10 @@ export const useMessagesStore = defineStore('messages', {
       this.loading = true
       try {
         const response = await api.post(`/api/cases/${this.cases.data.id}/messages`, payload)
-        return response.data
+        if (response.data.success) {
+          return response.data
+        }
+        throw new Error('Failed to send message')
       } catch (error) {
         this.error = error.message
         throw error
@@ -46,7 +52,10 @@ export const useMessagesStore = defineStore('messages', {
             rating,
           },
         )
-        return response.data
+        if (response.data.success) {
+          return response.data
+        }
+        throw new Error('Failed to rate message')
       } catch (error) {
         this.error = error.message
         throw error

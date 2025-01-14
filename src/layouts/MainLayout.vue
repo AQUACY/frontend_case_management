@@ -117,7 +117,7 @@ const linksList = [
     title: 'Case Preparation',
     caption: '',
     icon: '',
-    link: '/client/caseprep',
+    link: '/client/casepreparation',
   },
   {
     title: 'Questionnaire',
