@@ -34,6 +34,21 @@ export const useEndavorRecordsStore = defineStore('endavorRecords', {
         this.loading = false
       }
     },
+    async requestReview() {
+      this.loading = true
+      try {
+        const response = await api.post(
+          `/api/auth/request-review/${this.cases.data.id}/request-review`,
+          this.record,
+        )
+        return response.data
+      } catch (error) {
+        console.error('API Error:', error.response?.data || error)
+        throw error
+      } finally {
+        this.loading = false
+      }
+    },
 
     async saveEndavorRecord(data) {
       this.loading = true

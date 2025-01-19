@@ -10,6 +10,30 @@
         Your progress can be saved at any time by clicking "Save" at the bottom of the form.
       </div>
 
+      <!-- Status Section -->
+      <div class="status-section q-mt-md">
+        <q-banner class="bg-grey-2">
+          <template v-slot:avatar>
+            <q-icon :name="getStatusIcon" :color="getStatusColor" />
+          </template>
+          <div class="row items-center justify-between">
+            <div>
+              <div class="text-subtitle1">Current Status: {{ formData.status }}</div>
+              <div class="text-caption">
+                {{ getStatusMessage }}
+              </div>
+            </div>
+            <q-btn
+              v-if="formData.status === 'pending'"
+              color="primary"
+              label="Request Review"
+              :loading="requestingReview"
+              @click="handleRequestReview"
+            />
+          </div>
+        </q-banner>
+      </div>
+
       <q-form @submit="onSubmit" class="q-gutter-md">
         <!-- Status Display -->
         <div class="row items-center q-mb-md">
@@ -22,7 +46,11 @@
             />
           </div>
           <div class="col text-right">
-            <q-badge :color="formData.status === 'pending' ? 'warning' : 'positive'">
+            <q-badge
+              :color="formData.status === 'pending' ? 'warning' : 'positive'"
+              class="cursor-pointer"
+              @click="requestReview"
+            >
               Status: {{ formData.status.charAt(0).toUpperCase() + formData.status.slice(1) }}
             </q-badge>
           </div>
@@ -35,9 +63,9 @@
             <div class="text-body2 q-mb-md">
               <p>
                 One of the most important parts of a successful NIW petition is clearly describing
-                the petitioner’s “proposed endeavor.” To ensure that you are able to define your
-                proposed endeavor as accurately as possible, please review the document “Proposed
-                Endeavor Guide and Clarifications.pdf” found here before completing this section.
+                the petitioner's "proposed endeavor." To ensure that you are able to define your
+                proposed endeavor as accurately as possible, please review the document "Proposed
+                Endeavor Guide and Clarifications.pdf" found here before completing this section.
                 Once you have reviewed this document, please complete the prompts below, which will
                 help guide you in preparing your roughly 3- to 4-sentence proposed endeavor.
               </p>
@@ -61,7 +89,7 @@
               </p>
               <p>
                 For examples and samples of the proposed endeavor statement, please refer to the
-                “NIW CASES ONLY PES-EL Samples_11.29.23” folder here.
+                "NIW CASES ONLY PES-EL Samples_11.29.23" folder here.
               </p>
               <p>
                 <b>PROPOSED ENDEAVOR</b> | Your proposed endeavor itself should be no more than one
@@ -86,10 +114,10 @@
               </p>
               <p>
                 Together, the three parts of the proposed endeavor combine to make one complete
-                sentence that encompasses your research plans, as shown in the example below: “My
+                sentence that encompasses your research plans, as shown in the example below: "My
                 proposed endeavor is to [ develop state-of-the-art material characterization
                 approaches ] [ for identifying materials that are ideal for use ] [ in a range of
-                biomedical applications, including as artificial heart valves, joints, and organs ]”
+                biomedical applications, including as artificial heart valves, joints, and organs ]"
               </p>
               <p>Please complete the following three boxes to make one sentence:</p>
               <p>My proposed endeavor is to</p>
@@ -257,6 +285,32 @@
         </div>
       </q-form>
     </div>
+
+    <!-- Confirmation Dialog -->
+    <q-dialog v-model="showConfirmDialog" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="help_outline" color="primary" text-color="white" />
+          <span class="q-ml-sm">Are you sure you want to request a review?</span>
+        </q-card-section>
+
+        <q-card-section class="text-caption">
+          This action will submit your record for review. Make sure all information is complete and
+          accurate.
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" color="primary" v-close-popup />
+          <q-btn
+            flat
+            label="Request Review"
+            color="primary"
+            @click="confirmRequestReview"
+            :loading="requestingReview"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -294,6 +348,54 @@ export default {
 
     const currentDateTime = computed(() => {
       return date.formatDate(new Date(), 'MM/DD/YYYY h:mm a')
+    })
+
+    const requestingReview = ref(false)
+    const showConfirmDialog = ref(false)
+
+    const getStatusIcon = computed(() => {
+      switch (formData.value.status) {
+        case 'pending':
+          return 'pending'
+        case 'under_review':
+          return 'review'
+        case 'approved':
+          return 'check_circle'
+        case 'rejected':
+          return 'cancel'
+        default:
+          return 'help_outline'
+      }
+    })
+
+    const getStatusColor = computed(() => {
+      switch (formData.value.status) {
+        case 'pending':
+          return 'grey'
+        case 'under_review':
+          return 'orange'
+        case 'approved':
+          return 'positive'
+        case 'rejected':
+          return 'negative'
+        default:
+          return 'grey'
+      }
+    })
+
+    const getStatusMessage = computed(() => {
+      switch (formData.value.status) {
+        case 'pending':
+          return 'Your record is pending review. Click "Request Review" when ready.'
+        case 'under_review':
+          return 'Your record is currently being reviewed.'
+        case 'approved':
+          return 'Your record has been approved.'
+        case 'rejected':
+          return 'Your record needs revision.'
+        default:
+          return 'Status unknown'
+      }
     })
 
     const getEmploymentFields = (type) => {
@@ -359,6 +461,37 @@ export default {
       }
     }
 
+    const handleRequestReview = () => {
+      showConfirmDialog.value = true
+    }
+
+    const confirmRequestReview = async () => {
+      try {
+        requestingReview.value = true
+        await store.requestReview()
+        showConfirmDialog.value = false
+
+        // Refresh the record data
+        const record = await store.fetchEndavorRecord()
+        if (record) {
+          formData.value = { ...formData.value, ...record }
+        }
+
+        $q.notify({
+          type: 'positive',
+          message: 'Review request submitted successfully',
+        })
+      } catch (error) {
+        console.error('Request review error:', error)
+        $q.notify({
+          type: 'negative',
+          message: 'Failed to submit review request',
+        })
+      } finally {
+        requestingReview.value = false
+      }
+    }
+
     onMounted(async () => {
       try {
         const record = await store.fetchEndavorRecord()
@@ -383,6 +516,13 @@ export default {
       formatFieldLabel,
       handlePetitionTypeChange,
       onSubmit,
+      requestingReview,
+      showConfirmDialog,
+      getStatusIcon,
+      getStatusColor,
+      getStatusMessage,
+      handleRequestReview,
+      confirmRequestReview,
     }
   },
 }
@@ -392,5 +532,10 @@ export default {
 .endavor-container {
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.status-section {
+  border-radius: 4px;
+  overflow: hidden;
 }
 </style>
