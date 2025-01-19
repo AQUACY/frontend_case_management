@@ -45,6 +45,14 @@ const routes = [
         path: '/client/questionnaire',
         component: () => import('src/pages/client/QuestionnaireView.vue'),
       },
+      {
+        path: '/client/soc',
+        component: () => import('src/pages/client/SummaryofContribution.vue'),
+      },
+      {
+        path: '/client/popendeavor',
+        component: () => import('src/pages/client/ProposedEndavorRecord.vue'),
+      },
     ],
   },
   {
