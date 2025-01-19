@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 import { api } from 'src/boot/axios'
+import { useQuasar } from 'quasar'
+const $q = useQuasar()
 
 export const useRecommendersStore = defineStore('recommenders', {
   state: () => ({
@@ -36,6 +38,10 @@ export const useRecommendersStore = defineStore('recommenders', {
         return response.data
       } catch (error) {
         console.log(error)
+        $q.notify({
+          type: 'negative',
+          message: `Failed to add recommender. Please try again. ${error}`,
+        })
       } finally {
         this.loading = false
       }

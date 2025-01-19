@@ -18,7 +18,7 @@ const routes = [
         component: () => import('src/pages/client/MyProfile.vue'),
       },
       {
-        path: '/client/recommenders',
+        path: '/client/referrers',
         component: () => import('src/pages/client/RecommenderView.vue'),
       },
       {
@@ -40,6 +40,10 @@ const routes = [
       {
         path: '/client/casepreparation',
         component: () => import('src/pages/client/CasePreparation.vue'),
+      },
+      {
+        path: '/client/questionnaire',
+        component: () => import('src/pages/client/QuestionnaireView.vue'),
       },
     ],
   },

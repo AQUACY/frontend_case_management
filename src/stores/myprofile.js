@@ -14,7 +14,7 @@ export const useMyProfile = defineStore('myprofile', {
       this.loading = true
       try {
         const response = await api.get(`/api/cases/${this.cases.data.id}/profile`)
-        this.profile = response.data
+        this.profile = response.data.data
         console.log(this.profile)
       } catch (error) {
         this.error = error.message || 'Failed to fetch announcements.'

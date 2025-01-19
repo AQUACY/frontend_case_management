@@ -1,30 +1,32 @@
 <template>
   <div class="carousel-container">
-    <div class="carousel">
-      <!-- Slide content -->
-      <div
-        class="carousel-slide"
-        v-for="(announcement, index) in announcements"
-        :key="index"
-        :class="{ active: currentIndex === index }"
+    <div class="announcement-section">
+      <q-carousel
+        v-if="announcements.length > 0"
+        animated
+        infinite
+        autoplay
+        arrows
+        transition-prev="slide-right"
+        transition-next="slide-left"
+        v-model="currentIndex"
+        height="60px"
+        class="bg-blue-10 shadow-1 rounded-borders"
       >
-        <div class="">
-          <div class="row items-center justify-between">
-          <div class="col">
-                <div class="text-left">{{ announcement.title }}</div>
-              </div>
-              <div class="col-auto">
-                <div class="text-overline text-right">{{ formatDate(announcement.created_at) }}</div>
-              </div>
-            </div>
-        </div>
-      </div>
-    </div>
+        <q-carousel-slide
+          v-for="(announcement, index) in announcements"
+          :key="index"
+          :name="index"
+          class="column no-wrap flex-center"
+        >
+          <div class="q-pa-sm text-center">
+            <div class="text-subtitle1 text-white">{{ announcement.title }}</div>
+            <div class="text-caption text-white">{{ formatDate(announcement.created_at) }}</div>
+          </div>
+        </q-carousel-slide>
+      </q-carousel>
 
-    <!-- Navigation Controls -->
-    <div class="controls">
-      <button @click="prevSlide">&#10094;</button>
-      <button @click="nextSlide">&#10095;</button>
+      <div v-else class="no-announcements q-pa-md text-center">No announcements available</div>
     </div>
   </div>
 </template>
@@ -40,24 +42,25 @@ export default {
   data() {
     return {
       currentIndex: 0,
-    };
+    }
   },
   methods: {
     nextSlide() {
-      this.currentIndex = (this.currentIndex + 1) % this.announcements.length;
+      this.currentIndex = (this.currentIndex + 1) % this.announcements.length
     },
     prevSlide() {
-      this.currentIndex = (this.currentIndex - 1 + this.announcements.length) % this.announcements.length;
+      this.currentIndex =
+        (this.currentIndex - 1 + this.announcements.length) % this.announcements.length
     },
     formatDate(date) {
-    const d = new Date(date);
-    const day = String(d.getDate()).padStart(2, '0'); // Ensure two digits for day
-    const month = String(d.getMonth() + 1).padStart(2, '0'); // Ensure two digits for month (getMonth is 0-indexed)
-    const year = d.getFullYear();
-    return `${day}/${month}/${year}`;
+      const d = new Date(date)
+      const day = String(d.getDate()).padStart(2, '0') // Ensure two digits for day
+      const month = String(d.getMonth() + 1).padStart(2, '0') // Ensure two digits for month (getMonth is 0-indexed)
+      const year = d.getFullYear()
+      return `${day}/${month}/${year}`
+    },
   },
-  },
-};
+}
 </script>
 
 <style scoped>
@@ -88,7 +91,7 @@ export default {
 
 .controls {
   position: absolute;
-  margin-top:20px;
+  margin-top: 20px;
   top: 20%;
   width: 100%;
   display: flex;

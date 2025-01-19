@@ -1,11 +1,11 @@
 <template>
   <q-page padding>
-    <div class="text-h5 q-mb-lg">Recommenders</div>
+    <div class="text-h5 q-mb-lg">Referrers</div>
     <div class="q-pa-md bg-grey-1 rounded-borders">
-      <div class="text-subtitle1 q-mb-md">Important Guidelines for Recommenders</div>
+      <div class="text-subtitle1 q-mb-md">Important Guidelines for Referrers</div>
 
       <div class="q-mb-md">
-        <div class="text-weight-medium q-mb-sm">Independent vs Dependent Recommenders:</div>
+        <div class="text-weight-medium q-mb-sm">Independent vs Dependent Referrers:</div>
         <p>
           An independent recommendation letter originates from someone who has never worked with
           you, collaborated with you, or been professionally or personally affiliated with you. This
@@ -78,14 +78,22 @@
         <q-card bordered>
           <q-card-section>
             <div class="row items-center justify-between">
-              <div class="text-h6">Recommender {{ index + 1 }}</div>
+              <div class="text-h6">Referrer {{ index + 1 }}</div>
               <div>
                 <q-btn
-                  v-if="!recommender.isEditing"
+                  v-if="!recommender.isEditing && recommender.status === 'pending'"
                   flat
                   round
                   color="primary"
                   icon="edit"
+                  @click="startEditing(recommender)"
+                />
+                <q-btn
+                  v-if="recommender.status === 'finalized'"
+                  flat
+                  round
+                  color="red"
+                  icon="lock"
                   @click="startEditing(recommender)"
                   :disable="recommender.status === 'finalized'"
                 />
@@ -131,7 +139,7 @@
                 <div>{{ recommender.google_scholar_link }}</div>
               </div>
               <div class="col-12 col-md-6">
-                <div class="text-weight-medium">How They Know Me:</div>
+                <div class="text-weight-medium">How does this referrer know me?:</div>
                 <div>{{ recommender.relationship }}</div>
               </div>
               <div class="col-12 col-md-6">
@@ -196,7 +204,11 @@
                   />
                 </div>
                 <div class="col-12 col-md-6">
-                  <q-input v-model="recommender.relationship" label="How they know me" outlined />
+                  <q-input
+                    v-model="recommender.relationship"
+                    label="How does this referrer know me?"
+                    outlined
+                  />
                 </div>
               </div>
 
@@ -252,7 +264,7 @@
     <!-- New Recommender Form -->
     <q-card flat bordered class="q-mt-md">
       <q-card-section>
-        <div class="text-h6">Add New Recommender</div>
+        <div class="text-h6">Add New Referrer</div>
       </q-card-section>
 
       <q-card-section>
@@ -264,14 +276,16 @@
                 label="Name of recommender"
                 :rules="[(val) => !!val || 'Name is required']"
                 outlined
+                class="q-pa-md"
               />
             </div>
             <div class="col-12 col-md-6">
               <q-input
-                v-model="form.dependentOrIndependent"
+                v-model="form.dependent_or_independent"
                 label="Dependent or Independent"
                 outlined
                 :readonly="isFinalized"
+                class="q-pa-md"
               />
             </div>
           </div>
@@ -279,10 +293,11 @@
           <div class="row q-col-gutter-md">
             <div class="col-12 col-md-6">
               <q-input
-                v-model="form.titlePosition"
+                v-model="form.title"
                 label="Title/position"
                 outlined
                 :readonly="isFinalized"
+                class="q-pa-md"
               />
             </div>
             <div class="col-12 col-md-6">
@@ -291,6 +306,7 @@
                 label="Institution"
                 outlined
                 :readonly="isFinalized"
+                class="q-pa-md"
               />
             </div>
           </div>
@@ -300,25 +316,34 @@
             label="Country where the recommender is located"
             outlined
             :readonly="isFinalized"
+            class="q-pa-md"
           />
 
           <q-input
-            v-model="form.facultyLink"
+            v-model="form.faculty_biography_link"
             label="Link to online faculty or company biography page"
             outlined
             :readonly="isFinalized"
+            class="q-pa-md"
           />
 
           <q-input
-            v-model="form.scholarLink"
+            v-model="form.google_scholar_link"
             label="Link to Google Scholar profile"
             outlined
             :readonly="isFinalized"
+            class="q-pa-md"
           />
 
           <q-card-section class="q-pa-none">
             <div class="text-subtitle1 q-mb-sm">How does this recommender know me?</div>
-            <q-input v-model="form.howKnowMe" type="textarea" outlined :readonly="isFinalized" />
+            <q-input
+              v-model="form.relationship"
+              type="textarea"
+              outlined
+              :readonly="isFinalized"
+              class="q-pa-md"
+            />
           </q-card-section>
 
           <div class="q-mt-md">
@@ -330,33 +355,48 @@
               Please list this project number/these project numbers below.
             </div>
             <q-input
-              v-model="form.projectNumbers"
+              v-model="form.projects_discussed"
               type="textarea"
               outlined
               :readonly="isFinalized"
+              class="q-pa-md"
             />
           </div>
 
           <div class="q-mt-md">
             <div class="text-subtitle1">Has this recommender cited a project?</div>
-            <q-radio v-model="form.hasCitedProject" val="Yes" label="Yes" :disable="isFinalized" />
-            <q-radio v-model="form.hasCitedProject" val="No" label="No" :disable="isFinalized" />
+            <q-radio
+              v-model="form.cited_project"
+              val="Yes"
+              label="Yes"
+              :disable="isFinalized"
+              class="q-pa-md"
+            />
+            <q-radio
+              v-model="form.cited_project"
+              val="No"
+              label="No"
+              :disable="isFinalized"
+              class="q-pa-md"
+            />
           </div>
 
-          <template v-if="form.hasCitedProject === 'Yes'">
+          <template v-if="form.cited_project === 'Yes'">
             <q-input
-              v-model="form.citedProjectNumber"
+              v-model="form.cited_project_number"
               label="Project number from the summary of contributions they cited"
               outlined
               :readonly="isFinalized"
+              class="q-pa-md"
             />
 
             <q-input
-              v-model="form.citationDetails"
+              v-model="form.cited_project_details"
               label="Title and publication details of their citing paper"
               type="textarea"
               outlined
               :readonly="isFinalized"
+              class="q-pa-md"
             />
 
             <q-input
@@ -365,30 +405,27 @@
               type="textarea"
               outlined
               :readonly="isFinalized"
+              class="q-pa-md"
             />
           </template>
 
-          <div class="row justify-end q-mt-md">
-            <q-btn label="Submit" type="submit" color="primary" :loading="loading" />
+          <div class="sticky-button-container">
+            <q-btn
+              label="Save Referrer"
+              color="primary"
+              type="submit"
+              :disable="isFinalized"
+              :loading="loading"
+              class="full-width"
+            >
+              <template v-slot:loading>
+                <q-spinner-facebook />
+              </template>
+            </q-btn>
           </div>
         </q-form>
       </q-card-section>
     </q-card>
-
-    <div class="sticky-button-container">
-      <q-btn
-        label="Save Recommender"
-        color="primary"
-        type="submit"
-        :disable="isFinalized"
-        :loading="loading"
-        class="full-width"
-      >
-        <template v-slot:loading>
-          <q-spinner-facebook />
-        </template>
-      </q-btn>
-    </div>
   </q-page>
 </template>
 
@@ -408,17 +445,17 @@ export default {
     const isFinalized = ref(false)
     const form = ref({
       name: '',
-      dependentOrIndependent: '',
-      titlePosition: '',
+      dependent_or_independent: '',
+      title: '',
       institution: '',
       country: '',
-      facultyLink: '',
-      scholarLink: '',
-      howKnowMe: '',
-      projectNumbers: '',
-      hasCitedProject: 'No',
-      citedProjectNumber: '',
-      citationDetails: '',
+      faculty_biography_link: '',
+      google_scholar_link: '',
+      relationship: '',
+      projects_discussed: '',
+      cited_project: 'No',
+      cited_project_number: '',
+      cited_project_details: '',
       explanationOfUse: '',
     })
 
@@ -428,45 +465,50 @@ export default {
 
     const onSubmit = async () => {
       console.log('onSubmit function called')
-      // loading.value = true
-      // try {
-      //   const payload = {
-      //     ...form.value,
-      //     cited_project: form.value.hasCitedProject === 'Yes',
-      //   }
+      loading.value = true
+      try {
+        const payload = {
+          ...form.value,
+          cited_project: form.value.cited_project === 'Yes',
+        }
 
-      //   await store.addRecommender(payload)
+        const response = await store.addRecommender(payload)
+        console.log('thi si functino log', response)
+        // Check if the response indicates success
+        if (response) {
+          // Reset form after successful submission
+          form.value = {
+            name: '',
+            dependent_or_independent: '',
+            title: '',
+            institution: '',
+            country: '',
+            faculty_biography_link: '',
+            google_scholar_link: '',
+            relationship: '',
+            projects_discussed: '',
+            cited_project: 'No',
+            cited_project_number: '',
+            cited_project_details: '',
+            explanationOfUse: '',
+          }
 
-      //   // Reset form after successful submission
-      //   form.value = {
-      //     name: '',
-      //     institution: '',
-      //     dependentOrIndependent: '',
-      //     titlePosition: '',
-      //     country: '',
-      //     facultyLink: '',
-      //     scholarLink: '',
-      //     howKnowMe: '',
-      //     projectNumbers: '',
-      //     hasCitedProject: 'No',
-      //     citedProjectNumber: '',
-      //     citationDetails: '',
-      //     explanationOfUse: '',
-      //   }
-
-      //   $q.notify({
-      //     type: 'positive',
-      //     message: 'Recommender added successfully!',
-      //   })
-      // } catch (error) {
-      //   console.error('Error adding recommender:', error)
-      //   $q.notify({
-      //     type: 'negative',
-      //     message: 'Failed to add recommender. Please try again.',
-      //   })
-      // } finally {
-      //   loading.value = false
-      // }
+          $q.notify({
+            type: 'positive',
+            message: 'Recommender added successfully!',
+          })
+        } else {
+          throw new Error('Failed to add recommender')
+        }
+      } catch (error) {
+        console.error('Error adding recommender:', error)
+        $q.notify({
+          type: 'negative',
+          message: `Failed to add recommender. Please try again. ${error || ''}`,
+        })
+      } finally {
+        loading.value = false
+      }
     }
 
     const startEditing = (recommender) => {

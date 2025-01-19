@@ -79,12 +79,12 @@ const linksList = [
     link: '/client/popendeavor',
   },
   {
-    title: 'Recommenders',
+    title: 'Referrers',
     caption: '',
-    link: '/client/recommenders',
+    link: '/client/referrers',
   },
   {
-    title: 'SOC (Summary of Contributions)',
+    title: 'Summary of Contributions (SOC)',
     caption: '',
     icon: '',
     link: '/client/soc',
