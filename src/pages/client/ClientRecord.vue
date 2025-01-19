@@ -1,321 +1,434 @@
 <template>
-  <q-page class="q-pa-lg">
-    <q-card>
-      <q-card-section>
-        <q-card-section>
-          <span class="text-red">Required Fields</span> <br />
-          <ul>
-            <li>
-              Please make sure you update your client record promptly to provide the most up to date
-              information. <br />
-            </li>
-            <li>
-              If you extend, renew, or change your nonimmigrant visa status, please update your
-              Client Record and let us know. <br />
-            </li>
-            <li>
-              If you intend to leave the US and return after signing this agreement, but before
-              filing the I-140 or I-485, please let us know.
-            </li>
-          </ul>
-          <p class="text-green text-bold" style="margin-left: 20px">
-            1. * a. Which type of petition(s) are you retaining us to file for you at this time?
-            Please check all that apply:
-          </p>
+  <q-page class="q-pa-md">
+    <div class="client-record-container">
+      <!-- Loading State -->
+      <div v-if="loading" class="full-width row justify-center items-center" style="height: 400px">
+        <q-spinner color="primary" size="3em" />
+      </div>
 
-          <ul style="text-decoration: none; margin-left: 20px">
-            <li class="q-mt-sm">
-              <q-checkbox
-                v-model="option1"
-                label="I-140 filed under the category of EB-1A (Alien of Extraordinary Ability)"
-                color="blue"
-              />
-            </li>
-            <li style="margin-top: -10px">
-              <q-checkbox
-                v-model="option2"
-                label="I-140 filed under the category of EB-1B/OR (Outstanding Researchers and Professors)"
-                color="blue"
-              />
-            </li>
-            <li style="margin-top: -10px">
-              <q-checkbox
-                v-model="option3"
-                label="I-140 filed under the category of EB-2 NIW (National Interest Waiver)"
-                color="blue"
-              />
-            </li>
-            <li style="margin-top: -10px">
-              <q-checkbox
-                v-model="option4"
-                label="I-129 filed under the category of O-1A"
-                color="blue"
-              />
-            </li>
-            <li style="margin-top: -10px">
-              <q-checkbox
-                v-model="option5"
-                label="I-129 filed under the category of O-1B"
-                color="blue"
-              />
-            </li>
-            <li style="margin-top: -10px">
-              <q-checkbox
-                v-model="option6"
-                label="I-140 filed under the category of EB-1A (Alien of Extraordinary Ability)"
-                color="blue"
-              />
-            </li>
-            <li style="margin-top: -10px">
-              <q-checkbox
-                v-model="option7"
-                label="I-140 filed under the category of EB-1A (Alien of Extraordinary Ability)"
-                color="blue"
-              />
-            </li>
-            <li style="margin-top: -10px">
-              <q-checkbox v-model="option8" label="Other" color="blue" /> <input />
-            </li>
-          </ul>
+      <div v-else>
+        <q-form @submit="onSubmit" class="q-gutter-md">
+          <!-- Petition Information -->
+          <q-card flat bordered>
+            <q-card-section>
+              <div class="text-h6 q-mb-md">Petition Information</div>
+              <div class="row q-col-gutter-md">
+                <div class="col-12 col-md-6">
+                  <q-select
+                    v-model="formData.petition_types"
+                    :options="petitionTypeOptions"
+                    label="Which type of petition(s) are you retaining us to file for you at this time? Please check all that apply:"
+                    multiple
+                    outlined
+                    emit-value
+                    map-options
+                    :value="formData.petition_types"
+                    @update:model-value="handlePetitionTypeChange"
+                  />
+                </div>
+                <div class="col-12 col-md-6">
+                  <q-select
+                    v-model="formData.petition_category"
+                    :options="['EB-1A', 'EB-2 NIW']"
+                    label="Petition Category"
+                    outlined
+                  />
+                </div>
+              </div>
+            </q-card-section>
+          </q-card>
 
-          <ul style="margin-left: 40px">
-            <li>
-              <div class="row">
-                <div class="col-6">Which category should be submitted first?</div>
-                <div class="col-6" style="width: 30%">
-                  <q-select dense v-model="model" :options="options" />
+          <!-- Personal Information -->
+          <q-card flat bordered>
+            <q-card-section>
+              <div class="text-h6 q-mb-md">Personal Information</div>
+              <div class="row q-col-gutter-md">
+                <div class="col-12 col-md-3">
+                  <q-input v-model="formData.last_name" label="Last Name" outlined />
+                </div>
+                <div class="col-12 col-md-3">
+                  <q-input v-model="formData.first_name" label="First Name" outlined />
+                </div>
+                <div class="col-12 col-md-3">
+                  <q-input v-model="formData.middle_name" label="Middle Name" outlined />
+                </div>
+                <div class="col-12 col-md-3">
+                  <q-select
+                    v-model="formData.title"
+                    :options="['Mr.', 'Mrs.', 'Ms.', 'Dr.']"
+                    label="Title"
+                    outlined
+                  />
                 </div>
               </div>
-            </li>
-            <li style="margin-top: -10px">
-              <div class="row">
-                <div class="col-6">Plan for filing the I-140 EB-1A:</div>
-                <div class="col-6" style="width: 30%">
-                  <q-select dense v-model="model" :options="options" />
-                </div>
-              </div>
-            </li>
-            <li style="margin-top: -10px">
-              <div class="row">
-                <div class="col-6">I-485 filing plan for I-140 EB-1A:</div>
-                <div class="col-6" style="width: 30%">
-                  <q-select dense v-model="model" :options="options" />
-                </div>
-              </div>
-            </li>
-            <li style="margin-top: -10px">
-              <div class="row">
-                <div class="col-6">Plan for filing the I-140 EB-2 NIW:</div>
-                <div class="col-6" style="width: 30%">
-                  <q-select dense v-model="model" :options="options" />
-                </div>
-              </div>
-            </li>
-            <li style="margin-top: -10px">
-              <div class="row">
-                <div class="col-6">I-485 filing plan for I-140 EB-2 NIW:</div>
-                <div class="col-6" style="width: 30%">
-                  <q-select dense v-model="model" :options="options" />
-                </div>
-              </div>
-            </li>
-          </ul>
-        </q-card-section>
-        <q-card-section>
-          <p class="q-pa-lg" style="margin-top: -20px">
-            For I-140 clients, please note that requesting Premium Processing Service can only
-            shorten the processing time of your I-140 petition. It does not affect your priority
-            date. Your priority date should be approximately the date USCIS receives your I-140
-            petition. Your priority date is NOT the date USCIS approves your petition. Having the
-            I-140 approval through Premium Processing Service will not expedite the wait time for
-            your priority date to become current. You will still need to wait for your priority date
-            to become current in order to proceed with the second step of green card application.
-          </p>
 
-          <ul>
-            <li style="margin-top: -10px">
-              <div class="row">
-                <div class="col-6 q-pa-md">
-                  b. Besides the I-140(s) you are retaining us for, have you previously filed any
-                  immigrant visa petition (e.g. I-140, I-130, and I-485)?
+              <div class="row q-col-gutter-md q-mt-md">
+                <div class="col-12 col-md-4">
+                  <q-input
+                    v-model="formData.date_of_birth"
+                    label="Date of Birth"
+                    type="date"
+                    outlined
+                  />
                 </div>
-                <div class="col-6" style="width: 30%">
-                  <div class="q-gutter-sm q-pa-md">
-                    <q-radio v-model="choice" val="yes" label="Yes" />
-                    <q-radio v-model="choice" val="no" label="No" />
+                <div class="col-12 col-md-4">
+                  <q-select
+                    v-model="formData.gender"
+                    :options="['Male', 'Female', 'Other']"
+                    label="Gender"
+                    outlined
+                  />
+                </div>
+                <div class="col-12 col-md-4">
+                  <q-input v-model="formData.country_of_birth" label="Country of Birth" outlined />
+                </div>
+              </div>
+            </q-card-section>
+          </q-card>
+
+          <!-- Contact Information -->
+          <q-card flat bordered>
+            <q-card-section>
+              <div class="text-h6 q-mb-md">Contact Information</div>
+              <div class="row q-col-gutter-md">
+                <div class="col-12">
+                  <q-input v-model="formData.street_address" label="Street Address" outlined />
+                </div>
+                <div class="col-12">
+                  <q-input v-model="formData.address_line_2" label="Address Line 2" outlined />
+                </div>
+                <div class="col-12 col-md-4">
+                  <q-input v-model="formData.city" label="City" outlined />
+                </div>
+                <div class="col-12 col-md-4">
+                  <q-select
+                    v-model="formData.state"
+                    :options="stateOptions"
+                    label="State"
+                    outlined
+                  />
+                </div>
+                <div class="col-12 col-md-4">
+                  <q-input v-model="formData.zip_code" label="ZIP Code" outlined />
+                </div>
+              </div>
+            </q-card-section>
+          </q-card>
+
+          <!-- Dependents Section -->
+          <q-card flat bordered v-if="formData.has_dependents">
+            <q-card-section>
+              <div class="text-h6 q-mb-md">Dependents</div>
+              <div v-for="(dependent, index) in formData.dependents" :key="index" class="q-mb-lg">
+                <div class="row q-col-gutter-md">
+                  <div class="col-12 col-md-3">
+                    <q-input v-model="dependent.last_name" label="Last Name" outlined />
+                  </div>
+                  <div class="col-12 col-md-3">
+                    <q-input v-model="dependent.first_name" label="First Name" outlined />
+                  </div>
+                  <div class="col-12 col-md-3">
+                    <q-input v-model="dependent.middle_name" label="Middle Name" outlined />
+                  </div>
+                  <div class="col-12 col-md-3">
+                    <q-select
+                      v-model="dependent.relation"
+                      :options="['Spouse', 'Child']"
+                      label="Relation"
+                      outlined
+                    />
+                  </div>
+                  <div class="col-12 col-md-3">
+                    <q-input
+                      v-model="dependent.date_of_birth"
+                      label="Date of Birth"
+                      type="date"
+                      outlined
+                    />
+                  </div>
+                  <div class="col-12 col-md-3">
+                    <q-input v-model="dependent.passport_number" label="Passport Number" outlined />
+                  </div>
+                  <div class="col-12 col-md-3">
+                    <q-input
+                      v-model="dependent.passport_expiration"
+                      label="Passport Expiry"
+                      type="date"
+                      outlined
+                    />
+                  </div>
+                  <div class="col-12 col-md-3">
+                    <q-input v-model="dependent.gender" label="Gender" outlined />
+                  </div>
+                  <div class="col-12 col-md-3">
+                    <q-input
+                      v-model="dependent.country_of_birth"
+                      label="Country of Birth"
+                      outlined
+                    />
+                  </div>
+                  <div class="col-12 col-md-3">
+                    <q-input v-model="dependent.place_of_birth" label="Place of Birth" outlined />
+                  </div>
+                  <div class="col-12 col-md-3">
+                    <q-input
+                      v-model="dependent.visa_processing_option"
+                      label="Visa Processing Option"
+                      outlined
+                    />
+                  </div>
+                  <div class="col-12 col-md-3">
+                    <q-input
+                      v-model="dependent.processing_country"
+                      label="Visa Processing Option"
+                      outlined
+                    />
+                  </div>
+                  <div class="col-12 col-md-3">
+                    <q-input
+                      v-model="dependent.visa_expiry"
+                      label="Visa Expiry"
+                      type="date"
+                      outlined
+                    />
+                  </div>
+                  <div class="col-12 col-md-3">
+                    <q-checkbox
+                      v-model="dependent.no_passport_applied"
+                      label="No Passport Applied"
+                      :true-value="0"
+                      :false-value="1"
+                    />
                   </div>
                 </div>
+                <div class="row justify-end q-mt-sm">
+                  <q-btn
+                    color="negative"
+                    flat
+                    label="Remove Dependent"
+                    @click="removeDependent(dependent.id)"
+                    :loading="removingDependentId === dependent.id"
+                  />
+                </div>
               </div>
-            </li>
-          </ul>
-          <ul style="margin-left: 20px">
-            <li>
-              For your I-485 filing plan (if applicable), please refer to the “Green Card
-              Application Process Overview and Timeline” under the Visa FAQ tab for additional
-              information.
-            </li>
-            <li class="text-bold">
-              There is a risk with filing the I-485 prior to getting I-140 approval. If your I-140
-              is denied, your I-485 will also be denied, and you would lose your filing fee(s).
-            </li>
-            <li>
-              If you plan to file File the I-140 and I-485(s) simultaneously:<br />
-              Please note that it usually takes our clients at least 4 weeks to prepare the I-485
-              for filing. Therefore, to avoid any delays with the filing of your I-140, please be
-              sure to retain us for your I-485 as soon as possible. Please send us a message when
-              you are ready to retain us for your I-485. If for some reason you are unable to
-              prepare your I-485 so that it is ready to file with your I-140, please be aware that
-              you can file your I-485 while your I-140 is pending after you receive your I-140
-              receipt notice. It usually takes 1-2 weeks to receive the I-140 receipt notice,
-              however, it can take up to 30 days.
-            </li>
-            <li></li>
-            <li></li>
-          </ul>
-        </q-card-section>
-        <q-card-section>
-          <p class="text-green text-bold" style="margin-left: 20px">
-            2. <span style="color: red">*</span> Plan for filing the I-485 or immigrant visa
-            processing, please check one: <br />
-            <u style="color: black">
-              Note whether you are allowed to file I-485 or immigrant visa processing is first
-              determined by visa bulletin. Click here to see if you are eligible for filing I-485 or
-              immigrant visa processing
-            </u>
-          </p>
-          <p style="margin-left: 20px">
-            Please note you must be in the U.S. when you file the I-485, and you should intend to
-            remain in the U.S., although you may be able to travel for brief periods of time while
-            the I-485 is pending. Otherwise you will have to undergo immigrant visa processing. You
-            can find more information about the differences between the I-485 and immigrant visa
-            processing in the “Adjustment of Status I-485 v. Immigrant Visa Processing.pdf” document
-            under the Visa FAQ tab.
-          </p>
-          <ul style="margin-left: 20px">
-            <li>
-              <q-radio
-                v-model="choice"
-                val="yes"
-                label="I plan to use the free I-485 Do-It-Yourself Packet"
-              />
-            </li>
-            <li>
-              <q-radio
-                v-model="choice"
-                val="yes"
-                label="I plan to retain your firm for the I-485 (please click here for our I-485 attorney fee)"
-              />
-            </li>
-            <li>
-              <q-radio v-model="choice" val="yes" label="I have already filed the I-485 on:" />
-              <input class="q-ml-sm" />
-            </li>
-            <li>
-              <q-radio
-                v-model="choice"
-                val="yes"
-                label="I have used the EAD/AP based on I-485 to work or travel on
-"
-              />
-              <input class="q-ml-sm" />
-            </li>
-            <li>
-              <q-radio
-                v-model="choice"
-                val="yes"
-                label="I plan to do immigrant visa processing in"
-              />
-              <input class="q-ml-sm" /> (for clients who will be applying for permanent resident
-              status from outside the U.S.; please click here for our IV processing attorney fee)
-            </li>
-          </ul>
-        </q-card-section>
-        <q-card-section> </q-card-section>
+              <div class="row justify-end q-mt-md">
+                <q-btn color="primary" label="Add Dependent" @click="addDependent" />
+              </div>
+            </q-card-section>
+          </q-card>
 
-        <q-card-section class="q-pt-xs">
-          <div class="row items-center justify-between">
-            <div class="col">
-              <div class="text-h5 text-caption">title</div>
-            </div>
-            <div class="col-auto">
-              <div class="text-overline text-right">time and date</div>
-            </div>
+          <!-- Submit Button -->
+          <div class="row justify-end q-mt-lg">
+            <q-btn color="primary" label="Save Changes" type="submit" :loading="saving" />
           </div>
-          <div class="text-caption text-grey">--Announcement--</div>
-          content
-        </q-card-section>
-      </q-card-section>
-    </q-card>
+        </q-form>
+      </div>
+    </div>
   </q-page>
 </template>
 
 <script>
 import { ref, onMounted } from 'vue'
-import { useCaseStore } from 'stores/clientrecords'
+import { useQuasar } from 'quasar'
+import { useClientRecordsStore } from 'src/stores/clientRecords'
 
 export default {
+  name: 'ClientRecord',
+
   setup() {
-    const option1 = ref(false)
-    const option2 = ref(false)
-    const option3 = ref(false)
-    const option4 = ref(false)
-    const option5 = ref(false)
-    const option6 = ref(false)
-    const option7 = ref(false)
-    const option8 = ref(false)
+    const $q = useQuasar()
+    const store = useClientRecordsStore()
 
-    const petitionMapping = {
-      'I-140 EB-1A': option1,
-      'I-140 EB-1B/OR': option2,
-      'I-140 EB-2 NIW': option3,
-      'I-129 O-1A': option4,
-    }
+    const loading = ref(false)
+    const saving = ref(false)
+    const stateOptions = ref(['AL', 'AK', 'AZ' /* Add all states */])
 
-    const model = ref(null)
-    const options = ['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle']
-    const choice = ref(null)
-    const caseStore = useCaseStore()
-    const petitionTypes = ref([])
+    const petitionTypeOptions = ref([
+      {
+        label: 'I-140 EB-1A',
+        value: 'I-140 EB-1A',
+      },
+      {
+        label: 'I-140 EB-2 NIW',
+        value: 'I-140 EB-2 NIW',
+      },
+    ])
+
+    const formData = ref({
+      petition_types: [],
+      petition_category: null,
+      filing_plan_eb1: null,
+      filing_plan_eb2: null,
+      previous_visa_filing: null,
+      i485_filing_plan: null,
+      last_name: '',
+      first_name: '',
+      middle_name: '',
+      gender: null,
+      title: null,
+      date_of_birth: null,
+      country_of_birth: '',
+      country_of_citizenship: '',
+      in_us: false,
+      visa_status: '',
+      visa_expiration: null,
+      passport_expiration: null,
+      no_passport_applied: false,
+      admit_until_date: null,
+      applying_new_visa: false,
+      visa_type: '',
+      latest_entry_date: null,
+      latest_visa_status: '',
+      j_visa_status: false,
+      communist_party_member: false,
+      employer_name: '',
+      job_title: '',
+      proposed_employment_field: '',
+      company_name: '',
+      job_description: '',
+      full_time: false,
+      permanent_position: false,
+      worksite_city: '',
+      worksite_state: '',
+      paper_publication_year: '',
+      asylum_applied: false,
+      street_address: '',
+      address_line_2: '',
+      city: '',
+      state: '',
+      zip_code: '',
+      country: '',
+      email: '',
+      phone_number: '',
+      referral_source: '',
+      social_media_source: '',
+      has_dependents: false,
+      marital_status: null,
+      dependents: [],
+    })
+
+    const removingDependentId = ref(null)
 
     onMounted(async () => {
       try {
-        await caseStore.fetchClientRecords()
-        let petitionTypes = caseStore.crecords.petition_types
-
-        // Check if petitionTypes is a string and parse it
-        if (typeof petitionTypes === 'string') {
-          petitionTypes = JSON.parse(petitionTypes)
-        }
-
-        // Check if petitionTypes is now an array
-        if (Array.isArray(petitionTypes)) {
-          petitionTypes.forEach((type) => {
-            if (petitionMapping[type]) {
-              petitionMapping[type].value = true
-            }
-          })
-        } else {
-          console.error('petitionTypes is not an array:', petitionTypes)
-        }
+        loading.value = true
+        await fetchClientRecord()
       } catch (error) {
-        console.error('Error fetching petition types:', error)
+        console.error('Error loading client record:', error)
+        $q.notify({
+          type: 'negative',
+          message: 'Failed to load client record',
+        })
+      } finally {
+        loading.value = false
       }
     })
+
+    const handlePetitionTypeChange = (val) => {
+      formData.value.petition_types = Array.isArray(val) ? val : []
+    }
+
+    const fetchClientRecord = async () => {
+      try {
+        const data = await store.fetchClientRecord()
+        if (data) {
+          if (typeof data.petition_types === 'string') {
+            try {
+              data.petition_types = JSON.parse(data.petition_types)
+            } catch (error) {
+              data.petition_types = []
+              console.log(error)
+            }
+          }
+          data.petition_types = Array.isArray(data.petition_types) ? data.petition_types : []
+
+          formData.value = { ...formData.value, ...data }
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    const addDependent = () => {
+      formData.value.dependents.push({
+        last_name: '',
+        first_name: '',
+        middle_name: '',
+        relation: null,
+        country_of_birth: '',
+        date_of_birth: null,
+        passport_expiration: null,
+        no_passport_applied: false,
+        gender: null,
+        address: '',
+        visa_processing_option: '',
+        processing_country: '',
+      })
+    }
+
+    const removeDependent = async (dependentId) => {
+      try {
+        removingDependentId.value = dependentId
+        await store.removeDependent(formData.value.id, dependentId)
+
+        // Remove from local state
+        formData.value.dependents = formData.value.dependents.filter(
+          (dep) => dep.id !== dependentId,
+        )
+
+        $q.notify({
+          type: 'positive',
+          message: 'Dependent removed successfully',
+        })
+      } catch (error) {
+        console.error('Remove dependent error:', error)
+        $q.notify({
+          type: 'negative',
+          message: 'Failed to remove dependent',
+        })
+      } finally {
+        removingDependentId.value = null
+      }
+    }
+
+    const onSubmit = async () => {
+      try {
+        saving.value = true
+        await store.saveClientRecord(formData.value)
+        $q.notify({
+          type: 'positive',
+          message: 'Changes saved successfully',
+        })
+      } catch (error) {
+        console.error('Save error:', error)
+        $q.notify({
+          type: 'negative',
+          message: 'Failed to save changes',
+        })
+      } finally {
+        saving.value = false
+      }
+    }
+
     return {
-      option1,
-      option2,
-      option3,
-      option4,
-      option5,
-      option6,
-      option7,
-      option8,
-      model,
-      options,
-      choice,
-      caseStore,
-      petitionTypes,
+      loading,
+      saving,
+      formData,
+      stateOptions,
+      petitionTypeOptions,
+      handlePetitionTypeChange,
+      addDependent,
+      removeDependent,
+      onSubmit,
+      removingDependentId,
     }
   },
 }
 </script>
+
+<style scoped>
+.client-record-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+</style>
