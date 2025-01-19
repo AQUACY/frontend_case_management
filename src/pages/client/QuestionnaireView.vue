@@ -32,7 +32,12 @@
                   />
                 </div>
                 <div class="col-12 col-md-6">
-                  <q-input v-model="formData.petitioner" label="Petitioner" outlined />
+                  <q-select
+                    v-model="formData.petitioner"
+                    label="Petitioner"
+                    :options="['Employer', 'Self']"
+                    outlined
+                  />
                 </div>
               </div>
             </q-card-section>
@@ -198,8 +203,10 @@
                     v-model="formData.dual_citizenship"
                     :options="['Yes', 'No']"
                     label="Do you have dual citizenship?"
-                    :rules="[(val) => !!val || 'Required']"
+                    emit-value
+                    map-options
                     outlined
+                    clearable
                   />
                 </div>
                 <div class="col-12 col-md-6" v-if="formData.dual_citizenship === 'Yes'">
@@ -242,6 +249,105 @@
                 </div>
               </div>
             </q-card-section>
+            <q-card-section>
+              <div class="text-subtitle2 q-mb-md">Position Details</div>
+              <div class="row q-col-gutter-md">
+                <div class="col-12 col-md-6">
+                  <q-input v-model="formData.occupation" label="Occupation" outlined />
+                </div>
+                <div class="col-12 col-md-6">
+                  <q-input
+                    v-model="formData.annual_income"
+                    label="Annual Income"
+                    outlined
+                    type="number"
+                  />
+                </div>
+                <div class="col-12 col-md-6">
+                  <q-input v-model="formData.soc_code" label="SOC Code" outlined />
+                </div>
+                <div class="col-12">
+                  <q-input
+                    v-model="formData.nontechnical_job_description"
+                    label="Non-Technical Job Description"
+                    type="textarea"
+                    outlined
+                  />
+                </div>
+                <div class="col-12 col-md-6">
+                  <q-input
+                    v-model="formData.hours_per_week"
+                    label="Hours Per Week"
+                    type="number"
+                    outlined
+                  />
+                </div>
+                <div class="col-12 col-md-6">
+                  <q-select
+                    v-model="formData.new_position"
+                    :options="['Yes', 'No']"
+                    label="Is this a new position?"
+                    outlined
+                  />
+                </div>
+                <div class="col-12 col-md-6">
+                  <q-input v-model="formData.wages" label="Wages" type="number" outlined />
+                </div>
+                <div class="col-12 col-md-6">
+                  <q-select
+                    v-model="formData.wages_per"
+                    :options="['Hour', 'Week', 'Month', 'Year']"
+                    label="Wages Per"
+                    outlined
+                  />
+                </div>
+              </div>
+
+              <div class="text-subtitle2 q-mb-md q-mt-lg">Worksite Information</div>
+              <div class="row q-col-gutter-md">
+                <div class="col-12 col-md-6">
+                  <q-select
+                    v-model="formData.worksite_type"
+                    :options="['Office', 'Home', 'Other']"
+                    label="Worksite Type"
+                    outlined
+                  />
+                </div>
+                <div class="col-12">
+                  <q-input
+                    v-model="formData.worksite_street_number_name"
+                    label="Street Address"
+                    outlined
+                  />
+                </div>
+                <div class="col-12 col-md-6">
+                  <q-input v-model="formData.work_building_type" label="Building Type" outlined />
+                </div>
+                <div class="col-12 col-md-6">
+                  <q-input
+                    v-model="formData.work_type_detail"
+                    label="Additional Details"
+                    outlined
+                  />
+                </div>
+                <div class="col-12 col-md-6">
+                  <q-input v-model="formData.work_city_town" label="City/Town" outlined />
+                </div>
+                <div class="col-12 col-md-6">
+                  <q-input v-model="formData.work_state" label="State" outlined />
+                </div>
+                <div class="col-12 col-md-6">
+                  <q-input
+                    v-model="formData.work_county_township"
+                    label="County/Township"
+                    outlined
+                  />
+                </div>
+                <div class="col-12 col-md-6">
+                  <q-input v-model="formData.work_zip_code" label="ZIP Code" outlined />
+                </div>
+              </div>
+            </q-card-section>
           </q-card>
 
           <!-- Additional Information -->
@@ -279,53 +385,77 @@
           <q-card flat bordered class="q-mt-md">
             <q-card-section>
               <div class="text-subtitle1 q-mb-md text-blue text-bold">Family Information</div>
-              <div v-for="(member, index) in formData.family_members" :key="index" class="q-mb-lg">
+              <div
+                v-for="(member, index) in formData.family_members"
+                :key="member.id || index"
+                class="q-mb-lg"
+              >
                 <div class="row q-col-gutter-md">
                   <div class="col-12 col-md-4">
-                    <q-input v-model="member.family_name" label="Family Member Name" outlined />
-                  </div>
-                  <div class="col-12 col-md-4">
-                    <q-input v-model="member.given_name" label="Given Member Name" outlined />
-                  </div>
-                  <div class="col-12 col-md-4">
-                    <q-input v-model="member.full_middle_name" label="Middle  Name" outlined />
-                  </div>
-                  <div class="col-12 col-md-4">
-                    <q-input v-model="member.birth_country" label="Birth Country" outlined />
-                  </div>
-                  <div class="col-12 col-md-4">
                     <q-input
-                      v-model="member.adjustment_status"
-                      label="Applying for Adjustment of Status (filing an I-485)"
+                      v-model="member.family_name"
+                      label="Family Name"
+                      :rules="[(val) => !!val || 'Required']"
                       outlined
                     />
                   </div>
                   <div class="col-12 col-md-4">
                     <q-input
-                      v-model="member.immigrant_visa"
-                      label="Applying for an immigrant visa abroad to be admitted as a US permanent resident"
+                      v-model="member.given_name"
+                      label="Given Name"
+                      :rules="[(val) => !!val || 'Required']"
                       outlined
                     />
                   </div>
                   <div class="col-12 col-md-4">
                     <q-select
                       v-model="member.relationship"
-                      :options="['Spouse', 'Child', 'Parent', 'Sibling']"
+                      :options="['Spouse', 'Child']"
                       label="Relationship"
+                      :rules="[(val) => !!val || 'Required']"
                       outlined
                     />
                   </div>
                   <div class="col-12 col-md-4">
-                    <q-input v-model="member.dob" label="Date of Birth" type="date" outlined />
+                    <q-input
+                      v-model="member.dob"
+                      label="Date of Birth"
+                      type="date"
+                      :rules="[(val) => !!val || 'Required']"
+                      outlined
+                    />
+                  </div>
+                  <div class="col-12 col-md-4">
+                    <q-input
+                      v-model="member.birth_country"
+                      label="Country of Birth"
+                      :rules="[(val) => !!val || 'Required']"
+                      outlined
+                    />
                   </div>
                 </div>
                 <div class="row justify-end q-mt-sm">
-                  <q-btn flat color="negative" label="Remove" @click="removeFamilyMember(index)" />
+                  <q-btn
+                    flat
+                    color="negative"
+                    label="Remove"
+                    :loading="removingMemberId === member.id"
+                    @click="removeFamilyMember(member)"
+                  />
                 </div>
               </div>
               <div class="row justify-end">
                 <q-btn color="primary" label="Add Family Member" @click="addFamilyMember" />
               </div>
+            </q-card-section>
+            <q-card-section>
+              <q-btn
+                type="submit"
+                color="primary"
+                label="Save Questionnairre"
+                :loading="loading"
+                class="full-width"
+              />
             </q-card-section>
           </q-card>
         </q-form>
@@ -356,12 +486,31 @@ export default {
       family_name: '',
       given_name: '',
       full_middle_name: '',
+      native_alphabet: '',
+      dob: '',
       street_number_name: '',
+      type: '',
+      type_details: '',
       city_town: '',
       state: '',
       zip_code: '',
+      phone: '',
+      email: '',
+      dual_citizenship: null,
+      second_citizenship: '',
+      passport_number: '',
+      passport_expiration_date: '',
+      country_of_birth: '',
+      country_of_citizenship: '',
+      full_time_position: '',
+      permanent_position: '',
+      prior_petition: '',
+      removal_proceedings: '',
+      additional_information: '',
       family_members: [],
     })
+
+    const removingMemberId = ref(null)
 
     onMounted(async () => {
       try {
@@ -402,23 +551,54 @@ export default {
       })
     }
 
-    const removeFamilyMember = (index) => {
-      formData.value.family_members.splice(index, 1)
+    const removeFamilyMember = async (member) => {
+      try {
+        removingMemberId.value = member.id
+
+        if (member.id) {
+          // If the member has an ID, it exists in the database
+          await store.deleteFamilyMember(formData.value.id, member.id)
+          $q.notify({
+            type: 'positive',
+            message: 'Family member removed successfully',
+          })
+        }
+
+        // Remove from local state
+        const index = formData.value.family_members.findIndex(
+          (m) => m.id === member.id || m === member,
+        )
+        if (index > -1) {
+          formData.value.family_members.splice(index, 1)
+        }
+      } catch (error) {
+        console.error('Error removing family member:', error)
+        $q.notify({
+          type: 'negative',
+          message: 'Failed to remove family member',
+        })
+      } finally {
+        removingMemberId.value = null
+      }
     }
 
     const onSubmit = async () => {
       try {
         saving.value = true
-        await store.saveQuestionnaire(formData.value)
+        if (formData.value.id) {
+          await store.updateQuestionnaire(formData.value)
+        } else {
+          await store.saveQuestionnaire(formData.value)
+        }
         $q.notify({
           type: 'positive',
-          message: 'Changes saved successfully',
+          message: 'Questionnaire saved successfully',
         })
       } catch (error) {
         console.error('Save error:', error)
         $q.notify({
           type: 'negative',
-          message: 'Failed to save changes',
+          message: 'Failed to save questionnaire',
         })
       } finally {
         saving.value = false
@@ -429,6 +609,8 @@ export default {
       loading,
       saving,
       formData,
+      // addingMemberId,
+      removingMemberId,
       addFamilyMember,
       removeFamilyMember,
       onSubmit,
