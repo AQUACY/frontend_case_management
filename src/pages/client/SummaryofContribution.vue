@@ -29,17 +29,12 @@
           label="SECTION I: BACKGROUND INFORMATION"
           header-class="bg-grey-2"
           expand-icon-class="text-primary"
+          :default-opened="true"
         >
           <q-card>
             <q-card-section>
               <div class="section-content">
-                <!-- Background Information Form -->
-                <div class="row q-col-gutter-md">
-                  <!-- Add your form fields here -->
-                </div>
-                <div class="row justify-end q-mt-md">
-                  <q-btn color="primary" label="Save SoC" @click="saveSectionI" />
-                </div>
+                <BackgroundInformationForm class="q-pa-md" />
               </div>
             </q-card-section>
           </q-card>
@@ -56,13 +51,7 @@
           <q-card>
             <q-card-section>
               <div class="section-content">
-                <!-- Contributions Form -->
-                <div class="row q-col-gutter-md">
-                  <!-- Add your form fields here -->
-                </div>
-                <div class="row justify-end q-mt-md">
-                  <q-btn color="primary" label="Save SoC" @click="saveSectionII" />
-                </div>
+                <ContributionsForm class="q-pa-md" />
               </div>
             </q-card-section>
           </q-card>
@@ -79,13 +68,7 @@
           <q-card>
             <q-card-section>
               <div class="section-content">
-                <!-- Additional Qualifications Form -->
-                <div class="row q-col-gutter-md">
-                  <!-- Add your form fields here -->
-                </div>
-                <div class="row justify-end q-mt-md">
-                  <q-btn color="primary" label="Save SoC" @click="saveSectionIII" />
-                </div>
+                <AdditionalQualificationForm class="q-pa-md" />
               </div>
             </q-card-section>
           </q-card>
@@ -112,9 +95,18 @@
 <script>
 import { ref, computed } from 'vue'
 import { date } from 'quasar'
+import BackgroundInformationForm from 'components/BackgroundInformationForm.vue'
+import AdditionalQualificationForm from 'components/AdditionalQualificationForm.vue'
+import ContributionsForm from 'components/ContributionsForm.vue'
 
 export default {
   name: 'SummaryofContribution',
+
+  components: {
+    BackgroundInformationForm,
+    AdditionalQualificationForm,
+    ContributionsForm,
+  },
 
   setup() {
     const currentDateTime = computed(() => {
@@ -125,38 +117,31 @@ export default {
       {
         id: 1,
         label: 'SECTION I: BACKGROUND INFORMATION',
-        status: 'Finalized',
+        status: 'Pending',
       },
       {
         id: 2,
         label: 'SECTION II: CONTRIBUTIONS',
-        status: 'Finalized',
+        status: 'Pending',
       },
       {
         id: 3,
         label: 'SECTION III: ADDITIONAL QUALIFICATIONS',
-        status: 'Finalized',
+        status: 'Pending',
       },
     ])
 
-    const saveSectionI = () => {
-      // Implement save logic
-    }
-
-    const saveSectionII = () => {
-      // Implement save logic
-    }
-
-    const saveSectionIII = () => {
-      // Implement save logic
+    const updateSectionStatus = (sectionId, status = 'Finalized') => {
+      const section = sections.value.find((s) => s.id === sectionId)
+      if (section) {
+        section.status = status
+      }
     }
 
     return {
       currentDateTime,
       sections,
-      saveSectionI,
-      saveSectionII,
-      saveSectionIII,
+      updateSectionStatus,
     }
   },
 }
