@@ -599,9 +599,9 @@
           <div class="table-responsive billing-table">
             <PaymentHistoryTable />
           </div>
-          <div>
+          <!-- <div>
             <PaymentForm @success="handleSuccess" />
-          </div>
+          </div> -->
         </q-tab-panel>
       </q-tab-panels>
     </q-card>
@@ -610,11 +610,11 @@
 
 <script>
 import { ref } from 'vue'
-import PaymentForm from 'src/components/PaymentForm.vue'
+// import PaymentForm from 'src/components/PaymentForm.vue'
 import PaymentHistoryTable from 'src/components/PaymentHistoryTable.vue'
 export default {
   components: {
-    PaymentForm,
+    // PaymentForm,
     PaymentHistoryTable,
   },
   setup() {
