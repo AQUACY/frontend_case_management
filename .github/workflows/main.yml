@@ -21,7 +21,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          cache: 'npm'
 
       - name: Install Global Dependencies
         run: |
@@ -87,39 +87,87 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            # Navigate to the project directory
+            # Debug: Print current directory and contents
+            pwd
+            ls -la
+
+            # Navigate to project directory
             cd /var/www/frontend_case_management
+            echo "Changed to project directory"
+            pwd
+            ls -la
+
+            # Debug: Check git status
+            git status
 
             # Pull latest changes
             git checkout production
             git pull origin production
+            echo "Pulled latest changes"
+            git log -1
 
             # Install dependencies and build
+            echo "Installing dependencies..."
             npm ci
+            echo "Building project..."
             quasar build
 
-            # Create backup of current deployment
+            # Debug: Check build output
+            ls -la dist/spa
+
+            # Create backup
             timestamp=$(date +%Y%m%d_%H%M%S)
+            echo "Creating backup..."
             if [ -d "/var/www/html/frontend_case_management" ]; then
               sudo mv /var/www/html/frontend_case_management "/var/www/html/frontend_case_management_backup_$timestamp"
+              echo "Backup created at frontend_case_management_backup_$timestamp"
             fi
 
             # Deploy new build
-            sudo cp -r dist/spa/. /var/www/html/frontend_case_management/
-            
-            # Set proper permissions
+            echo "Deploying new build..."
+            sudo mkdir -p /var/www/html/frontend_case_management
+            sudo cp -rv dist/spa/. /var/www/html/frontend_case_management/
+
+            # Set permissions
+            echo "Setting permissions..."
             sudo chown -R www-data:www-data /var/www/html/frontend_case_management
             sudo chmod -R 755 /var/www/html/frontend_case_management
-            
-            # Copy .htaccess
-            sudo cp dist/spa/.htaccess /var/www/html/frontend_case_management/.htaccess
-            
-            # Enable Apache modules if not already enabled
-            sudo a2enmod rewrite
-            
-            # Restart Apache
-            sudo systemctl restart apache2
 
-            # Clean up old backups (keep last 5)
-            cd /var/www/html
-            ls -dt frontend_case_management_backup_* | tail -n +6 | xargs -r sudo rm -rf
+            # Debug: Check deployed files
+            echo "Checking deployed files..."
+            ls -la /var/www/html/frontend_case_management
+
+            # Verify .htaccess
+            echo "Checking .htaccess..."
+            cat /var/www/html/frontend_case_management/.htaccess
+
+            # Enable Apache modules
+            echo "Enabling Apache modules..."
+            sudo a2enmod rewrite
+
+            # Restart Apache
+            echo "Restarting Apache..."
+            sudo systemctl restart apache2
+            sudo systemctl status apache2
+
+            # Clear browser cache (optional)
+            echo "Adding cache-busting headers..."
+            sudo bash -c 'cat > /var/www/html/frontend_case_management/.htaccess' << 'EOL'
+            <IfModule mod_rewrite.c>
+                RewriteEngine On
+                RewriteBase /
+                RewriteCond %{REQUEST_FILENAME} !-f
+                RewriteCond %{REQUEST_FILENAME} !-d
+                RewriteRule ^ index.html [L]
+            </IfModule>
+
+            <IfModule mod_headers.c>
+                Header set Cache-Control "no-cache, no-store, must-revalidate"
+                Header set Pragma "no-cache"
+                Header set Expires 0
+            </IfModule>
+            EOL
+
+            # Final verification
+            echo "Deployment completed. Verifying file permissions and ownership..."
+            ls -la /var/www/html/frontend_case_management
