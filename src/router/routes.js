@@ -64,6 +64,14 @@ const routes = [
     ],
   },
   {
+    path: '/casemanager/login',
+    component: () => import('layouts/LoginLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/casemanager/LoginView.vue') },
+      // { path: '/login', component: () => import('pages/LoginView.vue') }
+    ],
+  },
+  {
     path: '/casemanager',
     component: () => import('layouts/CaseManagerLayout.vue'),
     children: [

@@ -91,23 +91,7 @@ export default {
             color: 'negative',
           })
         }
-        // get the case for the user
-        if (response.data.success === true) {
-          const id = localStorage.getItem('user_id')
-          const cases = await this.$api.get(`/api/auth/cases/mycase/${id}`, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-          })
-          const caseDetails = cases.data
-          this.userStore.setCaseDetails(caseDetails)
-        } else {
-          this.$q.notify({
-            message: 'Case could not be loaded',
-            color: 'negative',
-          })
-        }
-        this.$router.push('/app')
+        this.$router.push('/casemanager/dashboard')
       } catch (error) {
         console.error('Login failed', error)
         this.$q.notify({

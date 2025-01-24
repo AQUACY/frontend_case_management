@@ -2,7 +2,7 @@
   <div class="dashboard">
     <!-- Stats Cards -->
     <div class="row q-col-gutter-md q-mb-lg">
-      <div class="col-12 col-sm-6 col-md-3">
+      <div class="col-12 col-sm-6 col-md-6">
         <q-card class="bg-primary text-white">
           <q-card-section>
             <div class="text-h6">Total Cases</div>
@@ -10,7 +10,7 @@
           </q-card-section>
         </q-card>
       </div>
-      <div class="col-12 col-sm-6 col-md-3">
+      <div class="col-12 col-sm-6 col-md-6">
         <q-card class="bg-positive text-white">
           <q-card-section>
             <div class="text-h6">Active Cases</div>
@@ -18,22 +18,22 @@
           </q-card-section>
         </q-card>
       </div>
-      <div class="col-12 col-sm-6 col-md-3">
+      <!-- <div class="col-12 col-sm-6 col-md-3">
         <q-card class="bg-warning text-white">
           <q-card-section>
             <div class="text-h6">Pending Reviews</div>
             <div class="text-h4">{{ store.pendingReviews }}</div>
           </q-card-section>
         </q-card>
-      </div>
-      <div class="col-12 col-sm-6 col-md-3">
+      </div> -->
+      <!-- <div class="col-12 col-sm-6 col-md-3">
         <q-card class="bg-negative text-white">
           <q-card-section>
             <div class="text-h6">Urgent Cases</div>
             <div class="text-h4">{{ store.urgentCases }}</div>
           </q-card-section>
         </q-card>
-      </div>
+      </div> -->
     </div>
 
     <!-- Recent Cases with Updates -->
@@ -62,13 +62,13 @@
           </q-td>
         </template>
 
-        <template v-slot:body-cell-priority="props">
+        <!-- <template v-slot:body-cell-priority="props">
           <q-td :props="props">
             <q-chip :color="getPriorityColor(props.row.priority)" text-color="white" size="sm">
               {{ props.row.priority }}
             </q-chip>
           </q-td>
-        </template>
+        </template> -->
 
         <template v-slot:body-cell-updated_at="props">
           <q-td :props="props">
@@ -89,9 +89,9 @@
               >
                 <q-tooltip>View Case</q-tooltip>
               </q-btn>
-              <q-btn flat round size="sm" color="warning" icon="edit" @click="editCase(props.row)">
+              <!-- <q-btn flat round size="sm" color="warning" icon="edit" @click="editCase(props.row)">
                 <q-tooltip>Edit Case</q-tooltip>
-              </q-btn>
+              </q-btn> -->
             </q-btn-group>
           </q-td>
         </template>
