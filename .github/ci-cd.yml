@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [24.x]
 
     steps:
       - uses: actions/checkout@v3
@@ -21,7 +21,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          cache: 'npm'
 
       - name: Install Global Dependencies
         run: |
@@ -106,17 +106,17 @@ jobs:
 
             # Deploy new build
             sudo cp -r dist/spa/. /var/www/html/frontend_case_management/
-            
+
             # Set proper permissions
             sudo chown -R www-data:www-data /var/www/html/frontend_case_management
             sudo chmod -R 755 /var/www/html/frontend_case_management
-            
+
             # Copy .htaccess
             sudo cp dist/spa/.htaccess /var/www/html/frontend_case_management/.htaccess
-            
+
             # Enable Apache modules if not already enabled
             sudo a2enmod rewrite
-            
+
             # Restart Apache
             sudo systemctl restart apache2
 
