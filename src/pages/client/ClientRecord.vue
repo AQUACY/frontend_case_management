@@ -230,7 +230,7 @@
 <script>
 import { ref, onMounted } from 'vue'
 import { useQuasar } from 'quasar'
-import { useClientRecordsStore } from 'src/stores/clientRecords'
+import { useClientRecordsStore } from 'src/stores/clientrecords'
 
 export default {
   name: 'ClientRecord',
