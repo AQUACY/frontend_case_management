@@ -63,6 +63,64 @@ const routes = [
       // { path: '/login', component: () => import('pages/LoginView.vue') }
     ],
   },
+  {
+    path: '/casemanager/login',
+    component: () => import('layouts/LoginLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/casemanager/LoginView.vue') },
+      // { path: '/login', component: () => import('pages/LoginView.vue') }
+    ],
+  },
+  {
+    path: '/casemanager',
+    component: () => import('layouts/CaseManagerLayout.vue'),
+    children: [
+      {
+        path: '',
+        redirect: '/casemanager/dashboard',
+      },
+      {
+        path: 'dashboard',
+        name: 'casemanager-dashboard',
+        component: () => import('pages/casemanager/DashboardPage.vue'),
+      },
+      {
+        path: 'cases',
+        name: 'casemanager-cases',
+        component: () => import('pages/casemanager/CasesPage.vue'),
+      },
+      {
+        path: 'clients',
+        name: 'casemanager-clients',
+        component: () => import('pages/casemanager/ClientsPage.vue'),
+      },
+      {
+        path: 'payments',
+        name: 'casemanager-payments',
+        component: () => import('pages/casemanager/PaymentsPage.vue'),
+      },
+      {
+        path: 'documents',
+        name: 'casemanager-documents',
+        component: () => import('pages/casemanager/DocumentsPage.vue'),
+      },
+      {
+        path: 'calendar',
+        name: 'casemanager-calendar',
+        component: () => import('pages/casemanager/CalendarPage.vue'),
+      },
+      {
+        path: 'reports',
+        name: 'casemanager-reports',
+        component: () => import('pages/casemanager/ReportsPage.vue'),
+      },
+      {
+        path: 'settings',
+        name: 'casemanager-settings',
+        component: () => import('pages/casemanager/SettingsPage.vue'),
+      },
+    ],
+  },
 
   // Always leave this as last one,
   // but you can also remove it
