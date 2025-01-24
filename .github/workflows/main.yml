@@ -96,7 +96,7 @@ jobs:
 
             # Install dependencies and build
             npm ci
-            npm run build
+            quasar build
 
             # Create backup of current deployment
             timestamp=$(date +%Y%m%d_%H%M%S)
