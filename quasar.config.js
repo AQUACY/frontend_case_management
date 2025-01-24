@@ -3,6 +3,9 @@
 
 import { defineConfig } from '#q-app/wrappers'
 
+// Get environment variables
+require('dotenv').config()
+
 export default defineConfig((/* ctx */) => {
   return {
     // https://v2.quasar.dev/quasar-cli-vite/prefetch-feature
@@ -47,7 +50,8 @@ export default defineConfig((/* ctx */) => {
       // publicPath: '/',
       // analyze: true,
       env: {
-        STRIPE_PUBLIC_KEY: process.env.STRIPE_PUBLIC_KEY,
+        STRIPE_PUBLIC_KEY: JSON.stringify(process.env.STRIPE_PUBLIC_KEY || ''),
+        API_URL: JSON.stringify(process.env.API_URL || ''),
       },
       // env: {},
       // rawDefine: {}
@@ -79,6 +83,14 @@ export default defineConfig((/* ctx */) => {
             async: true,
           },
         ],
+      },
+
+      // Add transpile options if needed
+      transpile: true,
+
+      // Add error handling during build
+      onError(error) {
+        console.error('Build error:', error)
       },
     },
 

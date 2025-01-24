@@ -1,0 +1,101 @@
+- pipeline: 'Build & Deploy'
+  trigger_mode: 'ON_EVERY_PUSH'
+  ref_name: 'production'
+  ref_type: 'BRANCH'
+  trigger_condition: 'ALWAYS'
+  actions:
+    - action: 'Install dependencies'
+      type: 'BUILD'
+      working_directory: '/buddy/frontend_case_management'
+      docker_image_name: 'node'
+      docker_image_tag: '18'
+      execute_commands:
+        - npm install -g @quasar/cli
+        - npm ci
+        - npm run lint
+
+    - action: 'Build application'
+      type: 'BUILD'
+      working_directory: '/buddy/frontend_case_management'
+      docker_image_name: 'node'
+      docker_image_tag: '18'
+      execute_commands:
+        - quasar build
+        # Create .htaccess file
+        - |
+          cat > dist/spa/.htaccess << 'EOL'
+          <IfModule mod_rewrite.c>
+              RewriteEngine On
+              RewriteBase /
+              RewriteCond %{REQUEST_FILENAME} !-f
+              RewriteCond %{REQUEST_FILENAME} !-d
+              RewriteRule ^ index.html [L]
+          </IfModule>
+          EOL
+
+    - action: 'Deploy to Production'
+      type: 'SFTP'
+      input_type: 'BUILD_ARTIFACTS'
+      local_path: 'dist/spa/*'
+      remote_path: '/var/www/html/frontend_case_management'
+      login: '$SSH_USERNAME'
+      host: '$SSH_HOST'
+      port: '22'
+      authentication_mode: 'PRIVATE_KEY'
+      private_key: '$SSH_PRIVATE_KEY'
+      after_commands:
+        - cd /var/www/html/frontend_case_management
+        - sudo chown -R www-data:www-data .
+        - sudo chmod -R 755 .
+        - sudo a2enmod rewrite
+        - |
+          sudo bash -c 'cat > .htaccess' << 'EOL'
+          <IfModule mod_rewrite.c>
+              RewriteEngine On
+              RewriteBase /
+              RewriteCond %{REQUEST_FILENAME} !-f
+              RewriteCond %{REQUEST_FILENAME} !-d
+              RewriteRule ^ index.html [L]
+          </IfModule>
+
+          <IfModule mod_headers.c>
+              Header set Cache-Control "no-cache, no-store, must-revalidate"
+              Header set Pragma "no-cache"
+              Header set Expires 0
+          </IfModule>
+          EOL
+        - sudo systemctl restart apache2
+
+    - action: 'Backup Production'
+      type: 'SSH_COMMAND'
+      login: '$SSH_USERNAME'
+      host: '$SSH_HOST'
+      port: '22'
+      authentication_mode: 'PRIVATE_KEY'
+      private_key: '$SSH_PRIVATE_KEY'
+      commands:
+        - timestamp=$(date +%Y%m%d_%H%M%S)
+        - cd /var/www/html
+        - |
+          if [ -d "frontend_case_management" ]; then
+            sudo mv frontend_case_management "frontend_case_management_backup_$timestamp"
+          fi
+        - ls -la frontend_case_management
+        - sudo systemctl status apache2
+
+- pipeline: 'Build & Test'
+  trigger_mode: 'ON_EVERY_PUSH'
+  ref_name: 'main'
+  ref_type: 'BRANCH'
+  trigger_condition: 'ALWAYS'
+  actions:
+    - action: 'Install & Test'
+      type: 'BUILD'
+      working_directory: '/buddy/frontend_case_management'
+      docker_image_name: 'node'
+      docker_image_tag: '18'
+      execute_commands:
+        - npm install -g @quasar/cli
+        - npm ci
+        - npm run lint
+        - quasar build

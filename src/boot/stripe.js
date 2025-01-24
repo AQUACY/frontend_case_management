@@ -1,14 +1,21 @@
 import { boot } from 'quasar/wrappers'
 import { loadStripe } from '@stripe/stripe-js'
 
-// Get the public key from environment variables
-const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
+// Fallback to empty string if env variable is not set
+const stripePublicKey = process.env.STRIPE_PUBLIC_KEY || ''
 
-// Create a promise that resolves with the Stripe instance
-const stripePromise = loadStripe(stripePublicKey)
+let stripePromise
+
+// Only initialize Stripe if we have a key
+if (stripePublicKey) {
+  stripePromise = loadStripe(stripePublicKey)
+} else {
+  console.log('Stripe public key not found')
+  stripePromise = null
+}
 
 export default boot(({ app }) => {
-  // Make stripe available in the app
+  // Make stripe available globally
   app.config.globalProperties.$stripe = stripePromise
 })
 
