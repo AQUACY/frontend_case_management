@@ -597,28 +597,10 @@
         <!-- this is the panel for the billing -->
         <q-tab-panel name="four">
           <div class="table-responsive billing-table">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th class="status-col">Status</th>
-                  <th class="date-col">Date</th>
-                  <th class="amount-col">Amount</th>
-                  <th class="note-col">Note</th>
-                  <th class="transaction-col">Transaction ID</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="status-cell">
-                    <span class="status-badge completed">Completed</span>
-                  </td>
-                  <td>2024-01-25 12:22:53</td>
-                  <td>$200</td>
-                  <td>NIW Attorney fee last due fee</td>
-                  <td class="transaction-cell">PP-39FZJLXP4YF4YH1GXQM9WU5D</td>
-                </tr>
-              </tbody>
-            </table>
+            <PaymentHistoryTable />
+          </div>
+          <div>
+            <PaymentForm @success="handleSuccess" />
           </div>
         </q-tab-panel>
       </q-tab-panels>
@@ -628,8 +610,13 @@
 
 <script>
 import { ref } from 'vue'
-
+import PaymentForm from 'src/components/PaymentForm.vue'
+import PaymentHistoryTable from 'src/components/PaymentHistoryTable.vue'
 export default {
+  components: {
+    PaymentForm,
+    PaymentHistoryTable,
+  },
   setup() {
     return {
       tab: ref('one'),
@@ -644,25 +631,29 @@ export default {
   max-width: 100%;
 }
 
-.billing-table{ margin: 1rem 0}
+.billing-table {
+  margin: 1rem 0;
+}
 
+.table {
+  background: #fff;
+  border: 1px solid #dee2e6;
+}
 
-              .table{ background: #fff;
-                border: 1px solid #dee2e6}
+th {
+  background: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+  padding: 0.75rem;
+  font-weight: 600;
+  color: #495057;
+}
 
-
-                th{ background: #f8f9fa;
-                  border-bottom: 2px solid #dee2e6;
-                  padding: 0.75rem;
-                  font-weight: 600;
-                  color: #495057}
-
-
-                td{ padding: 0.75rem;
-                  vertical-align: middle;
-                  color: #212529;
-                  border-color: #dee2e6}
-
+td {
+  padding: 0.75rem;
+  vertical-align: middle;
+  color: #212529;
+  border-color: #dee2e6;
+}
 
 .status-badge {
   display: inline-block;
@@ -677,7 +668,9 @@ export default {
   color: #2e7d32;
 }
 
-.transaction-cell{ font-family: monospace;
-                  color: #666;
-                  font-size: 0.9rem}
+.transaction-cell {
+  font-family: monospace;
+  color: #666;
+  font-size: 0.9rem;
+}
 </style>

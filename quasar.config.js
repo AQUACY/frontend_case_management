@@ -46,6 +46,11 @@ export default defineConfig((/* ctx */) => {
 
       // publicPath: '/',
       // analyze: true,
+
+      env: {
+        STRIPE_PUBLIC_KEY: process.env.STRIPE_PUBLIC_KEY,
+        STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+      },
       // env: {},
       // rawDefine: {}
       // ignorePublicFolder: true,
@@ -68,6 +73,15 @@ export default defineConfig((/* ctx */) => {
           { server: false },
         ],
       ],
+
+      html: {
+        scripts: [
+          {
+            src: 'https://js.stripe.com/v3/',
+            async: true,
+          },
+        ],
+      },
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#devserver
