@@ -71,6 +71,7 @@ const routes = [
       // { path: '/login', component: () => import('pages/LoginView.vue') }
     ],
   },
+  // case manager routes
   {
     path: '/casemanager',
     component: () => import('layouts/CaseManagerLayout.vue'),
@@ -119,9 +120,54 @@ const routes = [
         name: 'casemanager-settings',
         component: () => import('pages/casemanager/SettingsPage.vue'),
       },
+      {
+        path: 'cases/:id',
+        name: 'casemanager-case',
+        component: () => import('pages/casemanager/CaseView.vue'),
+      },
+      {
+        path: '/case/:id/client-records',
+        name: 'casemanager-case-client-records',
+        component: () => import('pages/casemanager/caseDetails/ClientRecordsPage.vue'),
+      },
     ],
   },
 
+  // {
+  //   path: '/case/:id/documents',
+  //   component: () => import('pages/casemanager/caseDetails/DocumentsPage.vue'),
+  //   meta: { requiresAuth: true },
+  // },
+  // {
+  //   path: '/case/:id/messages',
+  //   component: () => import('pages/casemanager/caseDetails/MessagesPage.vue'),
+  //   meta: { requiresAuth: true },
+  // },
+  // {
+  //   path: '/case/:id/proposed-endeavor',
+  //   component: () => import('pages/casemanager/caseDetails/ProposedEndeavorPage.vue'),
+  //   meta: { requiresAuth: true },
+  // },
+  // {
+  //   path: '/case/:id/publications',
+  //   component: () => import('pages/casemanager/caseDetails/PublicationsPage.vue'),
+  //   meta: { requiresAuth: true },
+  // },
+  // {
+  //   path: '/case/:id/questionnaire',
+  //   component: () => import('pages/casemanager/caseDetails/QuestionnairePage.vue'),
+  //   meta: { requiresAuth: true },
+  // },
+  // {
+  //   path: '/case/:id/contributions',
+  //   component: () => import('pages/casemanager/caseDetails/ContributionsPage.vue'),
+  //   meta: { requiresAuth: true },
+  // },
+  // {
+  //   path: '/case/:id/i485',
+  //   component: () => import('pages/casemanager/caseDetails/I485Page.vue'),
+  //   meta: { requiresAuth: true },
+  // },
   // Always leave this as last one,
   // but you can also remove it
   {

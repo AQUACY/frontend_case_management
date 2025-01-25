@@ -189,6 +189,6 @@ export default {
 }
 
 .q-footer {
-  background: linear-gradient(to right, $primary, darken($primary, 10%));
+  background: linear-gradient(to right, $primary);
 }
 </style>
