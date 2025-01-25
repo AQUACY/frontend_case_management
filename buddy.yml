@@ -3,6 +3,7 @@
   ref_name: 'production'
   ref_type: 'BRANCH'
   trigger_condition: 'ALWAYS'
+  server_key: 'production-server'
   actions:
     - action: 'Install dependencies'
       type: 'BUILD'
@@ -38,11 +39,11 @@
       input_type: 'BUILD_ARTIFACTS'
       local_path: 'dist/spa/*'
       remote_path: '/var/www/html/frontend_case_management'
-      login: '$SSH_USERNAME'
-      host: '$SSH_HOST'
+      login: '${server.user}'
+      host: '${server.host}'
       port: '22'
       authentication_mode: 'PRIVATE_KEY'
-      private_key: '$SSH_PRIVATE_KEY'
+      private_key: '${server.ssh_key}'
       after_commands:
         - cd /var/www/html/frontend_case_management
         - sudo chown -R www-data:www-data .
@@ -68,11 +69,11 @@
 
     - action: 'Backup Production'
       type: 'SSH_COMMAND'
-      login: '$SSH_USERNAME'
-      host: '$SSH_HOST'
+      login: '${server.user}'
+      host: '${server.host}'
       port: '22'
       authentication_mode: 'PRIVATE_KEY'
-      private_key: '$SSH_PRIVATE_KEY'
+      private_key: '${server.ssh_key}'
       commands:
         - timestamp=$(date +%Y%m%d_%H%M%S)
         - cd /var/www/html
@@ -88,6 +89,7 @@
   ref_name: 'main'
   ref_type: 'BRANCH'
   trigger_condition: 'ALWAYS'
+  server_key: 'test-server'
   actions:
     - action: 'Install & Test'
       type: 'BUILD'

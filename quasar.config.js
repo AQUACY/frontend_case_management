@@ -4,7 +4,7 @@
 import { defineConfig } from '#q-app/wrappers'
 
 // Get environment variables
-require('dotenv').config()
+// require('dotenv').config()
 
 export default defineConfig((/* ctx */) => {
   return {
