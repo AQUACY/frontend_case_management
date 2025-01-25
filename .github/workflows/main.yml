@@ -53,7 +53,7 @@ jobs:
 
   deploy:
     needs: build
-    if: github.ref == 'refs/heads/production'
+    if: ${{ github.ref_name == 'production' }}
     runs-on: ubuntu-latest
 
     steps:
