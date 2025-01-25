@@ -130,6 +130,16 @@ const routes = [
         name: 'casemanager-case-client-records',
         component: () => import('pages/casemanager/caseDetails/ClientRecordsPage.vue'),
       },
+      {
+        path: '/case/:id/documents',
+        name: 'casemanager-case-documents',
+        component: () => import('pages/casemanager/caseDetails/DocumentsPage.vue'),
+      },
+      {
+        path: '/case/:id/profile',
+        component: () => import('pages/casemanager/caseDetails/MyProfilePage.vue'),
+        meta: { requiresAuth: true },
+      },
     ],
   },
 

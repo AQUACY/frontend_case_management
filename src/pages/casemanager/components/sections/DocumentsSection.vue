@@ -1,208 +1,229 @@
 <template>
-  <div class="documents-section">
-    <div class="text-h6 q-mb-md">Documents</div>
-    <q-card>
+  <div class="documents-section q-pa-md">
+    <q-card flat bordered>
       <q-card-section>
-        <div class="row q-col-gutter-md">
+        <!-- Document Category Selector -->
+        <div class="row q-mb-xl">
           <div class="col-12">
-            <q-table
-              :rows="documents"
-              :columns="columns"
-              row-key="id"
-              :pagination="{ rowsPerPage: 10 }"
-            >
-              <template v-slot:top>
-                <div class="q-table__title">Case Documents</div>
-                <q-space />
-                <q-select
-                  v-model="filter"
-                  :options="filterOptions"
-                  label="Filter by category"
-                  dense
-                  outlined
-                  class="q-ml-md"
-                  style="width: 200px"
-                />
-              </template>
-
-              <template v-slot:body-cell-status="props">
-                <q-td :props="props">
-                  <q-chip :color="getStatusColor(props.row.status)" text-color="white" size="sm">
-                    {{ props.row.status }}
-                  </q-chip>
-                </q-td>
-              </template>
-
-              <template v-slot:body-cell-actions="props">
-                <q-td :props="props">
-                  <q-btn-group flat>
-                    <q-btn
-                      flat
-                      round
-                      size="sm"
-                      color="primary"
-                      icon="visibility"
-                      @click="previewDocument(props.row)"
-                    />
-                    <q-btn
-                      flat
-                      round
-                      size="sm"
-                      color="secondary"
-                      icon="download"
-                      @click="downloadDocument(props.row)"
-                    />
-                    <q-btn
-                      flat
-                      round
-                      size="sm"
-                      color="negative"
-                      icon="delete"
-                      @click="deleteDocument(props.row)"
-                    />
-                  </q-btn-group>
-                </q-td>
-              </template>
-            </q-table>
-
-            <!-- Document Preview Dialog -->
-            <q-dialog v-model="previewDialog" full-width>
-              <q-card>
-                <q-card-section class="row items-center">
-                  <div class="text-h6">{{ selectedDocument?.name }}</div>
-                  <q-space />
-                  <q-btn icon="close" flat round dense v-close-popup />
-                </q-card-section>
-
-                <q-card-section>
-                  <div class="document-preview">
-                    <!-- Add document preview component based on file type -->
-                    <iframe
-                      v-if="selectedDocument?.url"
-                      :src="selectedDocument.url"
-                      style="width: 100%; height: 600px"
-                      frameborder="0"
-                    ></iframe>
-                  </div>
-                </q-card-section>
-              </q-card>
-            </q-dialog>
+            <q-select
+              v-model="selectedCategory"
+              :options="categoryOptions"
+              label="Category"
+              outlined
+              dense
+              class="category-select"
+            />
           </div>
         </div>
+
+        <!-- Loading State -->
+        <div v-if="loading" class="text-center q-pa-md">
+          <q-spinner color="primary" size="2em" />
+          <div class="text-grey q-mt-sm">Loading documents...</div>
+        </div>
+
+        <!-- Documents Display -->
+        <template v-else>
+          <div v-for="(docs, category) in groupedDocuments" :key="category" class="q-mb-xl">
+            <template v-if="!selectedCategory || selectedCategory === category">
+              <div class="text-h6 q-mb-md">{{ category }}</div>
+
+              <div class="row q-col-gutter-md">
+                <div v-for="doc in docs" :key="doc.id" class="col-12 col-md-6">
+                  <q-card class="document-card cursor-pointer" @click="downloadDocument(doc)">
+                    <q-card-section>
+                      <div class="row items-center no-wrap">
+                        <div class="col">
+                          <div class="row items-center">
+                            <q-icon
+                              :name="getFileIcon(doc.file_type)"
+                              size="md"
+                              color="primary"
+                              class="q-mr-sm"
+                            />
+                            <div>
+                              <div class="text-subtitle1">{{ doc.name }}</div>
+                              <div class="text-caption text-grey">
+                                Uploaded: {{ formatDate(doc.created_at) }}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-auto">
+                          <q-btn
+                            flat
+                            round
+                            color="primary"
+                            icon="download"
+                            @click.stop="downloadDocument(doc)"
+                          >
+                            <q-tooltip>Download Document</q-tooltip>
+                          </q-btn>
+                        </div>
+                      </div>
+                    </q-card-section>
+                  </q-card>
+                </div>
+              </div>
+            </template>
+          </div>
+
+          <!-- Empty State -->
+          <div v-if="Object.keys(groupedDocuments).length === 0" class="text-center q-pa-xl">
+            <q-icon name="folder_open" size="4em" color="grey-4" />
+            <div class="text-h6 text-grey q-mt-md">No documents available</div>
+          </div>
+        </template>
       </q-card-section>
     </q-card>
   </div>
 </template>
 
 <script>
+import { ref, computed, onMounted } from 'vue'
+import { useQuasar } from 'quasar'
+import { api } from 'boot/axios'
+
 export default {
   name: 'DocumentsSection',
+
   props: {
-    documents: {
-      type: Array,
+    caseId: {
+      type: String,
       required: true,
-      default: () => [],
     },
   },
-  data() {
-    return {
-      filter: null,
-      filterOptions: [
-        'Personal Documents',
-        'Academic Records',
-        'Professional Documents',
-        'Immigration Forms',
-        'All',
-      ],
-      columns: [
-        {
-          name: 'name',
-          required: true,
-          label: 'Document Name',
-          align: 'left',
-          field: (row) => row.name,
-          sortable: true,
-        },
-        {
-          name: 'category',
-          align: 'left',
-          label: 'Category',
-          field: (row) => row.category,
-          sortable: true,
-        },
-        {
-          name: 'uploadDate',
-          align: 'left',
-          label: 'Upload Date',
-          field: (row) => row.upload_date,
-          sortable: true,
-          format: (val) => this.formatDate(val),
-        },
-        {
-          name: 'status',
-          align: 'center',
-          label: 'Status',
-          field: (row) => row.status,
-          sortable: true,
-        },
-        {
-          name: 'actions',
-          align: 'center',
-          label: 'Actions',
-        },
-      ],
-      previewDialog: false,
-      selectedDocument: null,
+
+  setup(props) {
+    const $q = useQuasar()
+    const loading = ref(false)
+    const documents = ref([])
+    const selectedCategory = ref(null)
+
+    const categoryOptions = [
+      'All Documents',
+      'Personal Documents',
+      'Academic Records',
+      'Professional Documents',
+      'Immigration Forms',
+      'Reference Letters',
+      'Publications',
+      'Citations',
+    ]
+
+    const groupedDocuments = computed(() => {
+      const grouped = {}
+      documents.value.forEach((doc) => {
+        if (!grouped[doc.category]) {
+          grouped[doc.category] = []
+        }
+        grouped[doc.category].push(doc)
+      })
+      return grouped
+    })
+
+    const getFileIcon = (fileType) => {
+      const icons = {
+        pdf: 'picture_as_pdf',
+        doc: 'description',
+        docx: 'description',
+        jpg: 'image',
+        jpeg: 'image',
+        png: 'image',
+        default: 'insert_drive_file',
+      }
+      return icons[fileType] || icons.default
     }
-  },
-  methods: {
-    formatDate(date) {
+
+    const formatDate = (date) => {
       return new Date(date).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
       })
-    },
-    getStatusColor(status) {
-      const colors = {
-        pending: 'orange',
-        approved: 'positive',
-        rejected: 'negative',
-        review: 'info',
+    }
+
+    const fetchDocuments = async () => {
+      loading.value = true
+      try {
+        const response = await api.get(`/api/cases/${props.caseId}/documents`)
+        documents.value = response.data.documents
+      } catch (error) {
+        console.error('Error fetching documents:', error)
+        $q.notify({
+          type: 'negative',
+          message: 'Failed to load documents',
+        })
+      } finally {
+        loading.value = false
       }
-      return colors[status.toLowerCase()] || 'grey'
-    },
-    previewDocument(document) {
-      this.selectedDocument = document
-      this.previewDialog = true
-    },
-    downloadDocument(document) {
-      // Implement document download
-      console.log('Download document:', document)
-    },
-    deleteDocument(document) {
-      // Implement document deletion with confirmation
-      this.$q
-        .dialog({
-          title: 'Confirm Deletion',
-          message: `Are you sure you want to delete ${document.name}?`,
-          cancel: true,
-          persistent: true,
+    }
+
+    const downloadDocument = async (doc) => {
+      try {
+        const response = await api.get(`/api/cases/${props.caseId}/documents/${doc.id}/download`, {
+          responseType: 'blob',
         })
-        .onOk(() => {
-          console.log('Delete document:', document)
+
+        // Create download link
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', doc.name)
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        window.URL.revokeObjectURL(url)
+
+        $q.notify({
+          type: 'positive',
+          message: 'Document downloaded successfully',
         })
-    },
+      } catch (error) {
+        console.error('Download error:', error)
+        $q.notify({
+          type: 'negative',
+          message: 'Failed to download document',
+        })
+      }
+    }
+
+    onMounted(() => {
+      fetchDocuments()
+    })
+
+    return {
+      loading,
+      documents,
+      selectedCategory,
+      categoryOptions,
+      groupedDocuments,
+      getFileIcon,
+      formatDate,
+      downloadDocument,
+    }
   },
 }
 </script>
 
 <style lang="scss" scoped>
 .documents-section {
-  .document-preview {
-    background: #f5f5f5;
-    border-radius: 4px;
-    min-height: 200px;
+  .category-select {
+    max-width: 400px;
+  }
+
+  .document-card {
+    transition: all 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .text-subtitle1 {
+    font-size: 1.1rem;
+    line-height: 1.2;
   }
 }
 </style>

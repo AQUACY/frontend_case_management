@@ -29,7 +29,9 @@
                   {{ casesStore.currentCase.status }}
                 </q-chip>
               </div>
-              <div class="text-subtitle2 text-white q-mt-sm">Client: {{ clientName }}</div>
+              <div class="text-subtitle2 text-white q-mt-sm">
+                Client: {{ casesStore.currentCase.user.name }}
+              </div>
             </q-card-section>
           </q-card>
         </div>
