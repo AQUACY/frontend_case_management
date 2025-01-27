@@ -140,6 +140,11 @@ const routes = [
         component: () => import('pages/casemanager/caseDetails/MyProfilePage.vue'),
         meta: { requiresAuth: true },
       },
+      {
+        path: '/case/:id/publications',
+        component: () => import('pages/casemanager/caseDetails/PublicationRecordsPage.vue'),
+        meta: { requiresAuth: true },
+      },
     ],
   },
 
