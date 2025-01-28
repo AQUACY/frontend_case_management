@@ -255,12 +255,15 @@ export default {
     ])
 
     const formData = ref({
+      // Petition Information
       petition_types: [],
       petition_category: null,
       filing_plan_eb1: null,
       filing_plan_eb2: null,
       previous_visa_filing: null,
       i485_filing_plan: null,
+
+      // Personal Information
       last_name: '',
       first_name: '',
       middle_name: '',
@@ -269,8 +272,11 @@ export default {
       date_of_birth: null,
       country_of_birth: '',
       country_of_citizenship: '',
+
+      // Visa & Immigration Status
       in_us: false,
       visa_status: '',
+      ds2019_expiration: null,
       visa_expiration: null,
       passport_expiration: null,
       no_passport_applied: false,
@@ -281,6 +287,8 @@ export default {
       latest_visa_status: '',
       j_visa_status: false,
       communist_party_member: false,
+
+      // Employment Information
       employer_name: '',
       job_title: '',
       proposed_employment_field: '',
@@ -292,6 +300,8 @@ export default {
       worksite_state: '',
       paper_publication_year: '',
       asylum_applied: false,
+
+      // Contact Information
       street_address: '',
       address_line_2: '',
       city: '',
@@ -300,14 +310,52 @@ export default {
       country: '',
       email: '',
       phone_number: '',
+
+      // Additional Information
       referral_source: '',
       social_media_source: '',
       has_dependents: false,
       marital_status: null,
+
+      // Dependents Array
       dependents: [],
+
+      // Case Information (read-only)
+      case: {
+        order_number: '',
+        bill: '',
+        status: '',
+        description: '',
+        contract_file: null,
+      },
     })
 
     const removingDependentId = ref(null)
+
+    const dependentTemplate = {
+      last_name: '',
+      first_name: '',
+      middle_name: '',
+      relation: null,
+      country_of_birth: '',
+      date_of_birth: null,
+      passport_expiration: null,
+      no_passport_applied: false,
+      gender: null,
+      address: '',
+      visa_processing_option: '',
+      processing_country: '',
+    }
+
+    const maritalStatusOptions = ['single', 'married', 'divorced', 'widowed']
+
+    const visaStatusOptions = ['B-1', 'B-2', 'F-1', 'H-1B', 'J-1', 'L-1', 'O-1', 'Other']
+
+    const filingPlanOptions = [
+      'file I-140 and premium processing request at same time',
+      'file I-140 without premium processing request',
+      'file I-140 first and then file I-485 later',
+    ]
 
     onMounted(async () => {
       try {
@@ -351,18 +399,7 @@ export default {
 
     const addDependent = () => {
       formData.value.dependents.push({
-        last_name: '',
-        first_name: '',
-        middle_name: '',
-        relation: null,
-        country_of_birth: '',
-        date_of_birth: null,
-        passport_expiration: null,
-        no_passport_applied: false,
-        gender: null,
-        address: '',
-        visa_processing_option: '',
-        processing_country: '',
+        ...dependentTemplate,
       })
     }
 
@@ -421,6 +458,9 @@ export default {
       removeDependent,
       onSubmit,
       removingDependentId,
+      maritalStatusOptions,
+      visaStatusOptions,
+      filingPlanOptions,
     }
   },
 }

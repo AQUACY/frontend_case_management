@@ -35,7 +35,7 @@ const routes = [
       },
       {
         path: '/client/messages',
-        component: () => import('src/pages/client/MessagesView.vue'),
+        component: () => import('src/pages/client/MessagesViews.vue'),
       },
       {
         path: '/client/casepreparation',
@@ -153,6 +153,11 @@ const routes = [
       {
         path: '/case/:id/proposed-endeavor',
         component: () => import('pages/casemanager/caseDetails/ProposedEndeavorPage.vue'),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: '/case/:id/contributions',
+        component: () => import('pages/casemanager/caseDetails/SummaryOfContributions.vue'),
         meta: { requiresAuth: true },
       },
     ],
