@@ -14,8 +14,8 @@
         <q-tab-panel name="one">
           <div>
             <p>
-              Welcome to our Case Management System. My name is Victoria Chen and I am the Managing
-              Attorney of North America Immigration Law Group.
+              Welcome to our Green Path Case Manager . My name is Paul Asare and I am the Lead Case
+              Manager.
               <br />Over the years, our firm has obtained thousands of EB-1A/EB-1B/NIW/O-1 approvals
               and accumulated more than seven thousand 5-star reviews on different review platforms.
               In addition, over 95% of our clients retained us because of the recommendation of our
@@ -29,11 +29,11 @@
               concerns will be addressed promptly.
             </p>
             <p>
-              Victoria Chen<br />
-              Managing Attorney<br />
-              North America Immigration Law Group<br />
-              victoriachen@chenassociates.com<br />
-              888.666.0969 ext 501<br />
+              Green Path Case Manager<br />
+              Lead Case Manager<br />
+              Green Path Immigration LLC<br />
+              paul@greenpathimmigration.com<br />
+              +1(913) 3853029<br />
             </p>
             <p>-----</p>
           </div>

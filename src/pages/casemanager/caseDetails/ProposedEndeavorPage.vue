@@ -3,7 +3,10 @@
     <q-card flat bordered>
       <q-card-section class="bg-primary text-white">
         <div class="row items-center justify-between">
-          <div class="text-h6">Proposed Endeavor Review</div>
+          <div class="row items-center q-gutter-sm">
+            <q-btn icon="arrow_back" flat round @click="$router.back()" />
+            <div class="text-h6">Proposed Endeavor Review</div>
+          </div>
           <div class="row items-center q-gutter-md">
             <q-select
               v-model="reviewDecision"
