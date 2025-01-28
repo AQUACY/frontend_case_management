@@ -2,74 +2,88 @@ import { defineStore } from 'pinia'
 import { api } from 'boot/axios'
 
 export const useCaseManagerStore = defineStore('caseManager', {
-  state: () => ({
-    allCases: [],
-    activeCases: [],
-    recentUpdates: [],
-    loading: false,
-    error: null,
-    currentUser: JSON.parse(localStorage.getItem('user')), // Get logged in user
-  }),
+  state: () => {
+    return {
+      // Make sure all properties are initialized with proper types
+      cases: [],
+      pendingQuestionnaires: 0,
+      pendingMessages: 0,
+      pendingEdavors: 0,
+      totalCases: 0,
+      totalActiveCases: 0,
+      loading: false,
+      error: null,
+    }
+  },
 
   actions: {
+    async fetchPendingItems() {
+      this.loading = true
+      try {
+        // Fetch pending questionnaires
+        const questionnaireResponse = await api.get('/api/auth/cases/questionnaire')
+        this.pendingQuestionnaires = questionnaireResponse?.data?.data?.length || 0
+
+        // Fetch pending endavor reviews
+        const endavorResponse = await api.get('/api/auth/cases/proposed-employment-endavors')
+        this.pendingEdavors = endavorResponse?.data?.data?.length || 0
+
+        // Fetch pending messages
+        // const messagesResponse = await api.get('/api/cases/messages')
+        // this.pendingMessages = messagesResponse?.data?.length || 0
+      } catch (error) {
+        console.error('Error fetching pending items:', error)
+        this.error = error
+      } finally {
+        this.loading = false
+      }
+    },
+
     async fetchAllCases() {
       this.loading = true
       try {
         const response = await api.get('/api/auth/casemanager/viewallcase')
-        // Filter cases for current case manager
-        this.allCases = response.data.data.data.filter(
-          (caseItem) => caseItem.case_manager.id === this.currentUser.id,
-        )
-        return this.allCases
+        const cases = response.data?.data?.data || []
+
+        // Update the cases array
+        this.cases = cases
+
+        // Update the counts
+        this.totalCases = cases.length
+        this.totalActiveCases = Array.isArray(cases)
+          ? cases.filter((c) => c.status === 'active').length
+          : 0
+
+        return cases
       } catch (error) {
-        console.error('Error fetching cases:', error)
-        this.error = error.response?.data?.message || 'Failed to fetch cases'
+        console.error('Error fetching all cases:', error)
+        this.error = error
         throw error
       } finally {
         this.loading = false
       }
     },
 
-    async getActiveCases() {
-      // Filter active cases for current case manager
-      return this.allCases.filter(
-        (caseItem) =>
-          caseItem.status === 'active' && caseItem.case_manager.id === this.currentUser.id,
-      )
-    },
-
-    async getRecentUpdates() {
-      // Get recent updates for current case manager's cases
-      return [...this.allCases]
-        .filter((caseItem) => caseItem.case_manager.id === this.currentUser.id)
-        .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
-        .slice(0, 5) // Get only the 5 most recent updates
+    resetPendingCounts() {
+      this.pendingQuestionnaires = 0
+      this.pendingMessages = 0
+      this.pendingEdavors = 0
+      this.totalCases = 0
+      this.totalActiveCases = 0
+      this.cases = []
+      this.error = null
     },
   },
 
   getters: {
-    // All getters now automatically filter for current case manager
-    totalCases: (state) => state.allCases.length,
-
-    totalActiveCases: (state) =>
-      state.allCases.filter(
-        (c) => c.status === 'active' && c.case_manager.id === state.currentUser.id,
-      ).length,
-
-    urgentCases: (state) =>
-      state.allCases.filter(
-        (c) => c.priority === 'high' && c.case_manager.id === state.currentUser.id,
-      ).length,
-
-    pendingReviews: (state) =>
-      state.allCases.filter(
-        (c) => c.status === 'pending_review' && c.case_manager.id === state.currentUser.id,
-      ).length,
-
-    // New getter to check if a case belongs to current case manager
-    isCaseManager: (state) => (caseId) => {
-      const caseItem = state.allCases.find((c) => c.id === caseId)
-      return caseItem?.case_manager.id === state.currentUser.id
+    hasPendingItems: (state) => {
+      return (
+        state.pendingQuestionnaires > 0 || state.pendingMessages > 0 || state.pendingEdavors > 0
+      )
     },
+
+    isLoading: (state) => state.loading,
+
+    hasError: (state) => state.error !== null,
   },
 })
