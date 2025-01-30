@@ -29,7 +29,7 @@
               v-ripple
             >
               <q-item-section>
-                <q-item-label>{{ message.subject }}</q-item-label>
+                <q-item-label class="text-green">{{ message.subject }}</q-item-label>
                 <q-item-label caption>
                   {{ message.latest_message }}
                 </q-item-label>
@@ -38,7 +38,7 @@
                 <q-item-label caption>
                   {{ formatDate(message.updated_at) }}
                 </q-item-label>
-                <q-badge v-if="message.unread_count" color="primary" rounded>
+                <q-badge v-if="message.unread_count" color="green" rounded>
                   {{ message.unread_count }}
                 </q-badge>
               </q-item-section>
@@ -82,7 +82,7 @@
                 <q-btn
                   round
                   flat
-                  color="primary"
+                  color="green"
                   icon="send"
                   :disable="!newMessage.trim()"
                   @click="sendMessage"
@@ -93,8 +93,8 @@
         </template>
 
         <div v-else class="column items-center justify-center full-height text-grey-6">
-          <q-icon name="chat" size="4rem" />
-          <div class="text-h6 q-mt-md">Select a message to view conversation</div>
+          <q-icon name="chat" size="4rem" color="white" />
+          <div class="text-h6 q-mt-md text-white">Select a message to view conversation</div>
         </div>
       </div>
     </div>

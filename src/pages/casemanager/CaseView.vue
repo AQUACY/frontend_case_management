@@ -2,7 +2,7 @@
   <div class="case-view q-pa-md">
     <!-- Loading State -->
     <div v-if="casesStore.isLoading" class="column items-center q-pa-lg">
-      <q-spinner color="primary" size="3em" />
+      <q-spinner color="green" size="3em" />
       <div class="text-grey q-mt-md">Loading case information...</div>
     </div>
 
@@ -10,7 +10,7 @@
     <div v-else-if="casesStore.error" class="column items-center q-pa-lg">
       <q-icon name="error" color="negative" size="3em" />
       <div class="text-negative q-mt-md">{{ casesStore.error }}</div>
-      <q-btn color="primary" label="Retry" @click="fetchCaseData" class="q-mt-md" />
+      <q-btn color="green" label="Retry" @click="fetchCaseData" class="q-mt-md" />
     </div>
 
     <!-- Content -->
@@ -18,7 +18,7 @@
       <!-- Case Overview Card -->
       <div class="row q-col-gutter-md">
         <div class="col-12">
-          <q-card class="overview-card">
+          <q-card class="overview-card bg-green-10">
             <q-card-section>
               <div class="row items-center">
                 <div class="text-h6 text-white">
@@ -87,7 +87,7 @@ export default {
         title: 'Client Records',
         description: 'View and manage client personal information',
         icon: 'person',
-        color: 'primary',
+        color: 'green',
         path: `/case/${route.params.id}/client-records`,
       },
       {

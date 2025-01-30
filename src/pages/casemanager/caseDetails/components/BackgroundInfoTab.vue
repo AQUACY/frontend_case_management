@@ -8,7 +8,7 @@
     />
 
     <div v-if="loading" class="row justify-center q-pa-md">
-      <q-spinner color="primary" size="3em" />
+      <q-spinner color="green" size="3em" />
     </div>
 
     <template v-else-if="backgroundData">
@@ -159,21 +159,24 @@ export default {
     const handleReview = async (reviewData) => {
       submitting.value = true
       try {
-        await api.post(`/api/auth/background-information/${route.params.id}/respond-review`, reviewData)
+        await api.post(
+          `/api/auth/background-information/${route.params.id}/respond-review`,
+          reviewData,
+        )
 
         emit('status-updated', reviewData.response)
 
         $q.notify({
           type: 'positive',
           message: 'Review submitted successfully',
-          position: 'top'
+          position: 'top',
         })
       } catch (error) {
         console.error('Error submitting review:', error)
         $q.notify({
           type: 'negative',
           message: error.response?.data?.message || 'Failed to submit review',
-          position: 'top'
+          position: 'top',
         })
       } finally {
         submitting.value = false

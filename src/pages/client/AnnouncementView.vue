@@ -1,7 +1,7 @@
 <template>
   <q-page class="q-pa-lg">
     <div v-if="loading">
-      <q-spinner size="50px" color="primary" />
+      <q-spinner size="50px" color="green" />
       <p>Loading announcement...</p>
     </div>
 

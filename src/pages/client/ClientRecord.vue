@@ -3,7 +3,7 @@
     <div class="client-record-container">
       <!-- Loading State -->
       <div v-if="loading" class="full-width row justify-center items-center" style="height: 400px">
-        <q-spinner color="primary" size="3em" />
+        <q-spinner color="green" size="3em" />
       </div>
 
       <div v-else>
@@ -11,7 +11,7 @@
           <!-- Petition Information -->
           <q-card flat bordered>
             <q-card-section>
-              <div class="text-h6 q-mb-md">Petition Information</div>
+              <div class="text-h6 text-green q-mb-md">Petition Information</div>
               <div class="row q-col-gutter-md">
                 <div class="col-12 col-md-6">
                   <q-select
@@ -41,7 +41,7 @@
           <!-- Personal Information -->
           <q-card flat bordered>
             <q-card-section>
-              <div class="text-h6 q-mb-md">Personal Information</div>
+              <div class="text-h6 text-green q-mb-md">Personal Information</div>
               <div class="row q-col-gutter-md">
                 <div class="col-12 col-md-3">
                   <q-input v-model="formData.last_name" label="Last Name" outlined />
@@ -89,7 +89,7 @@
           <!-- Contact Information -->
           <q-card flat bordered>
             <q-card-section>
-              <div class="text-h6 q-mb-md">Contact Information</div>
+              <div class="text-h6 text-green q-mb-md">Contact Information</div>
               <div class="row q-col-gutter-md">
                 <div class="col-12">
                   <q-input v-model="formData.street_address" label="Street Address" outlined />
@@ -118,7 +118,7 @@
           <!-- Dependents Section -->
           <q-card flat bordered v-if="formData.has_dependents">
             <q-card-section>
-              <div class="text-h6 q-mb-md">Dependents</div>
+              <div class="text-h6 text-green q-mb-md">Dependents</div>
               <div v-for="(dependent, index) in formData.dependents" :key="index" class="q-mb-lg">
                 <div class="row q-col-gutter-md">
                   <div class="col-12 col-md-3">
@@ -212,14 +212,14 @@
                 </div>
               </div>
               <div class="row justify-end q-mt-md">
-                <q-btn color="primary" label="Add Dependent" @click="addDependent" />
+                <q-btn color="green" label="Add Dependent" @click="addDependent" />
               </div>
             </q-card-section>
           </q-card>
 
           <!-- Submit Button -->
           <div class="row justify-end q-mt-lg">
-            <q-btn color="primary" label="Save Changes" type="submit" :loading="saving" />
+            <q-btn color="green-10" label="Save Changes" type="submit" :loading="saving" />
           </div>
         </q-form>
       </div>

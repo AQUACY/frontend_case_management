@@ -411,7 +411,7 @@ export default {
   }
 
   .text-h6 {
-    color: $primary;
+    color: $green;
     font-weight: 500;
   }
 }

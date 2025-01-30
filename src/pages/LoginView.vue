@@ -1,14 +1,13 @@
 <template>
-  <q-page class="flex flex-center" style="background-color: #4a90e2">
+  <q-page class="flex flex-center" style="background-color: #8bc34a">
     <div class="login-container">
       <div class="text-center">
         <img src="/src/assets/logo.png" alt="Application Logo" class="logo" />
-        <div class="text-h6">Case Management Platform</div>
       </div>
       <q-card class="login-card rounded q-pa-lg">
         <q-card-section class="text-center">
           <div v-if="loading">
-            <q-spinner size="50px" color="primary" />
+            <q-spinner size="50px" color="green" />
             <p>Loading...</p>
           </div>
         </q-card-section>
@@ -24,15 +23,17 @@
               required
               class="q-pb-md"
             />
-            <q-btn type="submit" label="Log in" color="positive" class="full-width" />
+            <q-btn type="submit" label="Log in" color="green-10" class="full-width" />
           </q-form>
         </q-card-section>
 
         <q-card-actions align="center" class="column">
-          <q-btn flat label="Lost your password?" class="text-primary" />
+          <q-btn flat label="Lost your password?" class="text-green-10" />
           <div class="text-caption q-mt-md">
             Need technical assistance? <br />Contact the Technical Support Administrator -
-            <a href="mailto:tech_support@wenzo.com" class="text-primary">tech_support@wenzo.com</a>
+            <a href="mailto:support@greenpathcasemanager.com" class="text-primary"
+              >support@greenpathcasemanager.com</a
+            >
           </div>
         </q-card-actions>
       </q-card>
@@ -107,7 +108,7 @@ export default {
             color: 'negative',
           })
         }
-        this.$router.push('/app')
+        this.$router.push('/')
       } catch (error) {
         console.error('Login failed', error)
         this.$q.notify({
@@ -129,7 +130,7 @@ export default {
 }
 .login-card {
   width: 100%;
-  background-color: goldenrod;
+  background-color: white;
 }
 .logo {
   width: 70%;

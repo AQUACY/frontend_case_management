@@ -23,7 +23,7 @@
       <q-card-section>
         <div class="row items-center justify-between q-mb-md">
           <div class="text-h6">I-485 Contracts and Questionnaire</div>
-          <q-btn color="primary" label="Upload" @click="triggerFileUpload" />
+          <q-btn color="green-10" label="Upload" @click="triggerFileUpload" />
         </div>
 
         <!-- Document List -->

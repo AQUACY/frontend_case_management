@@ -90,7 +90,7 @@
                   v-if="contribution.status === 'pending'"
                   flat
                   round
-                  color="primary"
+                  color="green"
                   icon="edit"
                   @click="showForm(contribution)"
                 >
@@ -100,7 +100,7 @@
                   v-if="contribution.status === 'pending'"
                   flat
                   round
-                  color="primary"
+                  color="green"
                   icon="send"
                   @click="handleRequestReview(contribution.id)"
                 >
@@ -115,7 +115,7 @@
 
     <!-- Add New Button -->
     <div class="text-center q-mt-lg">
-      <q-btn color="primary" icon="add" label="Add New Contribution" @click="showForm(null)" />
+      <q-btn color="green" icon="add" label="Add New Contribution" @click="showForm(null)" />
     </div>
 
     <!-- Form Dialog -->
@@ -253,7 +253,7 @@
           <q-btn flat label="Cancel" color="negative" v-close-popup />
           <q-btn
             type="submit"
-            color="primary"
+            color="green"
             :label="formData.id ? 'Update' : 'Create'"
             :loading="store.isLoading"
             @click="onSubmit"
@@ -266,7 +266,7 @@
     <q-dialog v-model="showReviewDialog" persistent>
       <q-card style="min-width: 300px">
         <q-card-section class="row items-center">
-          <q-avatar icon="help_outline" color="primary" text-color="white" />
+          <q-avatar icon="help_outline" color="green" text-color="white" />
           <span class="q-ml-sm">Request Review?</span>
         </q-card-section>
 
@@ -276,11 +276,11 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="Cancel" color="primary" v-close-popup />
+          <q-btn flat label="Cancel" color="green" v-close-popup />
           <q-btn
             flat
             label="Request Review"
-            color="primary"
+            color="green"
             @click="confirmRequestReview"
             :loading="requestingReview"
           />

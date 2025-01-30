@@ -3,7 +3,7 @@
     <q-card flat bordered>
       <!-- Loading State -->
       <div v-if="loading" class="text-center q-pa-lg">
-        <q-spinner color="primary" size="3em" />
+        <q-spinner color="green" size="3em" />
         <div class="text-grey q-mt-md">Loading profile information...</div>
       </div>
 
@@ -11,7 +11,7 @@
       <div v-else-if="error" class="text-center q-pa-lg">
         <q-icon name="error" color="negative" size="3em" />
         <div class="text-negative q-mt-md">{{ error }}</div>
-        <q-btn color="primary" label="Retry" @click="fetchProfileData" class="q-mt-md" />
+        <q-btn color="green" label="Retry" @click="fetchProfileData" class="q-mt-md" />
       </div>
 
       <!-- Content -->
@@ -238,7 +238,7 @@ export default {
   }
 
   .text-h6 {
-    color: $primary;
+    color: $green;
     font-weight: 500;
   }
 }

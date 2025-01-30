@@ -6,7 +6,7 @@
       @submit-review="handleReview"
     />
     <div v-if="loading" class="row justify-center q-pa-md">
-      <q-spinner color="primary" size="3em" />
+      <q-spinner color="green" size="3em" />
     </div>
 
     <template v-else-if="contributionsData && contributionsData.length">

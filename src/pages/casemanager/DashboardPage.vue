@@ -2,7 +2,7 @@
   <div class="dashboard">
     <!-- Loading State -->
     <div v-if="store.isLoading" class="row justify-center q-pa-md">
-      <q-spinner color="primary" size="3em" />
+      <q-spinner color="green" size="3em" />
     </div>
 
     <!-- Error State -->
@@ -54,7 +54,7 @@
             @click="router.push('/casemanager/cases?filter=pending_questionnaires')"
           >
             <q-item-section avatar>
-              <q-icon name="assignment" color="primary" />
+              <q-icon name="assignment" color="green" />
             </q-item-section>
             <q-item-section>
               <q-item-label>Questionnaires Pending Review</q-item-label>
@@ -96,7 +96,7 @@
             @click="router.push('/casemanager/cases?filter=pending_edavors')"
           >
             <q-item-section avatar>
-              <q-icon name="description" color="primary" />
+              <q-icon name="description" color="green" />
             </q-item-section>
             <q-item-section>
               <q-item-label>Proposed Edavors Pending Review</q-item-label>

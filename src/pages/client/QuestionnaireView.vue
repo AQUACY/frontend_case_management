@@ -3,14 +3,14 @@
     <div class="questionnaire-container">
       <!-- Loading State -->
       <div v-if="loading" class="full-width row justify-center items-center" style="height: 400px">
-        <q-spinner color="primary" size="3em" />
+        <q-spinner color="green" size="3em" />
       </div>
 
       <div v-else>
         <!-- Header Section -->
         <q-card flat bordered class="q-mb-md">
           <q-card-section>
-            <div class="text-h6">I-140 Questionnaire</div>
+            <div class="text-h6 text-green q-mb-md">I-140 Questionnaire</div>
             <div class="text-caption text-grey">
               Please fill out all required information. Your answers will be used for your petition.
             </div>
@@ -21,7 +21,9 @@
           <!-- Basic Information -->
           <q-card flat bordered>
             <q-card-section>
-              <div class="text-subtitle1 q-mb-md text-blue text-bold">Basic Information</div>
+              <div class="text-subtitle1 text-green q-mb-md text-blue text-bold text-green">
+                Basic Information
+              </div>
               <div class="row q-col-gutter-md">
                 <div class="col-12 col-md-6">
                   <q-input
@@ -46,7 +48,9 @@
           <!-- Personal Information -->
           <q-card flat bordered>
             <q-card-section>
-              <div class="text-subtitle1 q-mb-md text-blue text-bold">Personal Information</div>
+              <div class="text-subtitle1 text-green q-mb-md text-blue text-bold">
+                Personal Information
+              </div>
               <div class="row q-col-gutter-md">
                 <div class="col-12 col-md-4">
                   <q-input
@@ -89,7 +93,9 @@
           <!-- Contact Information -->
           <q-card flat bordered class="q-mt-md">
             <q-card-section>
-              <div class="text-subtitle1 q-mb-md text-blue text-bold">Contact Information</div>
+              <div class="text-subtitle1 text-green q-mb-md text-blue text-bold">
+                Contact Information
+              </div>
               <div class="row q-col-gutter-md">
                 <div class="col-12 col-md-6">
                   <q-input
@@ -163,7 +169,7 @@
           <!-- Immigration Information -->
           <q-card flat bordered class="q-mt-md">
             <q-card-section>
-              <div class="text-subtitle1 q-mb-md text-blue text-bold">Immigration Information</div>
+              <div class="text-subtitle1 text-green q-mb-md text-bold">Immigration Information</div>
               <div class="row q-col-gutter-md">
                 <div class="col-12 col-md-6">
                   <q-input
@@ -223,7 +229,9 @@
           <!-- Employment Information -->
           <q-card flat bordered class="q-mt-md">
             <q-card-section>
-              <div class="text-subtitle1 q-mb-md text-blue text-bold">Employment Information</div>
+              <div class="text-subtitle1 text-green q-mb-md text-blue text-bold">
+                Employment Information
+              </div>
               <div class="row q-col-gutter-md">
                 <div class="col-12 col-md-6">
                   <q-input v-model="formData.current_employer" label="Current Employer" outlined />
@@ -353,7 +361,9 @@
           <!-- Additional Information -->
           <q-card flat bordered class="q-mt-md">
             <q-card-section>
-              <div class="text-subtitle1 q-mb-md text-blue text-bold">Additional Information</div>
+              <div class="text-subtitle1 text-green q-mb-md text-blue text-bold">
+                Additional Information
+              </div>
               <div class="row q-col-gutter-md">
                 <div class="col-12">
                   <q-select
@@ -384,7 +394,9 @@
           </q-card>
           <q-card flat bordered class="q-mt-md">
             <q-card-section>
-              <div class="text-subtitle1 q-mb-md text-blue text-bold">Family Information</div>
+              <div class="text-subtitle1 text-green q-mb-md text-blue text-bold">
+                Family Information
+              </div>
               <div
                 v-for="(member, index) in formData.family_members"
                 :key="member.id || index"
@@ -445,13 +457,13 @@
                 </div>
               </div>
               <div class="row justify-end">
-                <q-btn color="primary" label="Add Family Member" @click="addFamilyMember" />
+                <q-btn color="green" label="Add Family Member" @click="addFamilyMember" />
               </div>
             </q-card-section>
             <q-card-section>
               <q-btn
                 type="submit"
-                color="primary"
+                color="green-10"
                 label="Save Questionnairre"
                 :loading="loading"
                 class="full-width"

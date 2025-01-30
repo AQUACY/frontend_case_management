@@ -199,8 +199,6 @@ import { useRoute } from 'vue-router'
 import { date, useQuasar } from 'quasar'
 import { api } from 'boot/axios'
 
-const cases = JSON.parse(localStorage.getItem('caseDetails'))
-
 export default {
   name: 'CaseMessages',
 
@@ -220,12 +218,12 @@ export default {
     const newMessageDialog = ref(false)
     const categories = ref([])
     const isActiveConversation = ref(false)
-
+    const caseId = route.params.id
     const newMessageForm = ref({
       category_id: null,
       subject: '',
       message: '',
-      case_id: cases.data.id,
+      case_id: caseId,
     })
 
     const filteredMessages = computed(() => {
@@ -245,8 +243,8 @@ export default {
     const fetchMessages = async () => {
       loading.value = true
       try {
-        console.log('Fetching messages for case:', cases.data.id)
-        const response = await api.get(`/api/cases/${cases.data.id}/messages`)
+        console.log('Fetching messages for case:', caseId)
+        const response = await api.get(`/api/cases/${caseId}/messages`)
         console.log('Messages response:', response.data.messages)
 
         if (response.data.messages && Array.isArray(response.data.messages)) {
@@ -292,49 +290,55 @@ export default {
     }
 
     const subscribeToConversation = (messageId) => {
-      // Clean up previous subscription if exists
-      if (selectedMessage.value) {
-        window.Echo.leave(`message.${selectedMessage.value.id}`)
-      }
+      try {
+        // Clean up previous subscription if exists
+        if (selectedMessage.value && window.Echo) {
+          console.log('Leaving previous channel:', `message.${selectedMessage.value.id}`)
+          window.Echo.leave(`message.${selectedMessage.value.id}`)
+        }
 
-      // Subscribe to new conversation channel
-      window.Echo.private(`message.${messageId}`)
-        .listen('.new.message', (data) => {
-          console.log('New message received:', data)
-          conversation.value.push({
-            id: data.id,
-            content: data.content,
-            sender_id: data.sender_id,
-            sender_type: data.sender_type,
-            sender_name: data.sender_name,
-            created_at: data.created_at,
-            is_read: data.is_read,
-          })
+        console.log('Subscribing to channel:', `message.${messageId}`)
+        // Subscribe to new conversation channel
+        window.Echo.private(`message.${messageId}`)
+          .listen('.new.message', (data) => {
+            console.log('New message received:', data)
+            conversation.value.push({
+              id: data.id,
+              content: data.content,
+              sender_id: data.sender_id,
+              sender_type: data.sender_type,
+              sender_name: data.sender_name,
+              created_at: data.created_at,
+              is_read: data.is_read,
+            })
 
-          // Scroll to bottom on new message
-          nextTick(() => {
-            if (messageScroll.value) {
-              messageScroll.value.setScrollPosition('vertical', 99999)
+            // Scroll to bottom on new message
+            nextTick(() => {
+              if (messageScroll.value) {
+                messageScroll.value.setScrollPosition('vertical', 99999)
+              }
+            })
+
+            // Show notification for messages from others
+            if (data.sender_type !== 'user') {
+              $q.notify({
+                type: 'info',
+                message: 'New message received',
+                position: 'top',
+              })
+            }
+
+            // Mark as read if conversation is active
+            if (isActiveConversation.value) {
+              markMessageAsRead(data.id)
             }
           })
-
-          // Show notification for messages from others
-          if (data.sender_type !== 'user') {
-            $q.notify({
-              type: 'info',
-              message: 'New message received',
-              position: 'top',
-            })
-          }
-
-          // Mark as read if conversation is active
-          if (isActiveConversation.value) {
-            markMessageAsRead(data.id)
-          }
-        })
-        .listen('.message.read', (data) => {
-          updateMessageReadStatus(data.message_id)
-        })
+          .listen('.message.read', (data) => {
+            updateMessageReadStatus(data.message_id)
+          })
+      } catch (error) {
+        console.error('Error subscribing to conversation:', error)
+      }
     }
 
     const selectMessage = async (message) => {
@@ -435,14 +439,14 @@ export default {
         category_id: null,
         subject: '',
         message: '',
-        case_id: cases.data.id,
+        case_id: caseId,
       }
     }
 
     const submitNewMessage = async () => {
       sending.value = true
       try {
-        await api.post(`/api/auth/cases/${cases.data.id}/addmessages`, newMessageForm.value)
+        await api.post(`/api/auth/cases/${caseId}/addmessages`, newMessageForm.value)
 
         $q.notify({
           type: 'positive',
@@ -464,14 +468,15 @@ export default {
     }
 
     onMounted(() => {
-      console.log('Component mounted, case ID:', cases.data.id)
+      console.log('Component mounted, case ID:', caseId)
       fetchMessages()
       fetchCategories()
     })
 
     onUnmounted(() => {
       // Clean up Echo listener
-      if (selectedMessage.value) {
+      if (selectedMessage.value && window.Echo) {
+        console.log('Cleaning up Echo listener')
         window.Echo.leave(`message.${selectedMessage.value.id}`)
       }
       isActiveConversation.value = false

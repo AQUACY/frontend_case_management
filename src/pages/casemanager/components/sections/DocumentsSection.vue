@@ -18,7 +18,7 @@
 
         <!-- Loading State -->
         <div v-if="loading" class="text-center q-pa-md">
-          <q-spinner color="primary" size="2em" />
+          <q-spinner color="green" size="2em" />
           <div class="text-grey q-mt-sm">Loading documents...</div>
         </div>
 
@@ -38,7 +38,7 @@
                             <q-icon
                               :name="getFileIcon(doc.file_type)"
                               size="md"
-                              color="primary"
+                              color="green"
                               class="q-mr-sm"
                             />
                             <div>
@@ -53,7 +53,7 @@
                           <q-btn
                             flat
                             round
-                            color="primary"
+                            color="green"
                             icon="download"
                             @click.stop="downloadDocument(doc)"
                           >

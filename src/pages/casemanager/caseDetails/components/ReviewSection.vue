@@ -26,7 +26,7 @@
       <q-btn
         :loading="submitting"
         :disable="!isValid"
-        color="primary"
+        color="green"
         label="Submit Review"
         @click="submitReview"
       />

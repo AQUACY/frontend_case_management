@@ -2,7 +2,7 @@
   <div class="clients">
     <div class="row justify-between q-mb-md">
       <div class="text-h6">Client Management</div>
-      <q-btn color="primary" icon="person_add" label="New Client" />
+      <q-btn color="green" icon="person_add" label="New Client" v-if="role_id === 2" />
     </div>
 
     <q-card>
@@ -51,7 +51,7 @@ export default {
   setup() {
     const loading = ref(false)
     const filter = ref('')
-
+    const role_id = JSON.parse(localStorage.getItem('user')).role_id
     const columns = [
       { name: 'id', label: 'Client ID', field: 'id', sortable: true },
       { name: 'name', label: 'Name', field: 'name', sortable: true },
@@ -91,6 +91,7 @@ export default {
     }
 
     return {
+      role_id,
       loading,
       filter,
       columns,

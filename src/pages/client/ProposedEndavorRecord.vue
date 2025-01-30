@@ -25,7 +25,7 @@
             </div>
             <q-btn
               v-if="formData.status === 'pending'"
-              color="primary"
+              color="green"
               label="Request Review"
               :loading="requestingReview"
               @click="handleRequestReview"
@@ -281,7 +281,7 @@
 
         <!-- Save Button -->
         <div class="row justify-end q-mt-lg">
-          <q-btn color="primary" label="Save" type="submit" :loading="saving" />
+          <q-btn color="green-10" label="Save" type="submit" :loading="saving" />
         </div>
       </q-form>
     </div>
@@ -290,7 +290,7 @@
     <q-dialog v-model="showConfirmDialog" persistent>
       <q-card>
         <q-card-section class="row items-center">
-          <q-avatar icon="help_outline" color="primary" text-color="white" />
+          <q-avatar icon="help_outline" color="green" text-color="white" />
           <span class="q-ml-sm">Are you sure you want to request a review?</span>
         </q-card-section>
 
@@ -300,11 +300,11 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="Cancel" color="primary" v-close-popup />
+          <q-btn flat label="Cancel" color="green" v-close-popup />
           <q-btn
             flat
             label="Request Review"
-            color="primary"
+            color="green"
             @click="confirmRequestReview"
             :loading="requestingReview"
           />

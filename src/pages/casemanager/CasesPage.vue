@@ -2,7 +2,7 @@
   <div class="cases">
     <div class="row justify-between q-mb-md">
       <div class="text-h6">Cases Management</div>
-      <q-btn color="primary" icon="add" label="New Case" />
+      <q-btn color="green" icon="add" label="New Case" v-if="role_id === 2" />
     </div>
 
     <q-card>
@@ -136,7 +136,7 @@ export default {
     const casesStore = useCasesStore()
     const router = useRouter()
     const showError = computed(() => casesStore.hasError)
-
+    const role_id = JSON.parse(localStorage.getItem('user')).role_id
     const columns = [
       { name: 'id', label: 'Case ID', field: 'order_number', align: 'left', sortable: true },
       {
@@ -189,6 +189,7 @@ export default {
 
     return {
       casesStore,
+      role_id,
       columns,
       showError,
       onRequest,

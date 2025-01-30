@@ -1,10 +1,10 @@
 <template>
   <q-page class="q-pa-md">
-    <div class="text-h6 q-mb-lg">Documents</div>
+    <div class="text-h6 q-mb-lg text-green">Documents</div>
 
     <!-- Category Selection -->
     <div class="row q-mb-md">
-      <div class="col-12">
+      <div class="col-12 q-mb-lg">
         <q-select v-model="selectedCategory" :options="categoryOptions" label="Category" outlined />
       </div>
     </div>
@@ -15,8 +15,8 @@
       <q-card flat bordered>
         <q-card-section>
           <div class="row items-center justify-between">
-            <div class="text-h6">My CV</div>
-            <q-btn color="primary" label="Upload" @click="triggerFileUpload('My CV')" />
+            <div class="text-h6 text-green">My CV</div>
+            <q-btn color="green-10" label="Upload" @click="triggerFileUpload('My CV')" />
           </div>
         </q-card-section>
 
@@ -47,9 +47,9 @@
       <q-card flat bordered>
         <q-card-section>
           <div class="row items-center justify-between">
-            <div class="text-h6">My List of Recommenders</div>
+            <div class="text-h6 text-green">My List of Recommenders</div>
             <q-btn
-              color="primary"
+              color="green-10"
               label="Upload"
               @click="triggerFileUpload('My List of Recommenders')"
             />
@@ -87,9 +87,9 @@
       <q-card flat bordered>
         <q-card-section>
           <div class="row items-center justify-between">
-            <div class="text-h6">My Citation Report</div>
+            <div class="text-h6 text-green">My Citation Report</div>
             <q-btn
-              color="primary"
+              color="green-10"
               label="Upload"
               @click="triggerFileUpload('My Citation Report')"
             />
