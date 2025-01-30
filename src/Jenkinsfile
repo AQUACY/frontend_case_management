@@ -1,0 +1,58 @@
+pipeline {
+    agent any
+
+    environment {
+        DEPLOY_DIR = "/var/www/frontend_case_management" // Change to your actual deployment path
+        GIT_REPO = "git@github.com:AQUACY/frontend_case_management.git"
+        BRANCH = "production"
+        NODE_VERSION = "20" // Adjust based on your Quasar setup
+    }
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                script {
+                    sh "rm -rf ${DEPLOY_DIR}/*"
+                    sh "git clone -b ${BRANCH} ${GIT_REPO} ${DEPLOY_DIR}"
+                }
+            }
+        }
+
+        stage('Install Node.js & Dependencies') {
+            steps {
+                script {
+                    sh "curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | sudo -E bash -"
+                    sh "sudo apt-get install -y nodejs"
+                    sh "cd ${DEPLOY_DIR} && npm install"
+                }
+            }
+        }
+
+        stage('Build Quasar App') {
+            steps {
+                script {
+                    sh "cd ${DEPLOY_DIR} && npm install -g @quasar/cli"
+                    sh "cd ${DEPLOY_DIR} && quasar build"
+                }
+            }
+        }
+
+        stage('Deploy Build to Web Server') {
+            steps {
+                script {
+                    sh "sudo rm -rf /var/www/*"
+                    sh "sudo cp -r ${DEPLOY_DIR}/dist/spa/* /var/www"
+                    sh "sudo chown -R www-data:www-data /var/www"
+                }
+            }
+        }
+
+        stage('Restart Web Server') {
+            steps {
+                script {
+                    sh "sudo systemctl restart apache2 || sudo systemctl restart nginx"
+                }
+            }
+        }
+    }
+}
