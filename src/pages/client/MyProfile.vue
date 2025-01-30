@@ -2,7 +2,7 @@
   <div class="my-profile q-pa-md">
     <q-card>
       <q-card-section>
-        <div class="text-h6">My Profile</div>
+        <div class="text-h6 text-green">My Profile</div>
       </q-card-section>
 
       <q-card-section class="q-pa-md">
@@ -154,7 +154,7 @@
     <q-dialog v-model="showNotification">
       <q-card>
         <q-card-section :class="notificationColor">
-          <div class="text-h6">{{ notificationTitle }}</div>
+          <div class="text-h6 text-green">{{ notificationTitle }}</div>
           <div class="text-body2">{{ notificationMessage }}</div>
         </q-card-section>
         <q-card-actions align="right">

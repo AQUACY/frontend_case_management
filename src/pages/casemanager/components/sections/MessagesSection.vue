@@ -17,7 +17,7 @@
               >
                 <q-item-section avatar>
                   <q-avatar>
-                    <img :src="message.sender.avatar" :alt="message.sender.name">
+                    <img :src="message.sender.avatar" :alt="message.sender.name" />
                   </q-avatar>
                 </q-item-section>
 
@@ -32,13 +32,7 @@
                   <div class="text-caption">
                     {{ formatDate(message.date) }}
                   </div>
-                  <q-badge
-                    v-if="message.unread"
-                    color="primary"
-                    floating
-                  >
-                    New
-                  </q-badge>
+                  <q-badge v-if="message.unread" color="green" floating> New </q-badge>
                 </q-item-section>
               </q-item>
             </q-list>
@@ -52,8 +46,7 @@
                   <div class="col">
                     <div class="text-h6">{{ selectedMessage.subject }}</div>
                     <div class="text-caption">
-                      From: {{ selectedMessage.sender.name }}
-                      ({{ selectedMessage.sender.email }})
+                      From: {{ selectedMessage.sender.name }} ({{ selectedMessage.sender.email }})
                     </div>
                     <div class="text-caption">
                       {{ formatDate(selectedMessage.date, true) }}
@@ -121,12 +114,12 @@ export default {
     messages: {
       type: Array,
       required: true,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   data() {
     return {
-      selectedMessage: null
+      selectedMessage: null,
     }
   },
   methods: {
@@ -139,12 +132,12 @@ export default {
           month: 'long',
           day: 'numeric',
           hour: '2-digit',
-          minute: '2-digit'
+          minute: '2-digit',
         })
       }
       return new Date(date).toLocaleDateString('en-US', {
         month: 'short',
-        day: 'numeric'
+        day: 'numeric',
       })
     },
     selectMessage(message) {
@@ -152,14 +145,14 @@ export default {
     },
     getFileIcon(type) {
       const icons = {
-        'pdf': 'picture_as_pdf',
-        'doc': 'description',
-        'image': 'image',
-        'default': 'insert_drive_file'
+        pdf: 'picture_as_pdf',
+        doc: 'description',
+        image: 'image',
+        default: 'insert_drive_file',
       }
       return icons[type] || icons.default
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -188,4 +181,4 @@ export default {
     }
   }
 }
-</style> 
+</style>

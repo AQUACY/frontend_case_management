@@ -2,7 +2,7 @@
   <q-page class="q-pa-md">
     <q-card>
       <q-card-section>
-        <div class="text-h6 q-mb-md">Publication Record</div>
+        <div class="text-h6 q-mb-md text-green">Publication Record</div>
 
         <p class="text-italic q-mb-md">
           Please complete this publication record before you begin your summary of contributions, as
@@ -198,7 +198,7 @@
         <div class="sticky-button-container">
           <q-btn
             type="submit"
-            color="primary"
+            color="green"
             label="Save Publication Record"
             :loading="loading"
             class="full-width"

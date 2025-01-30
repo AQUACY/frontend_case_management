@@ -1,6 +1,6 @@
 const routes = [
   {
-    path: '/app',
+    path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/IndexPage.vue') },
@@ -158,6 +158,11 @@ const routes = [
       {
         path: '/case/:id/contributions',
         component: () => import('pages/casemanager/caseDetails/SummaryOfContributions.vue'),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: '/case/:id/messages',
+        component: () => import('pages/casemanager/MessagesView.vue'),
         meta: { requiresAuth: true },
       },
     ],

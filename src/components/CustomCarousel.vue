@@ -11,7 +11,7 @@
         transition-next="slide-left"
         v-model="currentIndex"
         height="60px"
-        class="bg-blue-10 shadow-1 rounded-borders"
+        class="bg-green-10 shadow-1 rounded-borders"
       >
         <q-carousel-slide
           v-for="(announcement, index) in announcements"

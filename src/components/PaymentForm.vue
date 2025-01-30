@@ -75,7 +75,7 @@
       <!-- Actions -->
       <q-card-actions align="right">
         <q-btn flat label="Cancel" color="negative" @click="$emit('close')" :disable="loading" />
-        <q-btn label="Pay Now" color="primary" :loading="loading" @click="handlePayment">
+        <q-btn label="Pay Now" color="green" :loading="loading" @click="handlePayment">
           <template v-slot:loading>
             <q-spinner-dots />
           </template>
@@ -112,7 +112,7 @@
           </div>
         </q-card-section>
         <q-card-actions align="center">
-          <q-btn color="primary" label="Try Again" @click="showErrorDialog = false" />
+          <q-btn color="green" label="Try Again" @click="showErrorDialog = false" />
         </q-card-actions>
       </q-card>
     </q-dialog>

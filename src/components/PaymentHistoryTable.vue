@@ -7,10 +7,10 @@
         <q-card flat bordered class="bg-blue-1">
           <q-card-section class="q-pa-sm">
             <div class="row items-center">
-              <q-icon name="receipt_long" size="md" color="primary" class="q-mr-sm" />
+              <q-icon name="receipt_long" size="md" color="green" class="q-mr-sm" />
               <div>
                 <div class="text-caption">Total Bill</div>
-                <div class="text-h6 text-primary">${{ formatAmount(store.getCaseBilling) }}</div>
+                <div class="text-h6 text-green">${{ formatAmount(store.getCaseBilling) }}</div>
               </div>
             </div>
           </q-card-section>
@@ -63,14 +63,14 @@
 
     <!-- Loading State -->
     <div v-if="store.isLoading" class="text-center q-pa-md">
-      <q-spinner color="primary" size="3em" />
+      <q-spinner color="green" size="3em" />
       <div class="text-grey q-mt-sm">Loading payment history...</div>
     </div>
 
     <!-- Error State -->
     <div v-else-if="store.hasError" class="text-center text-negative q-pa-md">
       {{ store.errorMessage }}
-      <q-btn flat color="primary" label="Retry" @click="fetchData" class="q-mt-sm" />
+      <q-btn flat color="green" label="Retry" @click="fetchData" class="q-mt-sm" />
     </div>
 
     <!-- Data Table -->
@@ -108,7 +108,7 @@
             flat
             round
             size="sm"
-            color="primary"
+            color="green"
             icon="receipt_long"
             @click="showDetails(props.row)"
           >

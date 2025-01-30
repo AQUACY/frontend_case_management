@@ -126,7 +126,7 @@
 
       <!-- Submit Button -->
       <div class="row justify-end">
-        <q-btn type="submit" color="primary" label="Save" :loading="store.isLoading" />
+        <q-btn type="submit" color="green" label="Save" :loading="store.isLoading" />
       </div>
     </q-form>
   </div>

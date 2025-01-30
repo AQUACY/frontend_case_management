@@ -37,7 +37,7 @@
               <q-item>
                 <q-item-section>
                   <q-item-label caption>Citation Database Links</q-item-label>
-                  <q-item-label class="text-primary">
+                  <q-item-label class="text-green">
                     <a :href="profileDetails?.citation_database_link" target="_blank">
                       {{ profileDetails?.citation_database_link }}
                     </a>
@@ -58,8 +58,8 @@ export default {
   props: {
     profileDetails: {
       type: Object,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 }
-</script> 
+</script>

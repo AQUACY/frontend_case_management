@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <div class="text-h5 q-mb-lg">Referrers</div>
+    <div class="text-h5 text-green q-mb-lg">Referrers</div>
     <div class="q-pa-md bg-grey-1 rounded-borders">
       <div class="text-subtitle1 q-mb-md">Important Guidelines for Referrers</div>
 
@@ -78,13 +78,13 @@
         <q-card bordered>
           <q-card-section>
             <div class="row items-center justify-between">
-              <div class="text-h6">Referrer {{ index + 1 }}</div>
+              <div class="text-h6 text-green">Referrer {{ index + 1 }}</div>
               <div>
                 <q-btn
                   v-if="!recommender.isEditing && recommender.status === 'pending'"
                   flat
                   round
-                  color="primary"
+                  color="green"
                   icon="edit"
                   @click="startEditing(recommender)"
                 />
@@ -264,7 +264,7 @@
     <!-- New Recommender Form -->
     <q-card flat bordered class="q-mt-md">
       <q-card-section>
-        <div class="text-h6">Add New Referrer</div>
+        <div class="text-h6 text-green">Add New Referrer</div>
       </q-card-section>
 
       <q-card-section>
@@ -412,7 +412,7 @@
           <div class="sticky-button-container">
             <q-btn
               label="Save Referrer"
-              color="primary"
+              color="green-10"
               type="submit"
               :disable="isFinalized"
               :loading="loading"

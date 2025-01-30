@@ -4,9 +4,9 @@
     <div class="q-mb-lg">
       <q-tabs
         v-model="tab"
-        class="text-primary"
-        active-color="primary"
-        indicator-color="primary"
+        class="text-green"
+        active-color="green"
+        indicator-color="green"
         align="left"
       >
         <q-tab name="niw" label="NIW" />
@@ -35,7 +35,7 @@
 
                 <div class="q-mt-sm">
                   Please refer to Appendix A and Appendix B in the
-                  <a href="#" class="text-primary">Client Packet</a>.
+                  <a href="#" class="text-green">Client Packet</a>.
                 </div>
 
                 <div class="q-mt-sm">
@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="row justify-end q-mt-md">
-                  <q-btn color="primary" label="Do It Now" @click="handleDoItNow(1)" />
+                  <q-btn color="green-10" label="Do It Now" @click="handleDoItNow(1)" />
                 </div>
               </q-card-section>
             </q-card>
@@ -132,7 +132,7 @@
               <q-card-section>
                 <div class="row items-center justify-between">
                   <div class="text-h6">Step 4</div>
-                  <q-btn color="primary" label="Do It Now" @click="handleDoItNow(4)" />
+                  <q-btn color="green-10" label="Do It Now" @click="handleDoItNow(4)" />
                 </div>
 
                 <div class="text-blue q-mt-md">
@@ -203,7 +203,7 @@
               <q-card-section>
                 <div class="row items-center justify-between">
                   <div class="text-h6">Step 7</div>
-                  <q-btn color="primary" label="Do It Now" @click="handleDoItNow(7)" />
+                  <q-btn color="green-10" label="Do It Now" @click="handleDoItNow(7)" />
                 </div>
 
                 <div class="q-mt-md">
@@ -243,7 +243,7 @@
               <q-card-section>
                 <div class="row items-center justify-between">
                   <div class="text-h6">Step 8</div>
-                  <q-btn color="primary" label="Do It Now" @click="handleDoItNow(8)" />
+                  <q-btn color="green-10" label="Do It Now" @click="handleDoItNow(8)" />
                 </div>
 
                 <div class="text-blue q-mt-md">
@@ -392,7 +392,7 @@
                 </div>
 
                 <div class="row justify-end q-mt-md">
-                  <q-btn color="primary" label="Do It Now" @click="handleDoItNow(1)" />
+                  <q-btn color="green-10" label="Do It Now" @click="handleDoItNow(1)" />
                 </div>
               </q-card-section>
             </q-card>
@@ -479,7 +479,7 @@
                 </div>
 
                 <div class="row justify-end q-mt-md">
-                  <q-btn color="primary" label="Do It Now" @click="handleDoItNow(4)" />
+                  <q-btn color="green-10" label="Do It Now" @click="handleDoItNow(4)" />
                 </div>
               </q-card-section>
             </q-card>
@@ -529,7 +529,7 @@
                 </div>
 
                 <div class="row justify-end q-mt-md">
-                  <q-btn color="primary" label="Do It Now" @click="handleDoItNow(7)" />
+                  <q-btn color="green-10" label="Do It Now" @click="handleDoItNow(7)" />
                 </div>
               </q-card-section>
             </q-card>
@@ -555,7 +555,7 @@
                 </div>
 
                 <div class="row justify-end q-mt-md">
-                  <q-btn color="primary" label="Do It Now" @click="handleDoItNow(8)" />
+                  <q-btn color="green-10" label="Do It Now" @click="handleDoItNow(8)" />
                 </div>
               </q-card-section>
             </q-card>
