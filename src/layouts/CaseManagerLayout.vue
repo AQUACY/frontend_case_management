@@ -4,8 +4,12 @@
     <q-header elevated class="bg-green text-white">
       <q-toolbar>
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
-
-        <q-toolbar-title> Case Manager Portal </q-toolbar-title>
+        <q-avatar>
+          <q-img src="~assets/favicon.png" width="40px" height="40px" />
+        </q-avatar>
+        <q-toolbar-title>
+          {{ isAdmin ? 'Green Path Case Administrator Portal' : 'Green Path Case Manager Portal' }}
+        </q-toolbar-title>
 
         <div class="q-gutter-sm" v-if="currentUser">
           <q-btn round flat>
@@ -38,13 +42,21 @@
       <q-list>
         <q-item-label header> Navigation </q-item-label>
 
-        <q-item v-for="link in links" :key="link.title" :to="link.link" clickable v-ripple>
-          <q-item-section avatar class="text-green">
-            <q-icon :name="link.icon" />
+        <q-item
+          v-for="link in links"
+          :key="link.title"
+          :to="link.link"
+          clickable
+          v-ripple
+          class="nav-item"
+          :class="{ active: $route.path === link.link }"
+        >
+          <q-item-section avatar>
+            <q-icon :name="link.icon" color="green" class="hover-white" />
           </q-item-section>
 
-          <q-item-section :class="{ 'text-green': $route.path === link.link }">
-            {{ link.title }}
+          <q-item-section>
+            <span class="nav-text">{{ link.title }}</span>
           </q-item-section>
         </q-item>
       </q-list>
@@ -99,7 +111,7 @@ export default {
     const $q = useQuasar()
     const currentUser = ref(null)
     const role_id = ref(null)
-    const newrole_id  = JSON.parse(localStorage.getItem('user')).role_id
+    const newrole_id = JSON.parse(localStorage.getItem('user')).role_id
 
     // Safely get user data with error handling
     const getUserData = () => {
@@ -196,19 +208,24 @@ export default {
       newrole_id === 2
         ? [
             {
+              title: 'Guide',
+              icon: 'dashboard',
+              link: '/casemanager/guide',
+            },
+            {
               title: 'Dashboard',
               icon: 'dashboard',
               link: '/casemanager',
             },
             {
-              title: 'Cases',
-              icon: 'work',
-              link: '/casemanager/cases',
-            },
-            {
               title: 'Clients',
               icon: 'people',
               link: '/casemanager/clients',
+            },
+            {
+              title: 'Cases',
+              icon: 'work',
+              link: '/casemanager/cases',
             },
             {
               title: 'Payments',
@@ -239,8 +256,13 @@ export default {
         : newrole_id === 3
           ? [
               {
-                title: 'Dashboard',
+                title: 'Guide',
                 icon: 'dashboard',
+                link: '/casemanager/guide',
+              },
+              {
+                title: 'Dashboard',
+                icon: 'home',
                 link: '/casemanager',
               },
               {
@@ -286,6 +308,12 @@ export default {
       return crumbs
     })
 
+    // Computed property to check if user is admin
+    const isAdmin = computed(() => {
+      const user = getUserData()
+      return user?.role_id === 2 // Assuming role_id 2 is for admin
+    })
+
     return {
       leftDrawerOpen,
       toggleLeftDrawer() {
@@ -297,6 +325,7 @@ export default {
       getUserInitials,
       breadcrumbs,
       logout,
+      isAdmin,
     }
   },
 }
@@ -322,7 +351,75 @@ export default {
   }
 }
 
+.nav-item {
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(21, 187, 90, 0.986), rgb(21, 187, 90));
+    transition: left 0.3s ease;
+    z-index: 0;
+  }
+
+  &:hover::before {
+    left: 0;
+  }
+
+  &:hover {
+    .q-icon {
+      color: white !important;
+      transition: color 0.3s ease;
+    }
+    .nav-text {
+      color: white !important;
+      transition: color 0.3s ease;
+    }
+  }
+
+  // Ensure content stays above the hover effect
+  .q-item__section {
+    position: relative;
+    z-index: 1;
+  }
+
+  .q-icon {
+    color: rgb(2, 148, 63) !important;
+    transition: color 0.3s ease;
+  }
+
+  .nav-text {
+    color: rgb(21, 187, 90) !important;
+    transition: color 0.3s ease;
+  }
+
+  // Active state styling
+  &.q-router-link-active {
+    background: rgb(21, 187, 90);
+
+    &::before {
+      left: 0;
+      background: linear-gradient(to right, rgba(21, 187, 90, 0.993), rgb(21, 187, 90));
+    }
+
+    .q-item__section {
+      color: white !important;
+    }
+
+    .q-icon,
+    .nav-text {
+      color: white !important;
+      font-weight: bold;
+    }
+  }
+}
+
 .q-footer {
-  background: linear-gradient(to right, $primary);
+  background: linear-gradient(to right, white, rgb(21, 187, 90));
 }
 </style>

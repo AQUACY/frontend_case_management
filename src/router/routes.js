@@ -7,15 +7,30 @@ const routes = [
       {
         path: '/client/announcement',
         component: () => import('src/pages/client/AnnouncementView.vue'),
+        meta: {
+          title: 'Announcements',
+        },
       },
-      { path: '/client/overview', component: () => import('src/pages/client/OverView.vue') },
+      {
+        path: '/client/overview',
+        component: () => import('src/pages/client/OverView.vue'),
+        meta: {
+          title: 'Overview',
+        },
+      },
       {
         path: '/client/clientrecord',
         component: () => import('src/pages/client/ClientRecord.vue'),
+        meta: {
+          title: 'Client Records',
+        },
       },
       {
         path: '/client/profile',
         component: () => import('src/pages/client/MyProfile.vue'),
+        meta: {
+          title: 'Client Profile',
+        },
       },
       {
         path: '/client/referrers',
@@ -24,34 +39,65 @@ const routes = [
       {
         path: '/client/pubrecords',
         component: () => import('src/pages/client/PublicationRecord.vue'),
+        meta: {
+          title: 'Referrers',
+        },
       },
       {
         path: '/client/documents',
         component: () => import('src/pages/client/DocumentView.vue'),
+        meta: {
+          title: 'Documents',
+        },
       },
       {
         path: '/client/i-485',
         component: () => import('src/pages/client/i-485View.vue'),
+        meta: {
+          title: 'i-485',
+        },
       },
       {
         path: '/client/messages',
         component: () => import('src/pages/client/MessagesViews.vue'),
+        meta: {
+          title: 'Messages',
+        },
       },
       {
         path: '/client/casepreparation',
         component: () => import('src/pages/client/CasePreparation.vue'),
+        meta: {
+          title: 'Case Preparations',
+        },
       },
       {
         path: '/client/questionnaire',
         component: () => import('src/pages/client/QuestionnaireView.vue'),
+        meta: {
+          title: 'Questionnaire',
+        },
       },
       {
         path: '/client/soc',
         component: () => import('src/pages/client/SummaryofContribution.vue'),
+        meta: {
+          title: 'SOC',
+        },
       },
       {
         path: '/client/popendeavor',
         component: () => import('src/pages/client/ProposedEndavorRecord.vue'),
+        meta: {
+          title: 'Endavor',
+        },
+      },
+      {
+        path: '/client/profile-settings',
+        component: () => import('src/pages/client/SettingsPage.vue'),
+        meta: {
+          title: 'Profile Settings',
+        },
       },
     ],
   },
@@ -84,51 +130,81 @@ const routes = [
         path: 'dashboard',
         name: 'casemanager-dashboard',
         component: () => import('pages/casemanager/DashboardPage.vue'),
+        meta: {
+          title: 'Dashboard',
+        },
       },
       {
         path: 'cases',
         name: 'casemanager-cases',
         component: () => import('pages/casemanager/CasesPage.vue'),
+        meta: {
+          title: 'Cases',
+        },
       },
       {
         path: 'clients',
         name: 'casemanager-clients',
         component: () => import('pages/casemanager/ClientsPage.vue'),
+        meta: {
+          title: 'Clients',
+        },
       },
       {
         path: 'payments',
         name: 'casemanager-payments',
         component: () => import('pages/casemanager/PaymentsPage.vue'),
+        meta: {
+          title: 'Payments',
+        },
       },
       {
         path: 'documents',
         name: 'casemanager-documents',
         component: () => import('pages/casemanager/DocumentsPage.vue'),
+        meta: {
+          title: 'Documents',
+        },
       },
       {
         path: 'calendar',
         name: 'casemanager-calendar',
         component: () => import('pages/casemanager/CalendarPage.vue'),
+        meta: {
+          title: 'Calendar',
+        },
       },
       {
         path: 'reports',
         name: 'casemanager-reports',
         component: () => import('pages/casemanager/ReportsPage.vue'),
+        meta: {
+          title: 'Reports',
+        },
       },
       {
         path: 'settings',
         name: 'casemanager-settings',
         component: () => import('pages/casemanager/SettingsPage.vue'),
+        meta: {
+          title: 'Settings',
+        },
       },
       {
         path: 'cases/:id',
         name: 'casemanager-case',
         component: () => import('pages/casemanager/CaseView.vue'),
+        meta: {
+          title: 'Case',
+        },
       },
       {
         path: '/case/:id/client-records',
         name: 'casemanager-case-client-records',
         component: () => import('pages/casemanager/caseDetails/ClientRecordsPage.vue'),
+        meta: {
+          title: 'Client Records',
+        },
       },
       {
         path: '/case/:id/documents',
@@ -164,6 +240,15 @@ const routes = [
         path: '/case/:id/messages',
         component: () => import('pages/casemanager/MessagesView.vue'),
         meta: { requiresAuth: true },
+      },
+      {
+        path: 'guide',
+        name: 'casemanager-guide',
+        component: () => import('pages/casemanager/CaseManagerGuidePage.vue'),
+        meta: {
+          title: 'Case Manager Guide',
+          requiresAuth: true,
+        },
       },
     ],
   },
@@ -203,11 +288,15 @@ const routes = [
   //   component: () => import('pages/casemanager/caseDetails/I485Page.vue'),
   //   meta: { requiresAuth: true },
   // },
+
   // Always leave this as last one,
   // but you can also remove it
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),
+    meta: {
+      title: '404 Not Found',
+    },
   },
 ]
 

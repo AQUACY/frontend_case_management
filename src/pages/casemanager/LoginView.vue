@@ -90,7 +90,7 @@ export default {
             color: 'negative',
           })
         }
-        this.$router.push('/casemanager/dashboard')
+        this.$router.push('/casemanager/guide')
       } catch (error) {
         console.error('Login failed', error)
         this.$q.notify({
