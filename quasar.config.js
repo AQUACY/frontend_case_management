@@ -111,6 +111,10 @@ export default defineConfig((/* ctx */) => {
           backgroundColor: 'white',
           delay: 400,
         },
+        brand: {
+          // Define your font family here
+          fontFamily: 'Poppins, sans-serif',
+        },
       },
 
       // iconSet: 'material-icons', // Quasar icon set
@@ -124,7 +128,7 @@ export default defineConfig((/* ctx */) => {
       // directives: [],
 
       // Quasar plugins
-      plugins: ['Loading', 'Notify'],
+      plugins: ['Loading', 'Notify', 'Dialog'],
     },
 
     // animations: 'all', // --- includes all animations

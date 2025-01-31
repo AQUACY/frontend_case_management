@@ -3,12 +3,16 @@
     <q-header elevated class="bg-green text-white">
       <q-toolbar>
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
-        <q-toolbar-title class="topbar">
+        <q-avatar class="q-pl-xl">
+          <q-img src="~assets/favicon.png" width="40px" height="40px" />
+        </q-avatar>
+        <q-toolbar-title class="q-pl-xl q-pt-sm"> Green Path Case Manager </q-toolbar-title>
+        <!-- <q-toolbar-title class="topbar">
           <q-btn flat label="My Order" @click="goTo('announcements')" />
           <q-btn flat label="Our Team" @click="goTo('announcements')" />
           <q-btn flat label="Feedback" @click="goTo('feedback')" />
           <q-btn flat label="Calculator" @click="goTo('calculator')" />
-        </q-toolbar-title>
+        </q-toolbar-title> -->
         <div class="q-gutter-sm" v-if="currentUser">
           <q-btn round flat>
             <q-avatar size="26px">
@@ -22,7 +26,7 @@
             <q-menu>
               <q-list style="min-width: 100px">
                 <q-item clickable v-close-popup>
-                  <q-item-section>Profile</q-item-section>
+                  <q-item-section @click="goTo('profile')">Profile</q-item-section>
                 </q-item>
                 <q-separator />
                 <q-item clickable v-close-popup @click="logout">
@@ -102,6 +106,10 @@ const getCaseDetails = () => {
     console.error('Error parsing case details:', error)
     return null
   }
+}
+
+const goTo = () => {
+  router.push('/client/profile-settings')
 }
 
 // Computed property for user initials

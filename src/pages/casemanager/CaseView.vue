@@ -32,6 +32,9 @@
               <div class="text-subtitle2 text-white q-mt-sm">
                 Client: {{ casesStore.currentCase.user.name }}
               </div>
+              <div class="text-subtitle2 text-white q-mt-sm">
+                Bill: USD {{ casesStore.currentCase.bill }}
+              </div>
             </q-card-section>
           </q-card>
         </div>
@@ -65,6 +68,8 @@
           </div>
         </template>
       </div>
+
+      <PaymentHistoryTable />
     </div>
   </div>
 </template>
@@ -73,10 +78,13 @@
 import { computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useCasesStore } from 'stores/casemanager/casesStore'
+import PaymentHistoryTable from 'src/components/PaymentHistoryTables.vue'
 
 export default {
   name: 'CaseView',
-
+  components: {
+    PaymentHistoryTable,
+  },
   setup() {
     const router = useRouter()
     const route = useRoute()

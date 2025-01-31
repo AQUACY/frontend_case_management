@@ -1,1 +1,35 @@
 // app global css in SCSS form
+
+// Import Google Fonts (Option 1)
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+// Or import local fonts (Option 2)
+@font-face {
+  font-family: 'YourCustomFont';
+  src:
+    url('../assets/fonts/Flaticon.woff2') format('woff2'),
+    url('../assets/fonts/fontawesome-webfont.woff2') format('woff2'),
+    url('../assets/fonts/themify.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+// Apply the font globally
+:root {
+  --app-font-family: 'Poppins', 'Roboto', 'Muli', sans-serif; // or 'YourCustomFont' if using local fonts
+}
+
+// Apply to all elements
+* {
+  font-family: var(--app-font-family);
+}
+
+// Or target specific elements
+body {
+  font-family: var(--app-font-family);
+}
+
+// You can also create utility classes
+.custom-font {
+  font-family: var(--app-font-family);
+}
