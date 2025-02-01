@@ -18,7 +18,7 @@
       <!-- Case Overview Card -->
       <div class="row q-col-gutter-md">
         <div class="col-12">
-          <q-card class="overview-card bg-green-10">
+          <q-card class="overview-card bg-green">
             <q-card-section>
               <div class="row items-center">
                 <div class="text-h6 text-white">
@@ -102,35 +102,35 @@ export default {
         title: 'Documents',
         description: 'Access case-related documents and files',
         icon: 'folder',
-        color: 'deep-orange',
+        color: 'green',
         path: `/case/${route.params.id}/documents`,
       },
       {
         title: 'My Profile',
         description: 'View and update profile information',
         icon: 'account_circle',
-        color: 'teal',
+        color: 'green',
         path: `/case/${route.params.id}/profile`,
       },
       {
         title: 'Messages',
         description: 'Communication history and updates',
         icon: 'message',
-        color: 'purple',
+        color: 'green',
         path: `/case/${route.params.id}/messages`,
       },
       {
         title: 'Proposed Endeavor',
         description: 'Employment and future plans',
         icon: 'work',
-        color: 'blue',
+        color: 'green',
         path: `/case/${route.params.id}/proposed-endeavor`,
       },
       {
         title: 'Publication Records',
         description: 'Academic and research publications',
         icon: 'library_books',
-        color: 'deep-purple',
+        color: 'green',
         path: `/case/${route.params.id}/publications`,
       },
       {
@@ -144,14 +144,14 @@ export default {
         title: 'Summary of Contributions',
         description: 'Professional achievements and impact',
         icon: 'stars',
-        color: 'amber-9',
+        color: 'green',
         path: `/case/${route.params.id}/contributions`,
       },
       {
         title: 'I-485 Application',
         description: 'Track I-485 application status',
         icon: 'description',
-        color: 'brown',
+        color: 'green',
         path: `/case/${route.params.id}/i485`,
       },
     ]

@@ -2,10 +2,10 @@
   <div class="q-pa-md">
     <q-card class="my-card" flat bordered>
       <q-tabs v-model="tab" class="text-teal text-left" align="left">
-        <q-tab label="Reminders" name="one" style="text-transform: capitalize" />
-        <q-tab label="Client Packet" name="two" style="text-transform: capitalize" />
-        <q-tab label="VISA FAQ " name="three" style="text-transform: capitalize" />
-        <q-tab label="Billing" name="four" style="text-transform: capitalize" />
+        <q-tab label="Reminders" class="text-green" name="one" style="text-transform: capitalize" />
+        <q-tab label="Client Packet" class="text-green" name="two" style="text-transform: capitalize" />
+        <q-tab label="VISA FAQ " class="text-green" name="three" style="text-transform: capitalize" />
+        <q-tab label="Billing" class="text-green" name="four" style="text-transform: capitalize" />
       </q-tabs>
 
       <q-separator />

@@ -4,18 +4,14 @@
       <!-- Left Panel - Message List -->
       <div class="col-4 messages-list q-pa-sm" style="border-right: 1px solid #ddd">
         <div class="row items-center q-pa-sm">
-          <div class="text-h6 q-mr-auto">Case Messages</div>
-          <q-badge v-if="unreadCount > 0" color="red" floating transparent>
-            {{ unreadCount }}
-          </q-badge>
-
+          <div class="text-h6 q-mr-auto text-green">Case Messages</div>
           <!-- Add New Message Button -->
           <q-btn
-            color="primary"
+            color="green"
             icon="add"
             label="New Message"
             @click="openNewMessageDialog"
-            class="q-ml-sm"
+            class="q-ml-sm bg-green text-white"
           />
         </div>
 
@@ -27,9 +23,9 @@
         </q-input>
 
         <!-- Messages List -->
-        <q-scroll-area style="height: calc(100vh - 150px)">
+        <q-scroll-area style="height: calc(100vh - 150px); margin-left: auto">
           <div v-if="loading" class="text-center q-pa-md">
-            <q-spinner color="primary" size="2em" />
+            <q-spinner color="green" size="2em" />
           </div>
 
           <q-list v-else separator>
@@ -37,7 +33,10 @@
               v-for="message in filteredMessages"
               :key="message.id"
               clickable
-              :active="selectedMessage?.id === message.id"
+              :class="{
+                'selected-message': selectedMessage?.id === message.id,
+                'message-item': true,
+              }"
               @click="selectMessage(message)"
               v-ripple
             >
@@ -48,7 +47,12 @@
               </q-item-section>
 
               <q-item-section>
-                <q-item-label>{{ message.subject }}</q-item-label>
+                <div class="row items-center">
+                  <q-item-label class="q-mr-sm">{{ message.subject }}</q-item-label>
+                  <q-badge v-if="message.unread_count > 0" color="red" floating transparent>
+                    {{ message.unread_count }}
+                  </q-badge>
+                </div>
                 <q-item-label caption lines="2">
                   {{ message.latest_message }}
                 </q-item-label>
@@ -58,9 +62,6 @@
                 <q-item-label caption>
                   {{ formatDate(message.updated_at) }}
                 </q-item-label>
-                <q-badge v-if="message.unread_count" color="primary" rounded>
-                  {{ message.unread_count }}
-                </q-badge>
               </q-item-section>
 
               <!-- Add debug info -->
@@ -79,14 +80,18 @@
         <template v-if="selectedMessage">
           <!-- Conversation Header -->
           <div class="conversation-header q-pa-md" style="border-bottom: 1px solid #ddd">
-            <div class="text-h6">{{ selectedMessage.subject }}</div>
-            <div class="text-caption text-grey">Case #{{ route.params.id }}</div>
+            <div class="text-h6 text-white text-bold">{{ selectedMessage.subject }}</div>
+            <div class="text-caption text-white">Case #{{ route.params.id }}</div>
           </div>
 
           <!-- Messages Area -->
-          <q-scroll-area ref="messageScroll" style="height: calc(100vh - 220px)" class="q-pa-md">
+          <q-scroll-area
+            ref="messageScroll"
+            style="height: calc(100vh - 200px); width: 70%; margin-left: auto"
+            class="q-pa-md"
+          >
             <div v-if="loadingConversation" class="text-center q-pa-md">
-              <q-spinner color="primary" size="2em" />
+              <q-spinner color="green" size="2em" />
             </div>
 
             <template v-else>
@@ -96,11 +101,19 @@
                 >
                   <div class="row items-center no-wrap q-mb-sm">
                     <div class="text-caption text-weight-medium">
-                      {{ msg.sender.name }} ({{ msg.sender_type }})
+                      {{ msg.sender.name }}
+                      <span class="text-caption text-white-6" v-if="msg.sender_type === 'user'"
+                        >(Client)</span
+                      >
+                      <span
+                        class="text-caption text-white-6"
+                        v-if="msg.sender_type === 'case_manager'"
+                        >(Case Manager)</span
+                      >
                     </div>
                   </div>
                   <div class="message-content">{{ msg.content }}</div>
-                  <div class="message-time text-caption text-grey-6">
+                  <div class="message-time text-caption text-white-6">
                     {{ formatDate(msg.created_at) }}
                   </div>
                 </div>
@@ -116,6 +129,7 @@
               rows="3"
               outlined
               dense
+              color="green"
               placeholder="Type your message"
               @keypress.enter.prevent="sendMessage"
             >
@@ -123,7 +137,7 @@
                 <q-btn
                   round
                   flat
-                  color="primary"
+                  color="green"
                   icon="send"
                   :loading="sending"
                   :disable="!newMessage.trim() || sending"
@@ -178,13 +192,7 @@
 
             <div class="row justify-end q-mt-md">
               <q-btn label="Cancel" color="negative" flat v-close-popup />
-              <q-btn
-                label="Send"
-                color="primary"
-                type="submit"
-                :loading="sending"
-                class="q-ml-sm"
-              />
+              <q-btn label="Send" color="green" type="submit" :loading="sending" class="q-ml-sm" />
             </div>
           </q-form>
         </q-card-section>
@@ -240,23 +248,29 @@ export default {
       return date.formatDate(dateStr, 'MMM D, YYYY h:mm A')
     }
 
+    const fetchUnreadCount = async () => {
+      try {
+        const response = await api.get('/api/auth/messages/unread-count')
+        unreadCount.value = response.data.unread_count
+      } catch (error) {
+        console.error('Error fetching unread count:', error)
+      }
+    }
+
     const fetchMessages = async () => {
       loading.value = true
       try {
-        console.log('Fetching messages for case:', caseId)
         const response = await api.get(`/api/cases/${caseId}/messages`)
-        console.log('Messages response:', response.data.messages)
-
         if (response.data.messages && Array.isArray(response.data.messages)) {
-          messages.value = response.data.messages
-        } else {
-          console.error('Invalid messages response format:', response.data.messages)
-          throw new Error('Invalid messages response format')
+          messages.value = response.data.messages.map((message) => ({
+            ...message,
+            unread_count: message.unread_count || 0, // Ensure unread_count exists
+          }))
+          // Fetch unread count after messages are loaded
+          await fetchUnreadCount()
         }
       } catch (error) {
         console.error('Error fetching messages:', error)
-        console.error('Error response:', error.response)
-
         $q.notify({
           type: 'negative',
           message: 'Failed to load messages',
@@ -289,6 +303,13 @@ export default {
       }
     }
 
+    const updateMessageUnreadCount = (messageId) => {
+      const message = messages.value.find((m) => m.id === messageId)
+      if (message) {
+        message.unread_count = (message.unread_count || 0) + 1
+      }
+    }
+
     const subscribeToConversation = (messageId) => {
       try {
         // Clean up previous subscription if exists
@@ -302,15 +323,12 @@ export default {
         window.Echo.private(`message.${messageId}`)
           .listen('.new.message', (data) => {
             console.log('New message received:', data)
-            conversation.value.push({
-              id: data.id,
-              content: data.content,
-              sender_id: data.sender_id,
-              sender_type: data.sender_type,
-              sender_name: data.sender_name,
-              created_at: data.created_at,
-              is_read: data.is_read,
-            })
+            conversation.value.push(data)
+
+            // Update unread count for this specific message
+            if (data.sender_type !== 'user') {
+              updateMessageUnreadCount(messageId)
+            }
 
             // Scroll to bottom on new message
             nextTick(() => {
@@ -365,6 +383,8 @@ export default {
 
         if (response.data && response.data.conversation) {
           conversation.value = response.data.conversation
+          // Reset unread count when message is selected
+          message.unread_count = 0
         } else {
           console.error('Invalid response format:', response.data)
           throw new Error('Invalid response format')
@@ -471,15 +491,18 @@ export default {
       console.log('Component mounted, case ID:', caseId)
       fetchMessages()
       fetchCategories()
-    })
+      // Set up polling for unread count (optional)
+      const pollInterval = setInterval(fetchUnreadCount, 30000) // Poll every 30 seconds
 
-    onUnmounted(() => {
-      // Clean up Echo listener
-      if (selectedMessage.value && window.Echo) {
-        console.log('Cleaning up Echo listener')
-        window.Echo.leave(`message.${selectedMessage.value.id}`)
-      }
-      isActiveConversation.value = false
+      onUnmounted(() => {
+        clearInterval(pollInterval)
+        // Clean up Echo listener
+        if (selectedMessage.value && window.Echo) {
+          console.log('Cleaning up Echo listener')
+          window.Echo.leave(`message.${selectedMessage.value.id}`)
+        }
+        isActiveConversation.value = false
+      })
     })
 
     return {
@@ -504,6 +527,7 @@ export default {
       openNewMessageDialog,
       submitNewMessage,
       isActiveConversation,
+      updateMessageUnreadCount,
     }
   },
 }
@@ -581,13 +605,13 @@ export default {
 }
 
 .conversation {
-  background: #cca175;
+  background: #dcf8c7;
   background-repeat: repeat;
 }
 
 // Add these new styles for the conversation header
 .conversation-header {
-  background: #f0f2f5;
+  background: $green;
   border-bottom: 1px solid #e0e0e0;
 
   .text-h6 {
@@ -598,6 +622,7 @@ export default {
   .text-caption {
     font-size: 13px;
     opacity: 0.7;
+    color: white;
   }
 }
 
@@ -617,5 +642,34 @@ export default {
     max-width: 500px;
     width: 100%;
   }
+}
+
+.message-item {
+  transition: background-color 0.3s ease;
+  border-radius: 4px;
+  margin: 2px 0;
+
+  &:hover {
+    background: rgba(21, 187, 90, 0.1);
+  }
+}
+
+.selected-message {
+  background: rgb(21, 187, 90) !important;
+  color: white !important;
+
+  .q-item__label--caption {
+    color: rgba(255, 255, 255, 0.7) !important;
+  }
+
+  .q-badge {
+    background: white !important;
+    color: rgb(21, 187, 90) !important;
+  }
+}
+
+.q-badge {
+  font-size: 0.8em;
+  padding: 2px 6px;
 }
 </style>

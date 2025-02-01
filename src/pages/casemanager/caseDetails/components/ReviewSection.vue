@@ -7,6 +7,7 @@
         label="Review Decision"
         outlined
         dense
+        color="green"
         style="min-width: 200px"
         emit-value
         map-options

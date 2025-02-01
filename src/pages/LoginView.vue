@@ -1,8 +1,8 @@
 <template>
-  <q-page class="flex flex-center" style="background-color: #8bc34a">
+  <q-page class="flex flex-center">
     <div class="login-container">
       <div class="text-center">
-        <img src="/src/assets/logo.png" alt="Application Logo" class="logo" />
+        <img src="~assets/logo.png" alt="Application Logo" class="logo" />
       </div>
       <q-card class="login-card rounded q-pa-lg">
         <q-card-section class="text-center">

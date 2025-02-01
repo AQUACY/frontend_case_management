@@ -1,21 +1,29 @@
 <template>
   <q-layout view="hHh LpR fFf">
     <!-- Header -->
-    <q-header elevated class="bg-green text-white">
+    <q-header elevated class="bg-white text-white">
       <q-toolbar>
-        <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
+        <q-btn
+          style="color: #02943f"
+          flat
+          dense
+          round
+          icon="menu"
+          aria-label="Menu"
+          @click="toggleLeftDrawer"
+        />
         <q-avatar>
           <q-img src="~assets/favicon.png" width="40px" height="40px" />
         </q-avatar>
-        <q-toolbar-title>
-          {{ isAdmin ? 'Green Path Case Administrator Portal' : 'Green Path Case Manager Portal' }}
+        <q-toolbar-title class="text-bold" style="color: #02943f">
+          {{ isAdmin ? 'GreenPath Case Administrator Portal' : 'GreenPath Case Manager Portal' }}
         </q-toolbar-title>
 
         <div class="q-gutter-sm" v-if="currentUser">
           <q-btn round flat>
             <q-avatar size="26px">
               <div
-                class="text-center bg-white text-green"
+                class="text-center bg-green text-white"
                 style="width: 26px; height: 26px; line-height: 26px"
               >
                 {{ getUserInitials }}
@@ -68,12 +76,13 @@
         <!-- Breadcrumb -->
         <div class="row items-center q-mb-lg">
           <q-breadcrumbs class="text-green">
-            <q-breadcrumbs-el icon="home" to="/casemanager" class="text-green" />
+            <q-breadcrumbs-el icon="home" to="/casemanager" class="" style="color: #02943f" />
             <q-breadcrumbs-el
               v-for="crumb in breadcrumbs"
               :key="crumb.label"
               :label="crumb.label"
               :to="crumb.to"
+              style="color: #02943f"
             />
           </q-breadcrumbs>
         </div>
@@ -238,6 +247,11 @@ export default {
               link: '/casemanager/documents',
             },
             {
+              title: 'Message Categories',
+              icon: 'category',
+              link: '/casemanager/messagecategories',
+            },
+            {
               title: 'Calendar',
               icon: 'event',
               link: '/casemanager/calendar',
@@ -362,7 +376,7 @@ export default {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to right, rgba(21, 187, 90, 0.986), rgb(21, 187, 90));
+    background: linear-gradient(to right, #02943f, #02943f);
     transition: left 0.3s ease;
     z-index: 0;
   }

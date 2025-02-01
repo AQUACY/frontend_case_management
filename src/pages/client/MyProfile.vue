@@ -144,7 +144,7 @@
 
           <!-- Submit Button -->
           <div class="row justify-end q-mt-md">
-            <q-btn type="submit" color="primary" :loading="store.loading" label="Save Profile" />
+            <q-btn type="submit" color="green-10" :loading="store.loading" label="Save Profile" />
           </div>
         </q-form>
       </q-card-section>

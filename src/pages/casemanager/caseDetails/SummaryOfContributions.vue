@@ -1,7 +1,7 @@
 <template>
   <div class="summary-contributions q-pa-md">
     <q-card flat bordered>
-      <q-card-section class="bg-primary text-white">
+      <q-card-section class="bg-green text-white">
         <div class="row items-center justify-between">
           <div class="row items-center q-gutter-sm">
             <q-btn icon="arrow_back" flat round @click="$router.back()" />
@@ -14,8 +14,8 @@
         v-model="activeTab"
         dense
         class="text-grey"
-        active-color="primary"
-        indicator-color="primary"
+        active-color="green"
+        indicator-color="green"
         align="justify"
         narrow-indicator
       >

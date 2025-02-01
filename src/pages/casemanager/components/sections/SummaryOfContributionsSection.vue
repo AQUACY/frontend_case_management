@@ -1,6 +1,6 @@
 <template>
-  <div class="soc-section">
-    <div class="text-h6 q-mb-md">Summary of Contributions (SOC)</div>
+  <div class="soc-section bg-green">
+    <div class="text-h6 q-mb-md text-white">Summary of Contributions (SOC)</div>
     <q-card>
       <q-card-section>
         <div class="row q-col-gutter-md">
@@ -9,8 +9,8 @@
               v-model="activeTab"
               dense
               class="text-grey"
-              active-color="primary"
-              indicator-color="primary"
+              active-color="green"
+              indicator-color="green"
               align="left"
               narrow-indicator
             >

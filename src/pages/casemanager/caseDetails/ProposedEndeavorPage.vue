@@ -1,7 +1,7 @@
 <template>
   <div class="proposed-endeavor q-pa-md">
     <q-card flat bordered>
-      <q-card-section class="bg-primary text-white">
+      <q-card-section class="bg-green text-white">
         <div class="row items-center justify-between">
           <div class="row items-center q-gutter-sm">
             <q-btn icon="arrow_back" flat round @click="$router.back()" />
@@ -13,16 +13,17 @@
               :options="reviewOptions"
               label="Review Decision"
               outlined
+              color="white"
               dense
               dark
-              class="bg-primary"
-              style="min-width: 200px"
+              class="bg-green"
+              style="min-width: 200px; border-radius: 1px solid white"
             />
             <q-btn
               :loading="submitting"
               :disable="!reviewDecision"
               color="white"
-              text-color="primary"
+              text-color="green"
               label="Submit Review"
               @click="submitReview"
             />
@@ -54,7 +55,7 @@
                 <q-chip
                   v-for="type in parsedTypes"
                   :key="type"
-                  color="primary"
+                  color="green"
                   text-color="white"
                   size="sm"
                 >
@@ -126,7 +127,7 @@
                 Employment Status
                 <q-tooltip>
                   <div>Status colors:</div>
-                  <div class="text-positive">Green - Yes</div>
+                  <div class="text-green">Green - Yes</div>
                   <div class="text-negative">Red - No</div>
                   <div class="text-warning">Orange - Not specified</div>
                 </q-tooltip>
@@ -134,7 +135,7 @@
               <div class="row q-col-gutter-sm">
                 <template v-for="(value, key) in currentStatusFieldsforyes" :key="key">
                   <div v-if="value === 'yes'" class="col-12 col-sm-6 col-md-4">
-                    <q-chip color="positive" text-color="white" size="sm" class="full-width">
+                    <q-chip color="green" text-color="white" size="sm" class="full-width">
                       {{ formatStatusLabel(key) }}
                     </q-chip>
                   </div>
