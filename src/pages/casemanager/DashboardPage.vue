@@ -19,7 +19,8 @@
       <div class="row q-col-gutter-md q-mb-lg">
         <div class="col-12 col-sm-6 col-md-6">
           <q-card
-            class="bg-primary text-white cursor-pointer"
+            class="text-white cursor-pointer"
+            style="background-color: #af8c48"
             @click="router.push('/casemanager/cases?status=all')"
           >
             <q-card-section>
@@ -30,7 +31,7 @@
         </div>
         <div class="col-12 col-sm-6 col-md-6">
           <q-card
-            class="bg-positive text-white cursor-pointer"
+            class="bg-green text-white cursor-pointer"
             @click="router.push('/casemanager/cases?status=active')"
           >
             <q-card-section>

@@ -97,17 +97,17 @@
               </p>
               <p>
                 <b>Part One:</b>
-                <span class="text-blue-9"
+                <span class="text-red-5"
                   >The active verb(s) describing your methodical approach</span
                 >.
               </p>
               <p>
                 <b>Part Two:</b>
-                <span class="text-orange">The main topic/specific subject of your research.</span>
+                <span class="text-yellow-8">The main topic/specific subject of your research.</span>
               </p>
               <p>
                 <b>Part Three:</b>
-                <span class="text-purple"
+                <span class="text-green-10"
                   >The impact of your proposed research on the field and/or its real-world
                   applications.</span
                 >
@@ -132,7 +132,7 @@
                   type="textarea"
                   outlined
                   :rules="[(val) => !!val || 'This field is required']"
-                  color="blue-9"
+                  color="red-5"
                 />
               </div>
               <div class="col-12">
@@ -142,7 +142,7 @@
                   type="textarea"
                   outlined
                   :rules="[(val) => !!val || 'This field is required']"
-                  color="orange"
+                  color="yellow-8"
                 />
               </div>
               <div class="col-12">
@@ -152,7 +152,7 @@
                   type="textarea"
                   outlined
                   :rules="[(val) => !!val || 'This field is required']"
-                  color="purple"
+                  color="green-10"
                 />
               </div>
             </div>

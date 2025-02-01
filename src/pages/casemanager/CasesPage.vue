@@ -1,10 +1,10 @@
 <template>
   <div class="cases">
     <div class="row justify-between q-mb-md">
-      <div class="text-h6">Cases Management</div>
+      <div class="text-h6 text-green">Cases Management</div>
       <q-btn
         v-if="user_role === 2"
-        color="primary"
+        color="green"
         icon="add"
         label="New Case"
         @click="openNewCaseDialog"
@@ -69,12 +69,7 @@
 
             <!-- Reset Filters -->
             <div class="col-12 col-md-2">
-              <q-btn
-                label="Reset Filters"
-                color="secondary"
-                flat
-                @click="casesStore.resetFilters"
-              />
+              <q-btn label="Reset Filters" color="green" flat @click="casesStore.resetFilters" />
             </div>
           </div>
         </template>

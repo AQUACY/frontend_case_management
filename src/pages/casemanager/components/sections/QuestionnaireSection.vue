@@ -17,13 +17,14 @@
                 label="Review Decision"
                 outlined
                 dense
+                color="green"
                 class="col-grow"
                 style="min-width: 200px"
               />
               <q-btn
                 :loading="submitting"
                 :disable="!reviewDecision"
-                color="primary"
+                color="green"
                 label="Submit Review"
                 @click="submitReview"
               />
@@ -34,7 +35,7 @@
 
       <!-- Loading State -->
       <div v-if="loading" class="text-center q-pa-lg">
-        <q-spinner color="primary" size="3em" />
+        <q-spinner color="green" size="3em" />
         <div class="text-grey q-mt-md">Loading questionnaire data...</div>
       </div>
 
@@ -42,14 +43,14 @@
       <div v-else-if="error" class="text-center q-pa-lg">
         <q-icon name="error" color="negative" size="3em" />
         <div class="text-negative q-mt-md">{{ error }}</div>
-        <q-btn color="primary" label="Retry" @click="fetchQuestionnaireData" class="q-mt-md" />
+        <q-btn color="green" label="Retry" @click="fetchQuestionnaireData" class="q-mt-md" />
       </div>
 
       <!-- Content -->
       <q-card-section v-else>
         <!-- Basic Information -->
         <div class="section-container q-mb-xl">
-          <div class="text-h6 q-mb-md">Basic Information</div>
+          <div class="text-h6 q-mb-md text-green">Basic Information</div>
           <div class="row q-col-gutter-md">
             <div class="col-12 col-md-6">
               <q-input
@@ -76,7 +77,7 @@
 
         <!-- Personal Information -->
         <div class="section-container q-mb-xl">
-          <div class="text-h6 q-mb-md">Personal Information</div>
+          <div class="text-h6 q-mb-md text-green">Personal Information</div>
           <div class="row q-col-gutter-md">
             <div class="col-12 col-md-4">
               <q-input
@@ -173,7 +174,7 @@
 
         <!-- Address Information -->
         <div class="section-container q-mb-xl">
-          <div class="text-h6 q-mb-md">Address Information</div>
+          <div class="text-h6 q-mb-md text-green">Address Information</div>
           <div class="row q-col-gutter-md">
             <div class="col-12">
               <q-input
@@ -260,7 +261,7 @@
 
         <!-- Passport Information -->
         <div class="section-container q-mb-xl">
-          <div class="text-h6 q-mb-md">Passport Information</div>
+          <div class="text-h6 q-mb-md text-green">Passport Information</div>
           <div class="row q-col-gutter-md">
             <div class="col-12 col-md-6">
               <q-input
@@ -357,7 +358,7 @@
 
         <!-- Occupation Information -->
         <div class="section-container q-mb-xl">
-          <div class="text-h6 q-mb-md">Occupation Information</div>
+          <div class="text-h6 q-mb-md text-green">Occupation Information</div>
           <div class="row q-col-gutter-md">
             <div class="col-12 col-md-6">
               <q-input
@@ -555,7 +556,7 @@
         </div>
         <!-- Processing Information -->
         <div class="section-container q-mb-xl">
-          <div class="text-h6 q-mb-md">Processing Information</div>
+          <div class="text-h6 q-mb-md text-green">Processing Information</div>
           <div class="row q-col-gutter-md">
             <div class="col-12 col-md-6">
               <q-input
@@ -611,7 +612,7 @@
         </div>
         <!-- Foreign Address -->
         <div class="section-container q-mb-xl">
-          <div class="text-h6 q-mb-md">Foreign Address</div>
+          <div class="text-h6 q-mb-md text-green">Foreign Address</div>
           <div class="row q-col-gutter-md">
             <div class="col-12">
               <q-input
@@ -688,7 +689,7 @@
 
         <!-- Additional Information -->
         <div class="section-container q-mb-xl">
-          <div class="text-h6 q-mb-md">Additional Information</div>
+          <div class="text-h6 q-mb-md text-green">Additional Information</div>
           <div class="row q-col-gutter-md">
             <div class="col-12">
               <q-input
@@ -724,7 +725,7 @@
         </div>
         <!-- Family Members -->
         <div class="section-container">
-          <div class="text-h6 q-mb-md">Family Members</div>
+          <div class="text-h6 q-mb-md text-green">Family Members</div>
           <div v-for="member in questionnaireData.family_members" :key="member.id" class="q-mb-lg">
             <q-card bordered flat class="q-pa-md">
               <div class="row q-col-gutter-md">

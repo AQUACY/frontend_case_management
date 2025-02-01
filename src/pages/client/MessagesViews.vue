@@ -4,14 +4,14 @@
       <!-- Left Panel - Message List -->
       <div class="col-4 messages-list q-pa-sm" style="border-right: 1px solid #ddd">
         <div class="row items-center q-pa-sm">
-          <div class="text-h6 q-mr-auto">Case Messages</div>
+          <div class="text-h6 q-mr-auto text-green">Case Messages</div>
           <q-badge v-if="unreadCount > 0" color="red" floating transparent>
             {{ unreadCount }}
           </q-badge>
 
           <!-- Add New Message Button -->
           <q-btn
-            color="primary"
+            color="green"
             icon="add"
             label="New Message"
             @click="openNewMessageDialog"
@@ -20,7 +20,7 @@
         </div>
 
         <!-- Search Messages -->
-        <q-input v-model="searchQuery" dense outlined placeholder="Search messages" class="q-mb-md">
+        <q-input v-model="searchQuery" color="green" dense outlined placeholder="Search messages" class="q-mb-md">
           <template v-slot:prepend>
             <q-icon name="search" />
           </template>
@@ -29,7 +29,7 @@
         <!-- Messages List -->
         <q-scroll-area style="height: calc(100vh - 150px)">
           <div v-if="loading" class="text-center q-pa-md">
-            <q-spinner color="primary" size="2em" />
+            <q-spinner color="green" size="2em" />
           </div>
 
           <q-list v-else separator>
@@ -37,7 +37,10 @@
               v-for="message in filteredMessages"
               :key="message.id"
               clickable
-              :active="selectedMessage?.id === message.id"
+              :class="{
+                'selected-message': selectedMessage?.id === message.id,
+                'message-item': true,
+              }"
               @click="selectMessage(message)"
               v-ripple
             >
@@ -58,7 +61,7 @@
                 <q-item-label caption>
                   {{ formatDate(message.updated_at) }}
                 </q-item-label>
-                <q-badge v-if="message.unread_count" color="primary" rounded>
+                <q-badge v-if="message.unread_count" color="green" rounded>
                   {{ message.unread_count }}
                 </q-badge>
               </q-item-section>
@@ -79,14 +82,14 @@
         <template v-if="selectedMessage">
           <!-- Conversation Header -->
           <div class="conversation-header q-pa-md" style="border-bottom: 1px solid #ddd">
-            <div class="text-h6">{{ selectedMessage.subject }}</div>
-            <div class="text-caption text-grey">Case #{{ route.params.id }}</div>
+            <div class="text-h6 text-white text-bold">{{ selectedMessage.subject }}</div>
+            <div class="text-caption text-white">Case #{{ route.params.id }}</div>
           </div>
 
           <!-- Messages Area -->
-          <q-scroll-area ref="messageScroll" style="height: calc(100vh - 220px)" class="q-pa-md">
+          <q-scroll-area ref="messageScroll" style="height: calc(100vh - 200px); width: 70%; margin-left: auto" class="q-pa-md">
             <div v-if="loadingConversation" class="text-center q-pa-md">
-              <q-spinner color="primary" size="2em" />
+              <q-spinner color="green" size="2em" />
             </div>
 
             <template v-else>
@@ -96,7 +99,15 @@
                 >
                   <div class="row items-center no-wrap q-mb-sm">
                     <div class="text-caption text-weight-medium">
-                      {{ msg.sender.name }} ({{ msg.sender_type }})
+                      {{ msg.sender.name }}
+                      <span class="text-caption text-white-6" v-if="msg.sender_type === 'user'"
+                        >(Client)</span
+                      >
+                      <span
+                        class="text-caption text-white-6"
+                        v-if="msg.sender_type === 'case_manager'"
+                        >(Case Manager)</span
+                      >
                     </div>
                   </div>
                   <div class="message-content">{{ msg.content }}</div>
@@ -123,7 +134,7 @@
                 <q-btn
                   round
                   flat
-                  color="primary"
+                  color="green"
                   icon="send"
                   :loading="sending"
                   :disable="!newMessage.trim() || sending"
@@ -180,7 +191,7 @@
               <q-btn label="Cancel" color="negative" flat v-close-popup />
               <q-btn
                 label="Send"
-                color="primary"
+                color="green"
                 type="submit"
                 :loading="sending"
                 class="q-ml-sm"
@@ -576,13 +587,13 @@ export default {
 }
 
 .conversation {
-  background: #cca175;
+  background: #dcf8c7;
   background-repeat: repeat;
 }
 
 // Add these new styles for the conversation header
 .conversation-header {
-  background: #f0f2f5;
+  background: $green;
   border-bottom: 1px solid #e0e0e0;
 
   .text-h6 {
@@ -596,6 +607,15 @@ export default {
   }
 }
 
+.message-item {
+  transition: background-color 0.3s ease;
+  border-radius: 4px;
+  margin: 2px 0;
+
+  &:hover {
+    background: rgba(21, 187, 90, 0.1);
+  }
+}
 // Style for the message input area
 .message-input {
   background: #f0f2f5;
@@ -604,6 +624,15 @@ export default {
   .q-input {
     background: white;
     border-radius: 8px;
+  }
+}
+
+.selected-message {
+  background: rgb(21, 187, 90) !important;
+  color: white !important;
+
+  .q-item__label--caption {
+    color: rgba(255, 255, 255, 0.7) !important;
   }
 }
 

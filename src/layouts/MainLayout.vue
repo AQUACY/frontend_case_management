@@ -1,12 +1,14 @@
 <template>
   <q-layout view="hHh Lpr lff" class="rounded-borders">
-    <q-header elevated class="bg-green text-white">
+    <q-header elevated class="bg-white text-green">
       <q-toolbar>
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
         <q-avatar class="q-pl-xl">
           <q-img src="~assets/favicon.png" width="40px" height="40px" />
         </q-avatar>
-        <q-toolbar-title class="q-pl-xl q-pt-sm"> Green Path Case Manager </q-toolbar-title>
+        <q-toolbar-title class="q-pl-xl q-pt-sm text-bold">
+          Greenpath Client Portal
+        </q-toolbar-title>
         <!-- <q-toolbar-title class="topbar">
           <q-btn flat label="My Order" @click="goTo('announcements')" />
           <q-btn flat label="Our Team" @click="goTo('announcements')" />
@@ -17,7 +19,7 @@
           <q-btn round flat>
             <q-avatar size="26px">
               <div
-                class="text-center bg-white text-green"
+                class="text-center bg-green text-white"
                 style="width: 26px; height: 26px; line-height: 26px"
               >
                 {{ getUserInitials }}
@@ -223,7 +225,7 @@ const linksList = [
     link: '/client/profile',
   },
   {
-    title: 'Proposed Employment/Proposed Endeavor',
+    title: 'Proposed Endeavor',
     caption: '',
     link: '/client/popendeavor',
   },

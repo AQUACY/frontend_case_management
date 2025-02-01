@@ -1,6 +1,6 @@
 <template>
   <div class="settings q-pa-lg">
-    <div class="text-h6 q-mb-lg">Settings</div>
+    <div class="text-h6 q-mb-lg text-green">Settings</div>
 
     <div class="row q-col-gutter-md">
       <!-- Settings Navigation -->
@@ -12,7 +12,10 @@
               :key="item.label"
               clickable
               v-ripple
-              :active="currentSection === item.value"
+              :class="{
+                'selected-item': currentSection === item.value,
+                'menu-item': true
+              }"
               @click="currentSection = item.value"
             >
               <q-item-section avatar>
@@ -30,16 +33,16 @@
           <q-card-section>
             <!-- Profile Settings -->
             <div v-if="currentSection === 'profile'">
-              <div class="text-h6 q-mb-md">Profile Settings</div>
+              <div class="text-h6 q-mb-md text-green">Profile Settings</div>
               <div class="row q-col-gutter-md">
                 <div class="col-12 col-md-6">
-                  <q-input v-model="profile.name" label="Full Name" outlined dense />
+                  <q-input v-model="profile.name" color="green" label="Full Name" outlined dense />
                 </div>
                 <div class="col-12 col-md-6">
-                  <q-input v-model="profile.email" label="Email" type="email" outlined dense />
+                  <q-input v-model="profile.email" color="green" label="Email" type="email" outlined dense />
                 </div>
                 <div class="col-12">
-                  <q-input v-model="profile.bio" label="Bio" type="textarea" outlined />
+                  <q-input v-model="profile.bio" label="Bio" color="green" type="textarea" outlined />
                 </div>
               </div>
             </div>
@@ -122,7 +125,7 @@
 
           <q-card-actions align="right">
             <q-btn flat label="Cancel" color="negative" @click="resetChanges" />
-            <q-btn label="Save Changes" color="primary" :loading="saving" @click="saveChanges" />
+            <q-btn label="Save Changes" color="green" :loading="saving" @click="saveChanges" />
           </q-card-actions>
         </q-card>
       </div>
@@ -364,3 +367,27 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+.menu-item {
+  transition: background-color 0.3s ease;
+  border-radius: 4px;
+  margin: 2px 0;
+
+  &:hover {
+    background: rgba(21, 187, 90, 0.1);
+  }
+}
+
+.selected-item {
+  background: rgb(21, 187, 90) !important;
+  color: white !important;
+
+  .q-item__section {
+    color: white !important;
+  }
+
+  .q-icon {
+    color: white !important;
+  }
+}
+</style>

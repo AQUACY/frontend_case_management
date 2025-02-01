@@ -1,8 +1,8 @@
 <template>
-  <q-page class="flex flex-center" style="background-color: #8bc34a">
+  <q-page class="flex flex-center" style="">
     <div class="login-container">
       <div class="text-center">
-        <img src="/src/assets/logo.png" alt="Application Logo" class="logo" />
+        <img src="~assets/logo.png" alt="Application Logo" class="logo" />
       </div>
       <q-card class="login-card rounded q-pa-lg">
         <q-card-section class="text-center">
@@ -31,7 +31,9 @@
           <q-btn flat label="Lost your password?" class="text-green-10" />
           <div class="text-caption q-mt-md">
             Need technical assistance? <br />Contact the Technical Support Administrator -
-            <a href="mailto:tech_support@wenzo.com" class="text-primary">tech_support@wenzo.com</a>
+            <a href="mailto:support@greenpathcasemanager.com" class="text-primary"
+              >support@greenpathcasemanager.com</a
+            >
           </div>
         </q-card-actions>
       </q-card>

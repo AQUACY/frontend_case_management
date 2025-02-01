@@ -3,7 +3,7 @@
     <q-card flat bordered>
       <!-- Loading State -->
       <div v-if="loading" class="text-center q-pa-lg">
-        <q-spinner color="primary" size="3em" />
+        <q-spinner color="green" size="3em" />
         <div class="text-grey q-mt-md">Loading publication records...</div>
       </div>
 
@@ -11,14 +11,14 @@
       <div v-else-if="error" class="text-center q-pa-lg">
         <q-icon name="error" color="negative" size="3em" />
         <div class="text-negative q-mt-md">{{ error }}</div>
-        <q-btn color="primary" label="Retry" @click="fetchPublicationData" class="q-mt-md" />
+        <q-btn color="green" label="Retry" @click="fetchPublicationData" class="q-mt-md" />
       </div>
 
       <!-- Content -->
       <q-card-section v-else>
         <!-- Journal Publications -->
         <div class="section-container q-mb-xl">
-          <div class="text-h6 q-mb-md">Journal Publications</div>
+          <div class="text-h6 q-mb-md text-green">Journal Publications</div>
           <div class="row q-col-gutter-md">
             <div class="col-12 col-md-6">
               <q-input
@@ -48,7 +48,7 @@
 
         <!-- Conference Publications -->
         <div class="section-container q-mb-xl">
-          <div class="text-h6 q-mb-md">Conference Publications</div>
+          <div class="text-h6 q-mb-md text-green">Conference Publications</div>
           <div class="row q-col-gutter-md">
             <div class="col-12 col-md-6">
               <q-input
@@ -101,7 +101,7 @@
 
         <!-- Other Publications -->
         <div class="section-container q-mb-xl">
-          <div class="text-h6 q-mb-md">Other Publications</div>
+          <div class="text-h6 q-mb-md text-green">Other Publications</div>
           <div class="row q-col-gutter-md">
             <div class="col-12 col-md-6">
               <q-input
@@ -235,7 +235,7 @@
 
         <!-- Research Information -->
         <div class="section-container">
-          <div class="text-h6 q-mb-md">Research Information</div>
+          <div class="text-h6 q-mb-md text-green">Research Information</div>
           <div class="row q-col-gutter-md">
             <div class="col-12">
               <q-input

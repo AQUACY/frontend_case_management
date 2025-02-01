@@ -9,8 +9,8 @@
       <!-- Download General Documents Section -->
       <q-card-section>
         <div class="row items-center q-mb-md">
-          <q-icon name="download" color="primary" size="sm" class="q-mr-sm" />
-          <div class="text-primary text-weight-medium">Download General Documents</div>
+          <q-icon name="download" color="green" size="sm" class="q-mr-sm" />
+          <div class="text-green text-weight-medium">Download General Documents</div>
         </div>
         <div class="q-pl-md">
           Please click

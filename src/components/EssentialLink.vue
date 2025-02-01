@@ -50,7 +50,7 @@ const props = defineProps({
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to right, rgba(21, 187, 90, 0.986), rgb(21, 187, 90));
+    background: linear-gradient(to right, $green, $green);
     transition: left 0.3s ease;
     z-index: 0;
   }
@@ -77,25 +77,25 @@ const props = defineProps({
   }
 
   .q-icon {
-    color: rgb(21, 187, 90) !important;
+    color: $green !important;
     transition: color 0.3s ease;
   }
 
   .nav-text {
-    color: rgb(21, 187, 90) !important;
+    color: $green !important;
     transition: color 0.3s ease;
   }
   .nav-item:active {
-    background-color: green;
+    background-color: $green;
   }
 
   // Active state styling
   &.q-router-link-active {
-    background: rgb(21, 187, 90) !important;
+    background: $green !important;
 
     &::before {
       left: 0;
-      background: linear-gradient(to right, rgba(185, 196, 190, 0.993), rgb(21, 187, 90));
+      background: linear-gradient(to right, $green, $green);
     }
 
     .q-item__section {

@@ -3,9 +3,11 @@
     <div class="row q-col-gutter-md">
       <!-- Welcome Section -->
       <div class="col-12">
-        <q-card class="welcome-card q-pa-md">
+        <q-card class="welcome-card q-pa-md" style="">
           <q-card-section>
-            <div class="text-h4 text-weight-bold text-green q-mb-md">Welcome, Case Manager!</div>
+            <div class="text-h4 text-weight-bold q-mb-md" style="color: white">
+              Welcome, Case Manager!
+            </div>
             <div class="text-subtitle1">
               This guide will help you understand how to effectively assist clients and manage
               cases.
@@ -18,8 +20,10 @@
       <div class="col-12 col-md-6">
         <q-card>
           <q-card-section>
-            <div class="text-h5 text-weight-bold text-primary q-mb-md">Case Management Process</div>
-            <q-timeline color="primary">
+            <div class="text-h5 text-weight-bold q-mb-md" style="color: #02943f">
+              Case Management Process
+            </div>
+            <q-timeline color="green">
               <q-timeline-entry
                 title="Initial Client Contact"
                 subtitle="First Step"
@@ -72,11 +76,11 @@
       <div class="col-12 col-md-6">
         <q-card>
           <q-card-section>
-            <div class="text-h5 text-weight-bold text-primary q-mb-md">Key Reminders</div>
+            <div class="text-h5 text-weight-bold text-green q-mb-md">Key Reminders</div>
             <q-list bordered separator>
               <q-item v-ripple>
                 <q-item-section avatar>
-                  <q-icon color="primary" name="schedule" />
+                  <q-icon color="green" name="schedule" />
                 </q-item-section>
                 <q-item-section>
                   <q-item-label>Timely Communication</q-item-label>
@@ -86,7 +90,7 @@
 
               <q-item v-ripple>
                 <q-item-section avatar>
-                  <q-icon color="primary" name="verified_user" />
+                  <q-icon color="green" name="verified_user" />
                 </q-item-section>
                 <q-item-section>
                   <q-item-label>Data Privacy</q-item-label>
@@ -96,7 +100,7 @@
 
               <q-item v-ripple>
                 <q-item-section avatar>
-                  <q-icon color="primary" name="update" />
+                  <q-icon color="green" name="update" />
                 </q-item-section>
                 <q-item-section>
                   <q-item-label>Regular Updates</q-item-label>
@@ -106,7 +110,7 @@
 
               <q-item v-ripple>
                 <q-item-section avatar>
-                  <q-icon color="primary" name="gavel" />
+                  <q-icon color="green" name="gavel" />
                 </q-item-section>
                 <q-item-section>
                   <q-item-label>Compliance</q-item-label>
@@ -120,7 +124,7 @@
         </q-card>
 
         <!-- Quick Actions -->
-        <q-card class="q-mt-md">
+        <q-card class="q-mt-md" v-if="role_id === 2">
           <q-card-section>
             <div class="text-h5 text-weight-bold text-primary q-mb-md">Quick Actions</div>
             <div class="row q-col-gutter-sm">
@@ -160,7 +164,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .welcome-card {
-  background: linear-gradient(145deg, $green, darken($primary, 10%));
+  background: linear-gradient(145deg, #02943f, darken(#02943f, 10%));
+
   color: white;
 }
 
