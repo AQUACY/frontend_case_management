@@ -32,7 +32,7 @@
                   <div class="text-caption">
                     {{ formatDate(message.date) }}
                   </div>
-                  <q-badge v-if="message.unread" color="green" floating> New </q-badge>
+                  <q-badge v-if="message.is_read" color="green" floating> New </q-badge>
                 </q-item-section>
               </q-item>
             </q-list>

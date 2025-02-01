@@ -1,8 +1,8 @@
 <template>
   <q-page padding>
     <div class="row q-mb-md items-center justify-between">
-      <div class="text-h6">Document Categories</div>
-      <q-btn color="green" icon="add" label="Add Document Category" @click="openAddDialog" />
+      <div class="text-h6">Message Categories</div>
+      <q-btn color="green" icon="add" label="Add Message Category" @click="openAddDialog" />
     </div>
 
     <!-- Categories Table -->
@@ -24,7 +24,7 @@
     <q-dialog v-model="dialog.show" persistent>
       <q-card style="min-width: 350px">
         <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6">{{ dialog.isEdit ? 'Edit' : 'Add' }} Category</div>
+          <div class="text-h6">{{ dialog.isEdit ? 'Edit' : 'Add' }} Message Category</div>
           <q-space />
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
@@ -88,7 +88,7 @@ import { api } from 'boot/axios'
 import { useQuasar } from 'quasar'
 
 export default {
-  name: 'DocumentsPage',
+  name: 'MessageCategoriesPage',
 
   setup() {
     const $q = useQuasar()
@@ -121,13 +121,13 @@ export default {
     const fetchCategories = async () => {
       loading.value = true
       try {
-        const response = await api.get('/api/admin/document-categories')
+        const response = await api.get('/api/admin/messagecategories')
         categories.value = response.data.data
       } catch (error) {
         console.error('Error fetching categories:', error)
         $q.notify({
           type: 'negative',
-          message: 'Failed to load categories',
+          message: 'Failed to load message categories',
         })
       } finally {
         loading.value = false
@@ -148,10 +148,10 @@ export default {
       submitting.value = true
       try {
         if (dialog.value.isEdit) {
-          await api.patch(`/api/admin/document-categories/${form.value.id}`, form.value)
+          await api.patch(`/api/admin/updatemessagecategory/${form.value.id}`, form.value)
           $q.notify({ type: 'positive', message: 'Category updated successfully' })
         } else {
-          await api.post('/api/admin/document-categories/add', form.value)
+          await api.post('/api/admin/addmessagecategory', form.value)
           $q.notify({ type: 'positive', message: 'Category added successfully' })
         }
         dialog.value.show = false
@@ -178,7 +178,7 @@ export default {
     const deleteCategory = async () => {
       deleteDialog.value.loading = true
       try {
-        await api.delete(`/api/admin/document-categories/${deleteDialog.value.category.id}`)
+        await api.delete(`/api/admin/deletemessagecategory/${deleteDialog.value.category.id}`)
         $q.notify({ type: 'positive', message: 'Category deleted successfully' })
         deleteDialog.value.show = false
         fetchCategories()

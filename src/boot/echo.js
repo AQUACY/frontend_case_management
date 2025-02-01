@@ -10,7 +10,7 @@ export default boot(() => {
     key: '06ede6efd5dd5850ce28',
     cluster: 'mt1',
     encrypted: true,
-    authEndpoint: 'https://api.greenpathcasemanager.com/broadcasting/auth',
+    authEndpoint: 'http://localhost:8000/broadcasting/auth',
     auth: {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,

@@ -5,10 +5,6 @@
       <div class="col-4 messages-list q-pa-sm" style="border-right: 1px solid #ddd">
         <div class="row items-center q-pa-sm">
           <div class="text-h6 q-mr-auto text-green">Case Messages</div>
-          <q-badge v-if="unreadCount > 0" color="red" floating transparent>
-            {{ unreadCount }}
-          </q-badge>
-
           <!-- Add New Message Button -->
           <q-btn
             color="green"
@@ -51,7 +47,12 @@
               </q-item-section>
 
               <q-item-section>
-                <q-item-label>{{ message.subject }}</q-item-label>
+                <div class="row items-center">
+                  <q-item-label class="q-mr-sm">{{ message.subject }}</q-item-label>
+                  <q-badge v-if="message.unread_count > 0" color="red" floating transparent>
+                    {{ message.unread_count }}
+                  </q-badge>
+                </div>
                 <q-item-label caption lines="2">
                   {{ message.latest_message }}
                 </q-item-label>
@@ -61,9 +62,6 @@
                 <q-item-label caption>
                   {{ formatDate(message.updated_at) }}
                 </q-item-label>
-                <q-badge v-if="message.unread_count" color="green" rounded>
-                  {{ message.unread_count }}
-                </q-badge>
               </q-item-section>
 
               <!-- Add debug info -->
@@ -250,23 +248,29 @@ export default {
       return date.formatDate(dateStr, 'MMM D, YYYY h:mm A')
     }
 
+    const fetchUnreadCount = async () => {
+      try {
+        const response = await api.get('/api/auth/messages/unread-count')
+        unreadCount.value = response.data.unread_count
+      } catch (error) {
+        console.error('Error fetching unread count:', error)
+      }
+    }
+
     const fetchMessages = async () => {
       loading.value = true
       try {
-        console.log('Fetching messages for case:', caseId)
         const response = await api.get(`/api/cases/${caseId}/messages`)
-        console.log('Messages response:', response.data.messages)
-
         if (response.data.messages && Array.isArray(response.data.messages)) {
-          messages.value = response.data.messages
-        } else {
-          console.error('Invalid messages response format:', response.data.messages)
-          throw new Error('Invalid messages response format')
+          messages.value = response.data.messages.map((message) => ({
+            ...message,
+            unread_count: message.unread_count || 0, // Ensure unread_count exists
+          }))
+          // Fetch unread count after messages are loaded
+          await fetchUnreadCount()
         }
       } catch (error) {
         console.error('Error fetching messages:', error)
-        console.error('Error response:', error.response)
-
         $q.notify({
           type: 'negative',
           message: 'Failed to load messages',
@@ -299,6 +303,13 @@ export default {
       }
     }
 
+    const updateMessageUnreadCount = (messageId) => {
+      const message = messages.value.find((m) => m.id === messageId)
+      if (message) {
+        message.unread_count = (message.unread_count || 0) + 1
+      }
+    }
+
     const subscribeToConversation = (messageId) => {
       try {
         // Clean up previous subscription if exists
@@ -312,15 +323,12 @@ export default {
         window.Echo.private(`message.${messageId}`)
           .listen('.new.message', (data) => {
             console.log('New message received:', data)
-            conversation.value.push({
-              id: data.id,
-              content: data.content,
-              sender_id: data.sender_id,
-              sender_type: data.sender_type,
-              sender_name: data.sender_name,
-              created_at: data.created_at,
-              is_read: data.is_read,
-            })
+            conversation.value.push(data)
+
+            // Update unread count for this specific message
+            if (data.sender_type !== 'user') {
+              updateMessageUnreadCount(messageId)
+            }
 
             // Scroll to bottom on new message
             nextTick(() => {
@@ -375,6 +383,8 @@ export default {
 
         if (response.data && response.data.conversation) {
           conversation.value = response.data.conversation
+          // Reset unread count when message is selected
+          message.unread_count = 0
         } else {
           console.error('Invalid response format:', response.data)
           throw new Error('Invalid response format')
@@ -481,15 +491,18 @@ export default {
       console.log('Component mounted, case ID:', caseId)
       fetchMessages()
       fetchCategories()
-    })
+      // Set up polling for unread count (optional)
+      const pollInterval = setInterval(fetchUnreadCount, 30000) // Poll every 30 seconds
 
-    onUnmounted(() => {
-      // Clean up Echo listener
-      if (selectedMessage.value && window.Echo) {
-        console.log('Cleaning up Echo listener')
-        window.Echo.leave(`message.${selectedMessage.value.id}`)
-      }
-      isActiveConversation.value = false
+      onUnmounted(() => {
+        clearInterval(pollInterval)
+        // Clean up Echo listener
+        if (selectedMessage.value && window.Echo) {
+          console.log('Cleaning up Echo listener')
+          window.Echo.leave(`message.${selectedMessage.value.id}`)
+        }
+        isActiveConversation.value = false
+      })
     })
 
     return {
@@ -514,6 +527,7 @@ export default {
       openNewMessageDialog,
       submitNewMessage,
       isActiveConversation,
+      updateMessageUnreadCount,
     }
   },
 }
@@ -647,5 +661,15 @@ export default {
   .q-item__label--caption {
     color: rgba(255, 255, 255, 0.7) !important;
   }
+
+  .q-badge {
+    background: white !important;
+    color: rgb(21, 187, 90) !important;
+  }
+}
+
+.q-badge {
+  font-size: 0.8em;
+  padding: 2px 6px;
 }
 </style>

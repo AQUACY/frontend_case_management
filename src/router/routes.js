@@ -250,9 +250,18 @@ const routes = [
           requiresAuth: true,
         },
       },
+      {
+        path: '/casemanager/messagecategories',
+        name: 'casemanager-messagecategories',
+        component: () => import('pages/casemanager/MessageCategoriesPage.vue'),
+        meta: {
+          title: 'Message Categories',
+          requiresAuth: true,
+        },
+      },
     ],
   },
-
+  
   // {
   //   path: '/case/:id/documents',
   //   component: () => import('pages/casemanager/caseDetails/DocumentsPage.vue'),

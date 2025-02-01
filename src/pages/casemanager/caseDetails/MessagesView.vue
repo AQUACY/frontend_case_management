@@ -38,8 +38,8 @@
                 <q-item-label caption>
                   {{ formatDate(message.updated_at) }}
                 </q-item-label>
-                <q-badge v-if="message.unread_count" color="green" rounded>
-                  {{ message.unread_count }}
+                <q-badge v-if="message.is_read" color="green" rounded>
+                  {{ message.is_read }}
                 </q-badge>
               </q-item-section>
             </q-item>
@@ -136,6 +136,9 @@ export default {
       try {
         const response = await api.get('/api/auth/messages/unread-count')
         unreadCount.value = response.data.count
+        console.log(unreadCount.value)
+        
+
       } catch (error) {
         console.error('Error fetching unread count:', error)
       }

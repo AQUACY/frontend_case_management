@@ -5,7 +5,7 @@
         <img src="~assets/404.svg" alt="404" class="logo" />
       </div>
 
-      <div class="text-h4 gree" style="opacity:.4">
+      <div class="text-h4 green" style="opacity:.4">
         Oops. Nothing here...
       </div>
 

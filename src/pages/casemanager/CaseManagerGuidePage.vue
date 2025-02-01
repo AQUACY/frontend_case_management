@@ -124,7 +124,7 @@
         </q-card>
 
         <!-- Quick Actions -->
-        <q-card class="q-mt-md" v-if="role_id === 2">
+        <q-card class="q-mt-md" v-if="roleId === 2">
           <q-card-section>
             <div class="text-h5 text-weight-bold text-primary q-mb-md">Quick Actions</div>
             <div class="row q-col-gutter-sm">
@@ -155,16 +155,34 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { ref, onMounted } from 'vue'
 
-export default defineComponent({
+export default {
   name: 'CaseManagerGuidePage',
-})
+
+  setup() {
+    const roleId = ref(null)
+
+    onMounted(() => {
+      try {
+        const userData = JSON.parse(localStorage.getItem('user'))
+        roleId.value = userData?.role_id || null
+        console.log('User role ID:', roleId.value) // Debug log
+      } catch (error) {
+        console.error('Error getting role ID from localStorage:', error)
+      }
+    })
+
+    return {
+      roleId,
+    }
+  },
+}
 </script>
 
 <style lang="scss" scoped>
 .welcome-card {
-  background: linear-gradient(145deg, #02943f, darken(#02943f, 10%));
+  background: #02943f;
 
   color: white;
 }

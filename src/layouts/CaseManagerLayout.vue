@@ -247,6 +247,11 @@ export default {
               link: '/casemanager/documents',
             },
             {
+              title: 'Message Categories',
+              icon: 'category',
+              link: '/casemanager/messagecategories',
+            },
+            {
               title: 'Calendar',
               icon: 'event',
               link: '/casemanager/calendar',
