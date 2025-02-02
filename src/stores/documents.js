@@ -38,6 +38,33 @@ export const useDocumentsStore = defineStore('documents', {
             case 3:
               categoryName = 'My Citation Report'
               break
+            case 4:
+              categoryName = 'My Employment-Related Documents'
+              break
+            case 5:
+              categoryName = 'My Degree-Related Documents'
+              break
+            case 6:
+              categoryName = 'Identity Documents and Forms'
+              break
+            case 7:
+              categoryName = 'Signed Letters and Recommenders CVs'
+              break
+            case 8:
+              categoryName = 'Additional Documents'
+              break
+            case 9:
+              categoryName = 'Approved Letters and Recommenders CVs (to be used in Petition Letter)'
+              break
+            case 10:
+              categoryName = 'Drafted Documents Revised by Customers'
+              break
+            case 11:
+              categoryName = 'Drafted Documents by Our Team'
+              break
+            case 12:
+              categoryName = 'USCIS Notice Section'
+              break
             default:
               categoryName = 'Other'
           }
@@ -60,7 +87,17 @@ export const useDocumentsStore = defineStore('documents', {
           'My CV': groupedDocs['My CV'] || [],
           'My List of Recommenders': groupedDocs['My List of Recommenders'] || [],
           'My Citation Report': groupedDocs['My Citation Report'] || [],
+          'My Employment-Related Documents': groupedDocs['My Employment-Related Documents'] || [],
+          'My Degree-Related Documents': groupedDocs['My Degree-Related Documents'] || [],
+          'Identity Documents and Forms': groupedDocs['Identity Documents and Forms'] || [],
+          'Signed Letters and Recommenders CVs': groupedDocs['Signed Letters and Recommenders CVs'] || [],
+          'Additional Documents': groupedDocs['Additional Documents'] || [],
+          'Approved Letters and Recommenders CVs (to be used in Petition Letter)': groupedDocs['Approved Letters and Recommenders CVs (to be used in Petition Letter)'] || [],
+          'Drafted Documents Revised by Customers': groupedDocs['Drafted Documents Revised by Customers'] || [],
+          'Drafted Documents by Our Team': groupedDocs['Drafted Documents by Our Team'] || [],
+          'USCIS Notice Section': groupedDocs['USCIS Notice Section'] || [],
         }
+
 
         return response.data
       } catch (error) {

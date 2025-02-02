@@ -52,7 +52,7 @@
       <q-scroll-area class="fit">
         <q-list>
           <q-item-label header>
-            My Order : <b>{{ caseDetails?.data?.order_number }}</b>
+            My Order: <b>{{ caseDetails.data?.order_number || 'N/A' }}</b>
           </q-item-label>
           <EssentialLink
             :class="{ 'text-green': $route.path === link.link }"
