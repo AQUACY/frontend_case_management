@@ -3,8 +3,18 @@
     <q-card class="my-card" flat bordered>
       <q-tabs v-model="tab" class="text-teal text-left" align="left">
         <q-tab label="Reminders" class="text-green" name="one" style="text-transform: capitalize" />
-        <q-tab label="Client Packet" class="text-green" name="two" style="text-transform: capitalize" />
-        <q-tab label="VISA FAQ " class="text-green" name="three" style="text-transform: capitalize" />
+        <q-tab
+          label="Client Packet"
+          class="text-green"
+          name="two"
+          style="text-transform: capitalize"
+        />
+        <q-tab
+          label="VISA FAQ "
+          class="text-green"
+          name="three"
+          style="text-transform: capitalize"
+        />
         <q-tab label="Billing" class="text-green" name="four" style="text-transform: capitalize" />
       </q-tabs>
 
@@ -240,12 +250,12 @@
             </div>
             <hr />
             <div class="clearfix">
-              <a href="javascript:;" class="btn btn-sm btn-outline-secondary float-right">
+              <a href="javascript:;" class="btn btn-sm btn-outline-green text-green float-right">
                 Download all Files as zip
               </a>
               <h5 class="text-primary font-weight-bold">
                 <span class="img-icon iicon-triangle-blue"></span>
-                Read First
+                <h6 class="text-green font-weight-bold">Read First</h6>
               </h5>
             </div>
             <div>
@@ -279,7 +289,7 @@
             </a>
             <h5 class="text-primary font-weight-bold">
               <span class="img-icon iicon-triangle-blue"></span>
-              NIW
+              <h6 class="text-green font-weight-bold">NIW</h6>
             </h5>
           </div>
           <div id="cp1">
@@ -407,7 +417,7 @@
               </a>
               <h5 class="text-primary font-weight-bold">
                 <span class="img-icon iicon-triangle-blue"></span>
-                I-485 DIY
+                <h6 class="text-green font-weight-bold">I-485 DIY</h6>
               </h5>
             </div>
             <div class="mb-3 ml-3">

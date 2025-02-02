@@ -18,6 +18,9 @@
             <div class="text-h6 text-green">My CV</div>
             <q-btn color="green-10" label="Upload" @click="triggerFileUpload('My CV')" />
           </div>
+          <div class="text-caption text-grey">
+            Please make sure the CV is updated before we file your case.
+          </div>
         </q-card-section>
 
         <q-card-section>
@@ -104,6 +107,406 @@
             <div class="row items-center justify-between">
               <div>
                 <q-icon name="insert_drive_file" class="q-mr-sm" />
+                <a
+                  href="#"
+                  class="text-primary cursor-pointer"
+                  style="text-decoration: none"
+                  @click.prevent="downloadDocument(doc)"
+                >
+                  {{ doc.filename }}
+                </a>
+                <div class="text-caption text-grey">
+                  {{ formatDate(doc.created_at) }}
+                </div>
+              </div>
+              <q-btn flat round color="negative" icon="delete" @click="deleteDocument(doc.id)" />
+            </div>
+          </div>
+        </q-card-section>
+      </q-card>
+
+      <!-- My Employment-Related Documents Section -->
+      <q-card flat bordered>
+        <q-card-section>
+          <div class="row items-center justify-between">
+            <div class="text-h6 text-green">My Employment-Related Documents</div>
+            <q-btn
+              color="green-10"
+              label="Upload"
+              @click="triggerFileUpload('My Employment-Related Documents')"
+            />
+          </div>
+          <div class="text-caption text-grey">
+            Please make sure the Employment-Related Documents are updated before we file your case.
+          </div>
+        </q-card-section>
+
+        <q-card-section>
+          <div
+            v-for="doc in getDocuments('My Employment-Related Documents')"
+            :key="doc.id"
+            class="q-my-sm"
+          >
+            <div class="row items-center justify-between">
+              <div>
+                <q-icon name="insert_drive_file" class="q-mr-sm" />
+
+                <a
+                  href="#"
+                  class="text-primary cursor-pointer"
+                  style="text-decoration: none"
+                  @click.prevent="downloadDocument(doc)"
+                >
+                  {{ doc.filename }}
+                </a>
+                <div class="text-caption text-grey">
+                  {{ formatDate(doc.created_at) }}
+                </div>
+              </div>
+              <q-btn flat round color="negative" icon="delete" @click="deleteDocument(doc.id)" />
+            </div>
+          </div>
+        </q-card-section>
+      </q-card>
+
+      <!-- My Degree-Related Documents Section -->
+      <q-card flat bordered>
+        <q-card-section>
+          <div class="row items-center justify-between">
+            <div class="text-h6 text-green">My Degree-Related Documents</div>
+            <q-btn
+              color="green-10"
+              label="Upload"
+              @click="triggerFileUpload('My Degree-Related Documents')"
+            />
+          </div>
+          <div class="text-caption text-grey">
+            Please make sure the Degree-Related Documents are updated before we file your case.
+          </div>
+        </q-card-section>
+
+        <q-card-section>
+          <div
+            v-for="doc in getDocuments('My Degree-Related Documents')"
+            :key="doc.id"
+            class="q-my-sm"
+          >
+            <div class="row items-center justify-between">
+              <div>
+                <q-icon name="insert_drive_file" class="q-mr-sm" />
+
+                <a
+                  href="#"
+                  class="text-primary cursor-pointer"
+                  style="text-decoration: none"
+                  @click.prevent="downloadDocument(doc)"
+                >
+                  {{ doc.filename }}
+                </a>
+                <div class="text-caption text-grey">
+                  {{ formatDate(doc.created_at) }}
+                </div>
+              </div>
+              <q-btn flat round color="negative" icon="delete" @click="deleteDocument(doc.id)" />
+            </div>
+          </div>
+        </q-card-section>
+      </q-card>
+
+      <!-- Identity Documents and Forms Section -->
+      <q-card flat bordered>
+        <q-card-section>
+          <div class="row items-center justify-between">
+            <div class="text-h6 text-green">Identity Documents and Forms</div>
+            <q-btn
+              color="green-10"
+              label="Upload"
+              @click="triggerFileUpload('Identity Documents and Forms')"
+            />
+          </div>
+          <div class="text-caption text-grey">
+            Please make sure the Identity Documents and Forms are updated before we file your case.
+          </div>
+        </q-card-section>
+
+        <q-card-section>
+          <div
+            v-for="doc in getDocuments('Identity Documents and Forms')"
+            :key="doc.id"
+            class="q-my-sm"
+          >
+            <div class="row items-center justify-between">
+              <div>
+                <q-icon name="insert_drive_file" class="q-mr-sm" />
+
+                <a
+                  href="#"
+                  class="text-primary cursor-pointer"
+                  style="text-decoration: none"
+                  @click.prevent="downloadDocument(doc)"
+                >
+                  {{ doc.filename }}
+                </a>
+                <div class="text-caption text-grey">
+                  {{ formatDate(doc.created_at) }}
+                </div>
+              </div>
+              <q-btn flat round color="negative" icon="delete" @click="deleteDocument(doc.id)" />
+            </div>
+          </div>
+        </q-card-section>
+      </q-card>
+
+      <!-- Signed Letters and Recommenders CVs Section -->
+      <q-card flat bordered>
+        <q-card-section>
+          <div class="row items-center justify-between">
+            <div class="text-h6 text-green">Signed Letters and Recommenders CVs</div>
+
+            <q-btn
+              color="green-10"
+              label="Upload"
+              @click="triggerFileUpload('Signed Letters and Recommenders CVs')"
+            />
+          </div>
+          <div class="text-caption text-grey">
+            Please make sure the Signed Letters and Recommenders CVs are updated before we file your
+            case.
+          </div>
+        </q-card-section>
+
+        <q-card-section>
+          <div
+            v-for="doc in getDocuments('Signed Letters and Recommenders CVs')"
+            :key="doc.id"
+            class="q-my-sm"
+          >
+            <div class="row items-center justify-between">
+              <div>
+                <q-icon name="insert_drive_file" class="q-mr-sm" />
+
+                <a
+                  href="#"
+                  class="text-primary cursor-pointer"
+                  style="text-decoration: none"
+                  @click.prevent="downloadDocument(doc)"
+                >
+                  {{ doc.filename }}
+                </a>
+                <div class="text-caption text-grey">
+                  {{ formatDate(doc.created_at) }}
+                </div>
+              </div>
+              <q-btn flat round color="negative" icon="delete" @click="deleteDocument(doc.id)" />
+            </div>
+          </div>
+        </q-card-section>
+      </q-card>
+
+      <!-- Additional Documents Section -->
+      <q-card flat bordered>
+        <q-card-section>
+          <div class="row items-center justify-between">
+            <div class="text-h6 text-green">Additional Documents</div>
+            <q-btn
+              color="green-10"
+              label="Upload"
+              @click="triggerFileUpload('Additional Documents')"
+            />
+          </div>
+          <div class="text-caption text-grey">
+            Please make sure the Additional Documents are updated before we file your case.
+          </div>
+        </q-card-section>
+
+        <q-card-section>
+          <div v-for="doc in getDocuments('Additional Documents')" :key="doc.id" class="q-my-sm">
+            <div class="row items-center justify-between">
+              <div>
+                <q-icon name="insert_drive_file" class="q-mr-sm" />
+
+                <a
+                  href="#"
+                  class="text-primary cursor-pointer"
+                  style="text-decoration: none"
+                  @click.prevent="downloadDocument(doc)"
+                >
+                  {{ doc.filename }}
+                </a>
+                <div class="text-caption text-grey">
+                  {{ formatDate(doc.created_at) }}
+                </div>
+              </div>
+              <q-btn flat round color="negative" icon="delete" @click="deleteDocument(doc.id)" />
+            </div>
+          </div>
+        </q-card-section>
+      </q-card>
+
+      <!-- Approved Letters and Recommenders CVs (to be used in Petition Letter) Section -->
+      <q-card flat bordered>
+        <q-card-section>
+          <div class="row items-center justify-between">
+            <div class="text-h6 text-green">
+              Approved Letters and Recommenders CVs (to be used in Petition Letter)
+            </div>
+            <q-btn
+              color="green-10"
+              label="Upload"
+              @click="
+                triggerFileUpload(
+                  'Approved Letters and Recommenders CVs (to be used in Petition Letter)',
+                )
+              "
+            />
+          </div>
+          <div class="text-caption text-grey">
+            Please make sure the Approved Letters and Recommenders CVs (to be used in Petition
+            Letter) are updated before we file your case.
+          </div>
+        </q-card-section>
+
+        <q-card-section>
+          <div
+            v-for="doc in getDocuments(
+              'Approved Letters and Recommenders CVs (to be used in Petition Letter)',
+            )"
+            :key="doc.id"
+            class="q-my-sm"
+          >
+            <div class="row items-center justify-between">
+              <div>
+                <q-icon name="insert_drive_file" class="q-mr-sm" />
+
+                <a
+                  href="#"
+                  class="text-primary cursor-pointer"
+                  style="text-decoration: none"
+                  @click.prevent="downloadDocument(doc)"
+                >
+                  {{ doc.filename }}
+                </a>
+                <div class="text-caption text-grey">
+                  {{ formatDate(doc.created_at) }}
+                </div>
+              </div>
+              <q-btn flat round color="negative" icon="delete" @click="deleteDocument(doc.id)" />
+            </div>
+          </div>
+        </q-card-section>
+      </q-card>
+
+      <!-- Drafted Documents Revised by Customers Section -->
+      <q-card flat bordered>
+        <q-card-section>
+          <div class="row items-center justify-between">
+            <div class="text-h6 text-green">Drafted Documents Revised by Customers</div>
+            <q-btn
+              color="green-10"
+              label="Upload"
+              @click="triggerFileUpload('Drafted Documents Revised by Customers')"
+            />
+          </div>
+          <div class="text-caption text-grey">
+            Please make sure the Drafted Documents Revised by Customers are updated before we file
+            your case.
+          </div>
+        </q-card-section>
+
+        <q-card-section>
+          <div
+            v-for="doc in getDocuments('Drafted Documents Revised by Customers')"
+            :key="doc.id"
+            class="q-my-sm"
+          >
+            <div class="row items-center justify-between">
+              <div>
+                <q-icon name="insert_drive_file" class="q-mr-sm" />
+
+                <a
+                  href="#"
+                  class="text-primary cursor-pointer"
+                  style="text-decoration: none"
+                  @click.prevent="downloadDocument(doc)"
+                >
+                  {{ doc.filename }}
+                </a>
+                <div class="text-caption text-grey">
+                  {{ formatDate(doc.created_at) }}
+                </div>
+              </div>
+              <q-btn flat round color="negative" icon="delete" @click="deleteDocument(doc.id)" />
+            </div>
+          </div>
+        </q-card-section>
+      </q-card>
+
+      <!-- Drafted Documents by Our Team Section -->
+      <q-card flat bordered>
+        <q-card-section>
+          <div class="row items-center justify-between">
+            <div class="text-h6 text-green">Drafted Documents by Our Team</div>
+            <!-- <q-btn
+              color="green-10"
+              label="Upload"
+              @click="triggerFileUpload('Drafted Documents by Our Team')"
+            /> -->
+          </div>
+          <div class="text-caption text-grey">
+            Please make sure the Drafted Documents by Our Team are updated before we file your case.
+          </div>
+        </q-card-section>
+
+        <q-card-section>
+          <div
+            v-for="doc in getDocuments('Drafted Documents by Our Team')"
+            :key="doc.id"
+            class="q-my-sm"
+          >
+            <div class="row items-center justify-between">
+              <div>
+                <q-icon name="insert_drive_file" class="q-mr-sm" />
+
+                <a
+                  href="#"
+                  class="text-primary cursor-pointer"
+                  style="text-decoration: none"
+                  @click.prevent="downloadDocument(doc)"
+                >
+                  {{ doc.filename }}
+                </a>
+                <div class="text-caption text-grey">
+                  {{ formatDate(doc.created_at) }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </q-card-section>
+      </q-card>
+
+      <!-- USCIS Notice Section -->
+      <q-card flat bordered>
+        <q-card-section>
+          <div class="row items-center justify-between">
+            <div class="text-h6 text-green">USCIS Notice Section</div>
+
+            <q-btn
+              color="green-10"
+              label="Upload"
+              @click="triggerFileUpload('USCIS Notice Section')"
+            />
+          </div>
+          <div class="text-caption text-grey">
+            Please make sure the USCIS Notice Section is updated before we file your case.
+          </div>
+        </q-card-section>
+
+        <q-card-section>
+          <div v-for="doc in getDocuments('USCIS Notice Section')" :key="doc.id" class="q-my-sm">
+            <div class="row items-center justify-between">
+              <div>
+                <q-icon name="insert_drive_file" class="q-mr-sm" />
+
                 <a
                   href="#"
                   class="text-primary cursor-pointer"
@@ -218,13 +621,35 @@ export default {
     const nameError = ref('')
     const loading = ref(false)
 
-    const categoryOptions = ['My CV', 'My List of Recommenders', 'My Citation Report']
+    const categoryOptions = [
+      'My CV',
+      'My List of Recommenders',
+      'My Citation Report',
+      'My Employment-Related Documents',
+      'My Degree-Related Documents',
+      'Identity Documents and Forms',
+      'Signed Letters and Recommenders CVs',
+      'Additional Documents',
+      'Approved Letters and Recommenders CVs (to be used in Petition Letter)',
+      'Drafted Documents Revised by Customers',
+      'Drafted Documents by Our Team',
+      'USCIS Notice Section',
+    ]
 
     // Update category mapping with proper IDs
     const categoryIds = {
       'My CV': 1,
       'My List of Recommenders': 2,
       'My Citation Report': 3,
+      'My Employment-Related Documents': 4,
+      'My Degree-Related Documents': 5,
+      'Identity Documents and Forms': 6,
+      'Signed Letters and Recommenders CVs': 7,
+      'Additional Documents': 8,
+      'Approved Letters and Recommenders CVs (to be used in Petition Letter)': 9,
+      'Drafted Documents Revised by Customers': 10,
+      'Drafted Documents by Our Team': 11,
+      'USCIS Notice Section': 12,
     }
 
     onMounted(async () => {
