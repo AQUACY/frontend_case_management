@@ -29,11 +29,28 @@
                   {{ casesStore.currentCase.status }}
                 </q-chip>
               </div>
+
               <div class="text-subtitle2 text-white q-mt-sm">
                 Client: {{ casesStore.currentCase.user.name }}
               </div>
               <div class="text-subtitle2 text-white q-mt-sm">
                 Bill: USD {{ casesStore.currentCase.bill }}
+              </div>
+
+              <!-- Add these buttons after your existing content -->
+              <div class="row q-mt-md q-gutter-sm">
+                <q-btn
+                  color="secondary"
+                  icon="add"
+                  label="Add Case Status"
+                  @click="openAddStatusDialog"
+                />
+                <q-btn
+                  color="green-10"
+                  icon="visibility"
+                  label="View Case Status"
+                  @click="openViewStatusDialog"
+                />
               </div>
             </q-card-section>
           </q-card>
@@ -70,15 +87,185 @@
       </div>
 
       <PaymentHistoryTable />
+
+      <!-- Add Status Dialog -->
+      <q-dialog v-model="addStatusDialog.show" persistent>
+        <q-card style="min-width: 400px">
+          <q-card-section class="row items-center">
+            <div class="text-h6">Add Case Status</div>
+            <q-space />
+            <q-btn icon="close" flat round dense v-close-popup />
+          </q-card-section>
+
+          <q-card-section>
+            <q-form @submit="submitCaseStatus">
+              <q-input
+                v-model="addStatusDialog.form.service_type"
+                label="Service Type *"
+                :rules="[(val) => !!val || 'Service type is required']"
+                class="q-mb-md"
+                color="green"
+              />
+              <q-input
+                v-model="addStatusDialog.form.receipt_number"
+                label="Receipt Number *"
+                :rules="[(val) => !!val || 'Receipt number is required']"
+                class="q-mb-md"
+                color="green"
+              />
+              <q-input
+                v-model="addStatusDialog.form.date_of_filing"
+                label="Date of Filing"
+                type="date"
+                class="q-mb-md"
+                color="green"
+              />
+              <q-input
+                v-model="addStatusDialog.form.date_of_decision"
+                label="Date of Decision"
+                type="date"
+                class="q-mb-md"
+                color="green"
+              />
+
+              <div class="row justify-end q-mt-md">
+                <q-btn label="Cancel" color="negative" flat v-close-popup />
+                <q-btn
+                  label="Submit"
+                  color="green"
+                  type="submit"
+                  :loading="addStatusDialog.loading"
+                  class="q-ml-sm"
+                />
+              </div>
+            </q-form>
+          </q-card-section>
+        </q-card>
+      </q-dialog>
+
+      <!-- View Status Dialog -->
+      <q-dialog v-model="viewStatusDialog.show" persistent>
+        <q-card style="min-width: 700px">
+          <q-card-section class="row items-center">
+            <div class="text-h6">Case Status History</div>
+            <q-space />
+            <q-btn icon="close" flat round dense v-close-popup />
+          </q-card-section>
+
+          <q-card-section>
+            <q-table
+              :rows="caseStatuses"
+              :columns="statusColumns"
+              row-key="id"
+              :loading="viewStatusDialog.loading"
+            >
+              <template v-slot:body-cell-actions="props">
+                <q-td :props="props">
+                  <q-btn flat round color="primary" icon="edit" @click="openEditStatus(props.row)">
+                    <q-tooltip>Edit Status</q-tooltip>
+                  </q-btn>
+                  <q-btn
+                    flat
+                    round
+                    color="negative"
+                    icon="delete"
+                    @click="confirmDeleteStatus(props.row)"
+                  >
+                    <q-tooltip>Delete Status</q-tooltip>
+                  </q-btn>
+                </q-td>
+              </template>
+            </q-table>
+          </q-card-section>
+        </q-card>
+      </q-dialog>
+
+      <!-- Edit Status Dialog -->
+      <q-dialog v-model="editStatusDialog.show" persistent>
+        <q-card style="min-width: 400px">
+          <q-card-section class="row items-center">
+            <div class="text-h6">Edit Case Status</div>
+            <q-space />
+            <q-btn icon="close" flat round dense v-close-popup />
+          </q-card-section>
+
+          <q-card-section>
+            <q-form @submit="updateCaseStatus">
+              <q-input
+                v-model="editStatusDialog.form.service_type"
+                label="Service Type *"
+                :rules="[(val) => !!val || 'Service type is required']"
+                class="q-mb-md"
+                color="green"
+              />
+              <q-input
+                v-model="editStatusDialog.form.receipt_number"
+                label="Receipt Number *"
+                :rules="[(val) => !!val || 'Receipt number is required']"
+                class="q-mb-md"
+                color="green"
+              />
+              <q-input
+                v-model="editStatusDialog.form.date_of_filing"
+                label="Date of Filing"
+                type="date"
+                class="q-mb-md"
+                color="green"
+              />
+              <q-input
+                v-model="editStatusDialog.form.date_of_decision"
+                label="Date of Decision"
+                type="date"
+                class="q-mb-md"
+                color="green"
+              />
+
+              <div class="row justify-end q-mt-md">
+                <q-btn label="Cancel" color="negative" flat v-close-popup />
+                <q-btn
+                  label="Update"
+                  color="green"
+                  type="submit"
+                  :loading="editStatusDialog.loading"
+                  class="q-ml-sm"
+                />
+              </div>
+            </q-form>
+          </q-card-section>
+        </q-card>
+      </q-dialog>
+
+      <!-- Delete Confirmation Dialog -->
+      <q-dialog v-model="deleteStatusDialog.show">
+        <q-card>
+          <q-card-section class="row items-center">
+            <q-avatar icon="warning" color="negative" text-color="white" />
+            <span class="q-ml-sm">Are you sure you want to delete this status?</span>
+          </q-card-section>
+
+          <q-card-actions align="right">
+            <q-btn flat label="Cancel" color="green" v-close-popup />
+            <q-btn
+              flat
+              label="Delete"
+              color="negative"
+              @click="deleteCaseStatus"
+              :loading="deleteStatusDialog.loading"
+            />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
     </div>
   </div>
 </template>
 
 <script>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useCasesStore } from 'stores/casemanager/casesStore'
 import PaymentHistoryTable from 'src/components/PaymentHistoryTables.vue'
+import { api } from 'boot/axios'
+import { useQuasar } from 'quasar'
 
 export default {
   name: 'CaseView',
@@ -89,6 +276,52 @@ export default {
     const router = useRouter()
     const route = useRoute()
     const casesStore = useCasesStore()
+    const $q = useQuasar()
+    const caseStatuses = ref([])
+    const statusColumns = [
+      { name: 'service_type', label: 'Service Type', field: 'service_type', sortable: true },
+      { name: 'receipt_number', label: 'Receipt Number', field: 'receipt_number', sortable: true },
+      { name: 'date_of_filing', label: 'Filing Date', field: 'date_of_filing', sortable: true },
+      {
+        name: 'date_of_decision',
+        label: 'Decision Date',
+        field: 'date_of_decision',
+        sortable: true,
+      },
+      { name: 'actions', label: 'Actions', field: 'actions', align: 'right' },
+    ]
+
+    const addStatusDialog = ref({
+      show: false,
+      loading: false,
+      form: {
+        service_type: '',
+        receipt_number: '',
+        date_of_filing: '',
+        date_of_decision: '',
+      },
+    })
+
+    const editStatusDialog = ref({
+      show: false,
+      loading: false,
+      form: {
+        service_type: '',
+        receipt_number: '',
+        date_of_filing: '',
+        date_of_decision: '',
+      },
+    })
+
+    const deleteStatusDialog = ref({
+      show: false,
+      loading: false,
+      status: null,
+    })
+    const viewStatusDialog = ref({
+      show: false,
+      loading: false,
+    })
 
     const sections = [
       {
@@ -180,6 +413,117 @@ export default {
       return colors[status?.toLowerCase()] || colors.default
     }
 
+    const fetchCaseStatuses = async () => {
+      viewStatusDialog.value.loading = true
+      try {
+        const response = await api.get(`/api/auth/case/${route.params.id}/statuses`)
+        caseStatuses.value = response.data.data
+      } catch (error) {
+        console.error('Error fetching case statuses:', error)
+        $q.notify({
+          type: 'negative',
+          message: 'Failed to load case statuses',
+        })
+      } finally {
+        viewStatusDialog.value.loading = false
+      }
+    }
+
+    const openAddStatusDialog = () => {
+      addStatusDialog.value.form = {
+        service_type: '',
+        receipt_number: '',
+        date_of_filing: '',
+        date_of_decision: '',
+      }
+      addStatusDialog.value.show = true
+    }
+
+    const openViewStatusDialog = async () => {
+      viewStatusDialog.value.show = true
+      await fetchCaseStatuses()
+    }
+
+    const openEditStatus = (status) => {
+      editStatusDialog.value.form = { ...status }
+      editStatusDialog.value.show = true
+    }
+
+    const confirmDeleteStatus = (status) => {
+      deleteStatusDialog.value.status = status
+      deleteStatusDialog.value.show = true
+    }
+
+    const submitCaseStatus = async () => {
+      addStatusDialog.value.loading = true
+      try {
+        const payload = {
+          ...addStatusDialog.value.form,
+          case_id: route.params.id,
+        }
+        await api.post('/api/auth/case/statuses', payload)
+        $q.notify({
+          type: 'positive',
+          message: 'Case status added successfully',
+        })
+        addStatusDialog.value.show = false
+        await fetchCaseStatuses()
+      } catch (error) {
+        console.error('Error adding case status:', error)
+        $q.notify({
+          type: 'negative',
+          message: error.response?.data?.message || 'Failed to add case status',
+        })
+      } finally {
+        addStatusDialog.value.loading = false
+      }
+    }
+
+    const updateCaseStatus = async () => {
+      editStatusDialog.value.loading = true
+      try {
+        await api.put(
+          `/api/auth/case/statuses/${editStatusDialog.value.form.id}`,
+          editStatusDialog.value.form,
+        )
+        $q.notify({
+          type: 'positive',
+          message: 'Case status updated successfully',
+        })
+        editStatusDialog.value.show = false
+        await fetchCaseStatuses()
+      } catch (error) {
+        console.error('Error updating case status:', error)
+        $q.notify({
+          type: 'negative',
+          message: error.response?.data?.message || 'Failed to update case status',
+        })
+      } finally {
+        editStatusDialog.value.loading = false
+      }
+    }
+
+    const deleteCaseStatus = async () => {
+      deleteStatusDialog.value.loading = true
+      try {
+        await api.delete(`/api/auth/case/statuses/${deleteStatusDialog.value.status.id}`)
+        $q.notify({
+          type: 'positive',
+          message: 'Case status deleted successfully',
+        })
+        deleteStatusDialog.value.show = false
+        await fetchCaseStatuses()
+      } catch (error) {
+        console.error('Error deleting case status:', error)
+        $q.notify({
+          type: 'negative',
+          message: error.response?.data?.message || 'Failed to delete case status',
+        })
+      } finally {
+        deleteStatusDialog.value.loading = false
+      }
+    }
+
     onMounted(() => {
       if (route.params.id) {
         fetchCaseData()
@@ -193,6 +537,19 @@ export default {
       navigateToSection,
       getStatusColor,
       fetchCaseData,
+      caseStatuses,
+      statusColumns,
+      addStatusDialog,
+      viewStatusDialog,
+      editStatusDialog,
+      deleteStatusDialog,
+      openAddStatusDialog,
+      openViewStatusDialog,
+      openEditStatus,
+      confirmDeleteStatus,
+      submitCaseStatus,
+      updateCaseStatus,
+      deleteCaseStatus,
     }
   },
 }

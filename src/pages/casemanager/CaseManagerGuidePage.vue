@@ -126,11 +126,11 @@
         <!-- Quick Actions -->
         <q-card class="q-mt-md" v-if="roleId === 2">
           <q-card-section>
-            <div class="text-h5 text-weight-bold text-primary q-mb-md">Quick Actions</div>
+            <div class="text-h5 text-weight-bold text-green q-mb-md">Quick Actions</div>
             <div class="row q-col-gutter-sm">
               <div class="col-6">
                 <q-btn
-                  color="primary"
+                  color="green"
                   class="full-width"
                   icon="person_add"
                   label="New Client"
@@ -139,7 +139,7 @@
               </div>
               <div class="col-6">
                 <q-btn
-                  color="secondary"
+                  color="green"
                   class="full-width"
                   icon="add_task"
                   label="New Case"

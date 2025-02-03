@@ -38,6 +38,16 @@
             </q-menu>
           </q-btn>
         </div>
+        <q-btn
+          flat
+          dense
+          round
+          icon="list"
+          aria-label="Case Status"
+          @click="rightDrawerOpen = !rightDrawerOpen"
+        >
+          <q-tooltip>Toggle Case Status</q-tooltip>
+        </q-btn>
       </q-toolbar>
     </q-header>
     <q-drawer
@@ -64,6 +74,61 @@
       </q-scroll-area>
     </q-drawer>
 
+    <q-drawer
+      v-model="rightDrawerOpen"
+      side="right"
+      bordered
+      :width="300"
+      class="bg-white"
+      v-if="currentUser && caseDetails"
+    >
+      <q-scroll-area class="fit">
+        <div class="q-pa-md">
+          <div class="text-h6 text-green q-mb-md">
+            <q-icon name="folder" class="q-mr-sm" />
+            Case Status
+          </div>
+
+          <q-list padding class="case-status-list">
+            <template v-for="status in caseStatuses" :key="status.id">
+              <q-card flat bordered class="q-mb-sm">
+                <q-card-section>
+                  <div class="text-subtitle2 text-weight-bold text-green">
+                    {{ status.service_type }}
+                  </div>
+                  <div class="q-mt-sm">
+                    <a :href="`https://egov.uscis.gov`" target="_blank" class="receipt-link">
+                      {{ status.receipt_number }}
+                    </a>
+                    <q-btn
+                      flat
+                      dense
+                      round
+                      icon="content_copy"
+                      size="sm"
+                      class="q-ml-sm"
+                      @click="() => copyToClipboard(status.receipt_number)"
+                    >
+                      <q-tooltip>Copy receipt number</q-tooltip>
+                    </q-btn>
+                  </div>
+                  <div class="text-caption q-mt-sm">
+                    <template v-if="status.date_of_filing">
+                      Filed: {{ formatDate(status.date_of_filing) }}
+                    </template>
+                    <template v-if="status.date_of_decision">
+                      <br />Decision: {{ formatDate(status.date_of_decision) }}
+                    </template>
+                  </div>
+                  <div class="q-mt-sm"></div>
+                </q-card-section>
+              </q-card>
+            </template>
+          </q-list>
+        </div>
+      </q-scroll-area>
+    </q-drawer>
+
     <q-page-container>
       <div class="announcements-container" v-if="currentUser">
         <CustomCarousel :announcements="announcementStore.announcements" />
@@ -73,20 +138,24 @@
   </q-layout>
 </template>
 <script setup>
-import { ref, computed, onBeforeMount } from 'vue'
+import { ref, computed, onBeforeMount, onMounted, watch } from 'vue'
 import { useAnnouncementStore } from 'stores/announcement'
 import EssentialLink from 'components/EssentialLink.vue'
 import CustomCarousel from 'components/CustomCarousel.vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { api } from 'boot/axios'
+import { date } from 'quasar'
 
 const router = useRouter()
 const $q = useQuasar()
 const announcementStore = useAnnouncementStore()
 const leftDrawerOpen = ref(false)
+const rightDrawerOpen = ref(true)
 const currentUser = ref(null)
 const caseDetails = ref(null)
+const caseStatuses = ref([])
+const loading = ref(false)
 
 // Safely get user data
 const getUserData = () => {
@@ -283,13 +352,150 @@ const linksList = [
     link: '/client/packagetracking',
   },
 ]
+
+// Format date helper
+const formatDate = (dateString) => {
+  if (!dateString) return ''
+  return date.formatDate(dateString, 'MMM D, YYYY')
+}
+
+// Get status color helper
+// const getStatusColor = (status) => {
+//   const colors = {
+//     'Case Filed': 'primary',
+//     Pending: 'warning',
+//     Inactive: 'grey',
+//     Approved: 'positive',
+//     Denied: 'negative',
+//   }
+//   return colors[status] || 'grey'
+// }
+
+// Get case ID from localStorage
+const getCaseId = () => {
+  try {
+    const caseData = localStorage.getItem('caseDetails')
+    if (!caseData) return null
+
+    const parsedData = JSON.parse(caseData)
+    return parsedData?.data?.id
+  } catch (error) {
+    console.error('Error parsing case details:', error)
+    return null
+  }
+}
+
+// Fetch case statuses
+const fetchCaseStatuses = async () => {
+  const currentCaseId = getCaseId()
+  if (!currentCaseId) {
+    console.log('No case ID found')
+    return
+  }
+
+  loading.value = true
+  try {
+    console.log('Fetching case statuses for ID:', currentCaseId)
+    const response = await api.get(`/api/auth/case/${currentCaseId}/statuses`)
+    console.log('API Response:', response.data)
+
+    if (response.data.success) {
+      caseStatuses.value = response.data.data
+      console.log('Case statuses loaded:', caseStatuses.value)
+    } else {
+      throw new Error(response.data.message)
+    }
+  } catch (error) {
+    console.error('Error fetching case statuses:', error)
+    $q.notify({
+      type: 'negative',
+      message: 'Failed to load case statuses',
+      position: 'top',
+    })
+    caseStatuses.value = []
+  } finally {
+    loading.value = false
+  }
+}
+
+// Watch for changes in localStorage
+watch(
+  () => localStorage.getItem('caseDetails'),
+  (newValue) => {
+    console.log('Case details changed in localStorage:', newValue)
+    if (newValue) {
+      fetchCaseStatuses()
+    } else {
+      caseStatuses.value = []
+    }
+  },
+  { immediate: true }, // This will trigger the watch immediately on setup
+)
+
+// Initial fetch on mount with a slight delay to ensure localStorage is populated
+onMounted(() => {
+  setTimeout(() => {
+    fetchCaseStatuses()
+  }, 500)
+})
+
+// Add this copy method
+const copyToClipboard = async (text) => {
+  try {
+    await navigator.clipboard.writeText(text)
+    $q.notify({
+      message: 'Receipt number copied to clipboard',
+      color: 'positive',
+      position: 'top',
+      timeout: 1000,
+    })
+  } catch (err) {
+    console.error('Failed to copy:', err)
+    // Fallback copy method
+    const textArea = document.createElement('textarea')
+    textArea.value = text
+    document.body.appendChild(textArea)
+    textArea.select()
+    try {
+      document.execCommand('copy')
+      $q.notify({
+        message: 'Receipt number copied to clipboard',
+        color: 'positive',
+        position: 'top',
+        timeout: 1000,
+      })
+    } catch (err) {
+      console.error('Fallback copy failed:', err)
+      $q.notify({
+        message: 'Failed to copy receipt number',
+        color: 'negative',
+        position: 'top',
+      })
+    }
+    document.body.removeChild(textArea)
+  }
+}
 </script>
 
-<style scoped>
-.topbar {
-  margin-left: 20%;
+<style lang="scss" scoped>
+.case-status-list {
+  .receipt-link {
+    color: #1976d2;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
-.announcements-container {
-  margin-top: -20px;
+
+.q-card {
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  }
 }
 </style>
