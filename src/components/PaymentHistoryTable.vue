@@ -59,7 +59,7 @@
       </div>
     </div>
 
-    <div class="text-h6 q-mb-md">Payment History</div>
+    <div class="text-h6 q-mb-md text-green">Payment History</div>
 
     <!-- Loading State -->
     <div v-if="store.isLoading" class="text-center q-pa-md">

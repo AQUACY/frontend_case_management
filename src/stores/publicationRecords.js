@@ -13,35 +13,61 @@ export const usePublicationRecordsStore = defineStore('publicationRecords', {
     async fetchPublicationRecords() {
       this.loading = true
       try {
-        console.log('Fetching publication records for case:', this.cases.data.id)
-        const response = await api.get(`/api/auth/cases/${this.cases.data.id}/publication-records`)
-        console.log('Fetched publication records:', response.data)
+        const caseId = this.cases?.data?.id
+        if (!caseId) throw new Error('No case ID found')
+
+        const response = await api.get(`/api/auth/cases/${caseId}/publication-records`)
         this.publicationRecords = response.data.data
-        return response.data
+        return this.publicationRecords
       } catch (error) {
         console.error('Error fetching publication records:', error)
-        this.error = error.message || 'Failed to fetch publication records'
+        if (error.response?.status === 404) {
+          this.publicationRecords = null
+          return null
+        }
         throw error
       } finally {
         this.loading = false
       }
     },
 
-    async savePublicationRecords(payload) {
-      this.loading = true
+    async savePublicationRecords(data) {
       try {
-        const response = await api.post(
-          `/api/auth/cases/${this.cases.data.id}/publication-records`,
-          payload,
-        )
-        // Update local state after successful save
-        this.publicationRecords = response.data
+        const caseId = this.cases?.data?.id
+        if (!caseId) throw new Error('No case ID found')
+
+        const formattedData = {
+          ...data,
+          case_id: caseId,
+        }
+
+        let response
+        if (this.publicationRecords) {
+          // Update existing record
+          response = await api.patch(`/api/auth/cases/${caseId}/publication-records`, formattedData)
+        } else {
+          // Create new record
+          response = await api.post('/api/auth/cases/publication-records', formattedData)
+        }
+
+        this.publicationRecords = response.data.data
         return response.data
       } catch (error) {
-        this.error = error.message || 'Failed to save publication records'
+        console.error('Error saving publication records:', error)
         throw error
-      } finally {
-        this.loading = false
+      }
+    },
+
+    async deletePublicationRecords() {
+      try {
+        const caseId = this.cases?.data?.id
+        if (!caseId) throw new Error('No case ID found')
+
+        await api.delete(`/api/auth/cases/${caseId}/publication-records`)
+        this.publicationRecords = null
+      } catch (error) {
+        console.error('Error deleting publication records:', error)
+        throw error
       }
     },
 

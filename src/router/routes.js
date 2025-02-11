@@ -5,10 +5,10 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/IndexPage.vue') },
       {
-        path: '/client/announcement',
+        path: '/client/news-update',
         component: () => import('src/pages/client/AnnouncementView.vue'),
         meta: {
-          title: 'Announcements',
+          title: 'News & Update',
         },
       },
       {
@@ -72,10 +72,38 @@ const routes = [
         },
       },
       {
-        path: '/client/questionnaire',
+        path: '/client/form-questionnaire',
         component: () => import('src/pages/client/QuestionnaireView.vue'),
         meta: {
-          title: 'Questionnaire',
+          title: 'Form I-140 Questionnaire',
+        },
+      },
+      {
+        path: '/client/experience',
+        component: () => import('src/pages/client/ExperienceView.vue'),
+        meta: {
+          title: 'Education and Professional Experience',
+        },
+      },
+      {
+        path: '/client/research-summary',
+        component: () => import('src/pages/client/ResearchSummaryView.vue'),
+        meta: {
+          title: 'Research Summary',
+        },
+      },
+      {
+        path: '/client/extraordinary-ability',
+        component: () => import('src/pages/client/ExtraordinaryAbilityView.vue'),
+        meta: {
+          title: 'Extraordinary Ability',
+        },
+      },
+      {
+        path: '/client/personal-statement',
+        component: () => import('src/pages/client/PersonalStatementView.vue'),
+        meta: {
+          title: 'Personal Statement',
         },
       },
       {
@@ -90,6 +118,20 @@ const routes = [
         component: () => import('src/pages/client/ProposedEndavorRecord.vue'),
         meta: {
           title: 'Endavor',
+        },
+      },
+      {
+        path: '/client/billing',
+        component: () => import('src/pages/client/BillingView.vue'),
+        meta: {
+          title: 'Billing',
+        },
+      },
+      {
+        path: '/client/visa-faq',
+        component: () => import('src/pages/client/VISA-Faq.vue'),
+        meta: {
+          title: 'VISA FAQ',
         },
       },
       {
@@ -156,6 +198,14 @@ const routes = [
         component: () => import('pages/casemanager/PaymentsPage.vue'),
         meta: {
           title: 'Payments',
+        },
+      },
+      {
+        path: '/case/:id/billing',
+        name: 'casemanager-case-billing',
+        component: () => import('pages/casemanager/caseDetails/BillingView.vue'),
+        meta: {
+          title: 'Billing',
         },
       },
       {
@@ -261,7 +311,7 @@ const routes = [
       },
     ],
   },
-  
+
   // {
   //   path: '/case/:id/documents',
   //   component: () => import('pages/casemanager/caseDetails/DocumentsPage.vue'),

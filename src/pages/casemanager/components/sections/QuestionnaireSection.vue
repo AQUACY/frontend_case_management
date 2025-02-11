@@ -103,7 +103,17 @@
               <q-input
                 readonly
                 v-model="questionnaireData.full_middle_name"
-                label="Middle Name"
+                label="Full Middle Name"
+                outlined
+                dense
+                stack-label
+              />
+            </div>
+            <div class="col-12 col-md-6">
+              <q-input
+                readonly
+                v-model="questionnaireData.native_alphabet"
+                label="Name in Native Alphabet"
                 outlined
                 dense
                 stack-label
@@ -119,51 +129,61 @@
                 stack-label
               />
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-4">
               <q-input
                 readonly
-                v-model="questionnaireData.native_alphabet"
-                label="Native Alphabet"
+                v-model="questionnaireData.city_town_village_of_birth"
+                label="City/Town/Village of Birth"
                 outlined
                 dense
                 stack-label
               />
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-4">
               <q-input
                 readonly
-                v-model="questionnaireData.birth_country"
-                label="Birth Country"
+                v-model="questionnaireData.state_of_birth"
+                label="State of Birth"
                 outlined
                 dense
                 stack-label
               />
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-4">
               <q-input
                 readonly
-                v-model="questionnaireData.birth_state_province"
-                label="Birth State/Province"
+                v-model="questionnaireData.country_of_birth"
+                label="Country of Birth"
                 outlined
                 dense
                 stack-label
               />
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-4">
               <q-input
                 readonly
-                v-model="questionnaireData.birth_city_town"
-                label="Birth City/Town"
+                v-model="questionnaireData.nationality"
+                label="Nationality"
                 outlined
                 dense
                 stack-label
               />
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-4">
               <q-input
                 readonly
-                v-model="questionnaireData.citizenship_country"
-                label="Citizenship Country"
+                v-model="questionnaireData.alien_registration_number"
+                label="Alien Registration Number"
+                outlined
+                dense
+                stack-label
+              />
+            </div>
+            <div class="col-12 col-md-4">
+              <q-input
+                readonly
+                v-model="questionnaireData.ssn"
+                label="SSN"
                 outlined
                 dense
                 stack-label
@@ -180,27 +200,27 @@
               <q-input
                 readonly
                 v-model="questionnaireData.street_number_name"
-                label="Street Address"
+                label="Street Number and Name"
                 outlined
                 dense
                 stack-label
               />
             </div>
-            <div class="col-12">
+            <div class="col-12 col-md-6">
               <q-input
                 readonly
                 v-model="questionnaireData.type"
-                label="Type"
+                label="Address Type"
                 outlined
                 dense
                 stack-label
               />
             </div>
-            <div class="col-12">
+            <div class="col-12 col-md-6">
               <q-input
                 readonly
-                v-model="questionnaireData.type_details"
-                label="Type Details"
+                v-model="questionnaireData.type_detail"
+                label="Type Detail"
                 outlined
                 dense
                 stack-label
@@ -288,26 +308,6 @@
                 readonly
                 v-model="questionnaireData.passport_country"
                 label="Passport Country"
-                outlined
-                dense
-                stack-label
-              />
-            </div>
-            <div class="col-12 col-md-6">
-              <q-input
-                readonly
-                v-model="questionnaireData.ssn"
-                label="SSN"
-                outlined
-                dense
-                stack-label
-              />
-            </div>
-            <div class="col-12 col-md-6">
-              <q-input
-                readonly
-                v-model="questionnaireData.alien_registration_number"
-                label="Alien Registration Number"
                 outlined
                 dense
                 stack-label

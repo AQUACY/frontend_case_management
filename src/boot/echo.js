@@ -15,6 +15,10 @@ export default boot(() => {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
         Accept: 'application/json',
+
+
+
+        
       },
     },
   })

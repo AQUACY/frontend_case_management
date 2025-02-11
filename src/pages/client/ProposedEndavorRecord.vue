@@ -210,7 +210,7 @@
         </q-card>
 
         <!-- Dynamic Employment Status Section based on selected petition types -->
-        <q-card flat bordered class="q-mb-md">
+        <!-- <q-card flat bordered class="q-mb-md">
           <q-card-section>
             <div class="text-subtitle1 q-mb-md">D) Employment Status</div>
 
@@ -254,8 +254,8 @@
               />
             </div>
           </q-card-section>
-        </q-card>
-        <template v-for="type in formData.type" :key="type">
+        </q-card> -->
+        <!-- <template v-for="type in formData.type" :key="type">
           <q-card flat bordered class="q-mb-md">
             <q-card-section>
               <div class="text-subtitle1 q-mb-md">Employment Status for {{ type }}</div>
@@ -277,7 +277,7 @@
               </div>
             </q-card-section>
           </q-card>
-        </template>
+        </template> -->
 
         <!-- Save Button -->
         <div class="row justify-end q-mt-lg">
