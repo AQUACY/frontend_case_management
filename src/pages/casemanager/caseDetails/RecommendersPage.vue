@@ -1,20 +1,20 @@
 <template>
-  <div class="questionnaire-page">
+  <div class="extraordinary-page">
     <div class="row items-center q-mb-md">
       <q-btn icon="arrow_back" flat round @click="router.back()" />
-      <div class="text-h6 q-ml-sm">Form I-140 Questionnaire</div>
+      <div class="text-h6 q-ml-sm">Recommendation Letters</div>
     </div>
-    <QuestionnaireSection :case-id="caseId" />
+    <Recommenders :case-id="caseId" />
   </div>
 </template>
 
 <script>
 import { useRoute, useRouter } from 'vue-router'
-import QuestionnaireSection from '../components/sections/QuestionnaireSection.vue'
+import Recommenders from '../components/sections/RecommendationLettersSection.vue'
 
 export default {
-  name: 'QuestionnairePage',
-  components: { QuestionnaireSection },
+  name: 'RecommendersPage',
+  components: { Recommenders },
   setup() {
     const route = useRoute()
     const router = useRouter()

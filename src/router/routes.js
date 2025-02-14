@@ -277,13 +277,33 @@ const routes = [
         meta: { requiresAuth: true },
       },
       {
+        path: '/case/:id/research-summary',
+        component: () => import('pages/casemanager/caseDetails/ResearchSummary.vue'),
+        meta: { requiresAuth: true },
+      },
+      {
         path: '/case/:id/proposed-endeavor',
         component: () => import('pages/casemanager/caseDetails/ProposedEndeavorPage.vue'),
         meta: { requiresAuth: true },
       },
       {
-        path: '/case/:id/contributions',
-        component: () => import('pages/casemanager/caseDetails/SummaryOfContributions.vue'),
+        path: '/case/:id/Experience&Education',
+        component: () => import('pages/casemanager/caseDetails/ExperienceAndEducation.vue'),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: '/case/:id/extraordinary-abilities',
+        component: () => import('pages/casemanager/caseDetails/ExtraOrdinaryPage.vue'),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: '/case/:id/recommendation-letters',
+        component: () => import('pages/casemanager/caseDetails/RecommendersPage.vue'),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: '/case/:id/personal-statement',
+        component: () => import('pages/casemanager/caseDetails/PersonalStatementPage.vue'),
         meta: { requiresAuth: true },
       },
       {

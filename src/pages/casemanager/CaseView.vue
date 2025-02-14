@@ -269,9 +269,7 @@ import { useQuasar } from 'quasar'
 
 export default {
   name: 'CaseView',
-  components: {
-
-  },
+  components: {},
   setup() {
     const router = useRouter()
     const route = useRoute()
@@ -336,7 +334,7 @@ export default {
         description: 'Professional achievements and impact',
         icon: 'stars',
         color: 'green',
-        path: `/case/${route.params.id}/contributions`,
+        path: `/case/${route.params.id}/Experience&Education`,
       },
       {
         title: 'Research Summary',
