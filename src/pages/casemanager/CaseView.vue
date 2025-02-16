@@ -377,17 +377,18 @@ export default {
         color: 'green',
         path: `/case/${route.params.id}/extraordinary-abilities`,
       },
+
       {
         title: 'Recommendation Letters',
         description: 'Track recommendation letters',
-        icon: 'recommendation',
-        color: 'green',
+        icon: 'recommend',
+        color: 'green', 
         path: `/case/${route.params.id}/recommendation-letters`,
       },
       {
         title: 'Personal Statement',
         description: 'Track personal statement',
-        icon: 'personal',
+        icon: 'person',
         color: 'green',
         path: `/case/${route.params.id}/personal-statement`,
       },
