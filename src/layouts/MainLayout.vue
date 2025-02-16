@@ -7,7 +7,7 @@
           <q-img src="~assets/favicon.png" width="40px" height="40px" />
         </q-avatar>
         <q-toolbar-title class="q-pl-xl q-pt-sm text-bold">
-          Greenpath Client Portal
+          GreenPath Client Portal
         </q-toolbar-title>
         <!-- <q-toolbar-title class="topbar">
           <q-btn flat label="My Order" @click="goTo('announcements')" />
@@ -274,24 +274,32 @@ const toggleLeftDrawer = () => {
 // List of links to display
 const linksList = [
   {
-    title: 'Announcement',
+    title: 'News & Update',
     caption: '',
-    link: '/client/announcement',
+    link: '/client/news-update',
   },
   {
     title: 'Overview',
-    caption: 'github.com/quasarframework',
+    caption: '',
     link: '/client/overview',
   },
   {
-    title: 'Client Record',
+    title: 'Form I-140 Questionnaire',
     caption: '',
-    link: '/client/clientrecord',
+    icon: '',
+    link: '/client/form-questionnaire',
   },
   {
-    title: 'My Profile',
+    title: 'Education & Professional Experience',
     caption: '',
-    link: '/client/profile',
+    icon: '',
+    link: '/client/experience',
+  },
+  {
+    title: 'Research Summary',
+    caption: '',
+    icon: '',
+    link: '/client/research-summary',
   },
   {
     title: 'Proposed Endeavor',
@@ -299,33 +307,66 @@ const linksList = [
     link: '/client/popendeavor',
   },
   {
-    title: 'Referrers',
+    title: 'Publication & Editorial Record',
+    caption: '',
+    link: '/client/pubrecords',
+  },
+  {
+    title: 'Evidence of Extraordinary Ability',
+    caption: '',
+    link: '/client/extraordinary-ability',
+  },
+  {
+    title: 'Recommendation Letters',
     caption: '',
     link: '/client/referrers',
   },
   {
-    title: 'Summary of Contributions (SOC)',
+    title: 'Personal Statement',
     caption: '',
-    icon: '',
-    link: '/client/soc',
+    link: '/client/personal-statement',
   },
-  {
-    title: 'Pubilcation Records',
-    caption: '',
-    icon: '',
-    link: '/client/pubrecords',
-  },
+  // {
+  //   title: 'My Profile',
+  //   caption: '',
+  //   link: '/client/profile',
+  // },
+
+  // {
+  //   title: 'Summary of Contributions (SOC)',
+  //   caption: '',
+  //   icon: '',
+  //   link: '/client/soc',
+  // },
+  // {
+  //   title: 'Pubilcation Records',
+  //   caption: '',
+  //   icon: '',
+  //   link: '/client/pubrecords',
+  // },
   {
     title: 'Documents',
     caption: '',
     icon: '',
     link: '/client/documents',
   },
+  // {
+  //   title: 'I-485',
+  //   caption: '',
+  //   icon: '',
+  //   link: '/client/i-485',
+  // },
   {
-    title: 'I-485',
+    title: 'Case Preparation',
     caption: '',
     icon: '',
-    link: '/client/i-485',
+    link: '/client/casepreparation',
+  },
+  {
+    title: 'Billing',
+    caption: '',
+    icon: '',
+    link: '/client/billing',
   },
   {
     title: 'Messages',
@@ -334,19 +375,13 @@ const linksList = [
     link: '/client/messages',
   },
   {
-    title: 'Case Preparation',
+    title: 'VISA FAQ',
     caption: '',
     icon: '',
-    link: '/client/casepreparation',
+    link: '/client/visa-faq',
   },
   {
-    title: 'Questionnaire',
-    caption: '',
-    icon: '',
-    link: '/client/questionnaire',
-  },
-  {
-    title: 'Package Tracking',
+    title: 'Tracking',
     caption: '',
     icon: '',
     link: '/client/packagetracking',

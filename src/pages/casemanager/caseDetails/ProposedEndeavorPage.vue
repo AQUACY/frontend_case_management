@@ -122,7 +122,7 @@
             </div>
 
             <!-- Current Status Section -->
-            <div class="col-12">
+            <!-- <div class="col-12">
               <div class="text-subtitle2 text-weight-medium q-mb-sm">
                 Employment Status
                 <q-tooltip>
@@ -155,7 +155,7 @@
                   </div>
                 </template>
               </div>
-            </div>
+            </div> -->
           </div>
         </q-card-section>
       </template>

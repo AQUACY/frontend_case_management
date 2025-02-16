@@ -1,20 +1,20 @@
 <template>
-  <div class="questionnaire-page">
+  <div class="personal-statement-page">
     <div class="row items-center q-mb-md">
       <q-btn icon="arrow_back" flat round @click="router.back()" />
-      <div class="text-h6 q-ml-sm">Form I-140 Questionnaire</div>
+      <div class="text-h6 q-ml-sm">Personal Statement</div>
     </div>
-    <QuestionnaireSection :case-id="caseId" />
+    <PersonalStatement :case-id="caseId" />
   </div>
 </template>
 
 <script>
 import { useRoute, useRouter } from 'vue-router'
-import QuestionnaireSection from '../components/sections/QuestionnaireSection.vue'
+import PersonalStatement from '../components/sections/PersonalStatementSection.vue'
 
 export default {
-  name: 'QuestionnairePage',
-  components: { QuestionnaireSection },
+  name: 'PersonalStatementPage',
+  components: { PersonalStatement },
   setup() {
     const route = useRoute()
     const router = useRouter()

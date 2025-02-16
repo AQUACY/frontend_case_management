@@ -13,47 +13,57 @@ export const useQuestionnaireStore = defineStore('questionnaire', {
     async fetchQuestionnaire() {
       this.loading = true
       try {
-        const response = await api.get(`/api/auth/cases/questionnaire/${this.cases.data.id}`)
+        const caseId = this.cases?.data?.id
+        if (!caseId) throw new Error('No case ID found')
 
-        // Parse dates
-        if (response.data) {
-          const dateFields = ['dob', 'arrival_date', 'passport_expiration_date', 'admit_until_date']
+        const response = await api.get(`/api/auth/cases/questionnaire/${caseId}`)
+
+        if (response.data.success) {
+          const questionnaireData = response.data.data
+          console.log('Questionnaire data:', questionnaireData)
+
+          // Parse dates
+          const dateFields = [
+            'dob',
+            'last_arrival_date',
+            'expiration_date',
+            'expiration_date_for_passport',
+          ]
+
           dateFields.forEach((field) => {
-            if (response.data[field]) {
-              response.data[field] = response.data[field].split('T')[0]
+            if (questionnaireData[field]) {
+              questionnaireData[field] = questionnaireData[field].split('T')[0]
             }
           })
 
-          // Convert boolean values to Yes/No for enum fields
-          const enumFields = [
-            'dual_citizenship',
+          // Convert boolean values
+          const booleanFields = [
+            'alien_will_apply_for_visa_abroad',
+            'alien_in_us',
             'full_time_position',
             'permanent_position',
             'new_position',
-            'apply_visa_abroad',
-            'file_adjustment_status',
-            'simultaneous_petitions',
-            'prior_petition',
-            'removal_proceedings',
           ]
 
-          enumFields.forEach((field) => {
-            if (response.data[field] !== null) {
-              response.data[field] = response.data[field] ? 'Yes' : 'No'
+          booleanFields.forEach((field) => {
+            if (questionnaireData[field] !== null) {
+              questionnaireData[field] = questionnaireData[field] ? 'Yes' : 'No'
             }
           })
 
           // Parse family member dates
-          if (response.data.family_members) {
-            response.data.family_members = response.data.family_members.map((member) => ({
+          if (questionnaireData.family_members) {
+            questionnaireData.family_members = questionnaireData.family_members.map((member) => ({
               ...member,
               dob: member.dob ? member.dob.split('T')[0] : null,
             }))
           }
+
+          this.questionnaireData = questionnaireData
+          return questionnaireData
         }
 
-        this.questionnaireData = response.data
-        return response.data
+        throw new Error(response.data.message || 'Failed to fetch questionnaire')
       } catch (error) {
         console.error('API Error:', error.response?.data || error)
         throw error
@@ -65,60 +75,159 @@ export const useQuestionnaireStore = defineStore('questionnaire', {
     async saveQuestionnaire(data) {
       this.loading = true
       try {
-        // Define enum fields
-        const enumFields = [
-          'dual_citizenship',
+        const caseId = this.cases?.data?.id
+        if (!caseId) throw new Error('No case ID found')
+
+        // Format boolean fields
+        const booleanFields = [
+          'alien_will_apply_for_visa_abroad',
+          'alien_in_us',
           'full_time_position',
           'permanent_position',
           'new_position',
-          'apply_visa_abroad',
-          'file_adjustment_status',
-          'simultaneous_petitions',
-          'prior_petition',
-          'removal_proceedings',
         ]
 
-        // Format family members data
-        const formattedFamilyMembers =
-          data.family_members?.map((member) => {
-            const formattedMember = {
-              family_name: member.family_name,
-              given_name: member.given_name,
-              full_middle_name: member.full_middle_name,
-              relationship: member.relationship,
-              dob: member.dob,
-              birth_country: member.birth_country,
-              adjustment_status: member.adjustment_status,
-              immigrant_visa: member.immigrant_visa,
-            }
-
-            // Only include id if it exists (for updates)
-            if (member.id) {
-              formattedMember.id = member.id
-            }
-
-            return formattedMember
-          }) || []
-
-        // Create formatted data with enum values and formatted family members
+        // Clean and format the data
         const formattedData = {
           ...data,
-          ...enumFields.reduce(
+          user_id: this.cases.data.user_id,
+          case_id: caseId,
+        }
+
+        // Format string fields
+        const stringFields = [
+          'petition_type',
+          'petitioner',
+          'family_name',
+          'given_name',
+          'full_middle_name',
+          'native_alphabet',
+          'city_town_village_of_birth',
+          'state_of_birth',
+          'country_of_birth',
+          'nationality',
+          'alien_registration_number',
+          'ssn',
+          'worksite_type',
+          'city_town',
+          'state',
+          'zip_code',
+          'country',
+          'mobile_telephone',
+          'email_address',
+        ]
+
+        stringFields.forEach((field) => {
+          if (formattedData[field]) {
+            formattedData[field] = String(formattedData[field]).trim()
+          }
+        })
+
+        // Format boolean fields - set to true for 'Yes', null for 'No'
+        booleanFields.forEach((field) => {
+          if (field in formattedData) {
+            const value = formattedData[field]
+            formattedData[field] = value === true || value === 'Yes' || value === 1 ? true : null
+          }
+        })
+
+        // Log boolean values for debugging
+        console.log(
+          'Boolean field values after formatting:',
+          booleanFields.reduce(
             (acc, field) => ({
               ...acc,
-              [field]: data[field] || null,
+              [field]: formattedData[field],
             }),
             {},
           ),
-          family_members: formattedFamilyMembers,
+        )
+
+        // Rest of the formatting logic remains the same
+        const numericFields = ['annual_income', 'hours_per_week', 'wages']
+        numericFields.forEach((field) => {
+          if (formattedData[field]) {
+            formattedData[field] = Number(formattedData[field]) || null
+          }
+        })
+
+        const dateFields = [
+          'dob',
+          'last_arrival_date',
+          'expiration_date',
+          'expiration_date_for_passport',
+        ]
+        dateFields.forEach((field) => {
+          if (formattedData[field]) {
+            const date = new Date(formattedData[field])
+            formattedData[field] = date.toISOString().split('T')[0]
+          }
+        })
+
+        // Format family members with correct field names and validation
+        if (formattedData.family_members?.length) {
+          // Debug log before formatting
+          console.log('Raw family members data:', formattedData.family_members)
+
+          formattedData.family_members = formattedData.family_members
+            .filter((member) => {
+              // Only include members that have the required fields
+              const isValid =
+                member.family_name_last_name &&
+                member.given_name_first_name &&
+                member.relationship &&
+                member.dob &&
+                member.birth_country
+
+              if (!isValid) {
+                console.log('Filtered out incomplete member:', member)
+              }
+              return isValid
+            })
+            .map((member) => {
+              const formattedMember = {
+                id: member.id || undefined,
+                case_questionnaire_id: formattedData.id,
+                family_name_last_name: String(member.family_name_last_name).trim(),
+                given_name_first_name: String(member.given_name_first_name).trim(),
+                middle_name: member.middle_name ? String(member.middle_name).trim() : null,
+                relationship: String(member.relationship).trim(),
+                dob: member.dob ? new Date(member.dob).toISOString().split('T')[0] : null,
+                birth_country: String(member.birth_country).trim(),
+                adjustment_status: member.adjustment_status === 'Yes',
+                visa_abroad: member.visa_abroad === 'Yes',
+              }
+              console.log('Formatted member:', formattedMember)
+              return formattedMember
+            })
+
+          // Log the final formatted family members
+          console.log('Final formatted family members:', formattedData.family_members)
+        } else {
+          console.log('No family members to process')
         }
 
-        const response = await api.post(
-          `/api/auth/cases/${this.cases.data.id}/questionnaire`,
-          formattedData,
-        )
-        this.questionnaireData = response.data
-        return response.data
+        // Remove empty values (but keep null values for booleans)
+        Object.keys(formattedData).forEach((key) => {
+          if (
+            formattedData[key] === undefined ||
+            (formattedData[key] === null && !booleanFields.includes(key)) ||
+            formattedData[key] === ''
+          ) {
+            delete formattedData[key]
+          }
+        })
+
+        console.log('Final formatted data:', formattedData)
+
+        const response = await api.post(`/api/auth/cases/${caseId}/questionnaire`, formattedData)
+
+        if (response.data.data) {
+          this.questionnaireData = response.data.data
+          return response.data.data
+        }
+
+        throw new Error(response.data.message || 'Failed to save questionnaire')
       } catch (error) {
         console.error('API Error:', error.response?.data || error)
         throw error
@@ -127,70 +236,42 @@ export const useQuestionnaireStore = defineStore('questionnaire', {
       }
     },
 
-    async updateQuestionnaire(data) {
-      this.loading = true
+    async requestReview() {
       try {
-        // Format family members data
-        const formattedFamilyMembers =
-          data.family_members?.map((member) => {
-            const formattedMember = {
-              family_name: member.family_name,
-              given_name: member.given_name,
-              full_middle_name: member.full_middle_name,
-              relationship: member.relationship,
-              dob: member.dob,
-              birth_country: member.birth_country,
-              adjustment_status: member.adjustment_status,
-              immigrant_visa: member.immigrant_visa,
-            }
-
-            // Only include id if it exists (for updates)
-            if (member.id) {
-              formattedMember.id = member.id
-            }
-
-            return formattedMember
-          }) || []
-
-        const formattedData = {
-          ...data,
-          family_members: formattedFamilyMembers,
-        }
+        const questionnaireId = this.questionnaireData?.id
+        if (!questionnaireId) throw new Error('No questionnaire ID found')
 
         const response = await api.post(
-          `/api/auth/cases/${this.cases.data.id}/questionnaire`,
-          formattedData,
+          `/api/auth/case-questionnaire/${questionnaireId}/request-review`,
         )
-        this.questionnaireData = response.data
         return response.data
       } catch (error) {
         console.error('API Error:', error.response?.data || error)
         throw error
-      } finally {
-        this.loading = false
       }
     },
 
-    async deleteFamilyMember(questionnaireId, familyMemberId) {
-      this.loading = true
+    async deleteFamilyMember(familyMemberId) {
       try {
+        const questionnaireId = this.questionnaireData?.id
+        if (!questionnaireId) throw new Error('No questionnaire ID found')
+
         const response = await api.delete(
           `/api/auth/case-questionnaires/case/${questionnaireId}/${familyMemberId}/delete`,
         )
 
-        // Update local state by removing the family member
-        if (this.questionnaireData && this.questionnaireData.family_members) {
+        if (response.data.message) {
+          // Update local state
           this.questionnaireData.family_members = this.questionnaireData.family_members.filter(
             (member) => member.id !== familyMemberId,
           )
+          return response.data
         }
 
-        return response.data
+        throw new Error(response.data.message || 'Failed to delete family member')
       } catch (error) {
         console.error('API Error:', error.response?.data || error)
         throw error
-      } finally {
-        this.loading = false
       }
     },
   },

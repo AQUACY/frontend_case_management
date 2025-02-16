@@ -51,6 +51,12 @@
                   label="View Case Status"
                   @click="openViewStatusDialog"
                 />
+                <q-btn
+                  color="primary"
+                  icon="folder"
+                  label="Sample Documents"
+                  @click="sampleDocsDialog = true"
+                />
               </div>
             </q-card-section>
           </q-card>
@@ -86,7 +92,7 @@
         </template>
       </div>
 
-      <PaymentHistoryTable />
+      <!-- <PaymentHistoryTable /> -->
 
       <!-- Add Status Dialog -->
       <q-dialog v-model="addStatusDialog.show" persistent>
@@ -255,6 +261,8 @@
           </q-card-actions>
         </q-card>
       </q-dialog>
+
+      <SampleDocumentsDialog v-model="sampleDocsDialog" />
     </div>
   </div>
 </template>
@@ -263,14 +271,15 @@
 import { computed, onMounted, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useCasesStore } from 'stores/casemanager/casesStore'
-import PaymentHistoryTable from 'src/components/PaymentHistoryTables.vue'
+
 import { api } from 'boot/axios'
 import { useQuasar } from 'quasar'
+import SampleDocumentsDialog from './components/SampleDocumentsDialog.vue'
 
 export default {
   name: 'CaseView',
   components: {
-    PaymentHistoryTable,
+    SampleDocumentsDialog,
   },
   setup() {
     const router = useRouter()
@@ -323,34 +332,29 @@ export default {
       loading: false,
     })
 
+    const sampleDocsDialog = ref(false)
+
     const sections = [
       {
-        title: 'Client Records',
-        description: 'View and manage client personal information',
+        title: 'Form I-140 Questionnaire',
+        description: 'Case-related forms and questions',
+        icon: 'assignment',
+        color: 'green',
+        path: `/case/${route.params.id}/questionnaire`,
+      },
+      {
+        title: 'Education & Professional Experience',
+        description: 'Professional achievements and impact',
+        icon: 'stars',
+        color: 'green',
+        path: `/case/${route.params.id}/Experience&Education`,
+      },
+      {
+        title: 'Research Summary',
+        description: 'View and manage client research summary information',
         icon: 'person',
         color: 'green',
-        path: `/case/${route.params.id}/client-records`,
-      },
-      {
-        title: 'Documents',
-        description: 'Access case-related documents and files',
-        icon: 'folder',
-        color: 'green',
-        path: `/case/${route.params.id}/documents`,
-      },
-      {
-        title: 'My Profile',
-        description: 'View and update profile information',
-        icon: 'account_circle',
-        color: 'green',
-        path: `/case/${route.params.id}/profile`,
-      },
-      {
-        title: 'Messages',
-        description: 'Communication history and updates',
-        icon: 'message',
-        color: 'green',
-        path: `/case/${route.params.id}/messages`,
+        path: `/case/${route.params.id}/research-summary`,
       },
       {
         title: 'Proposed Endeavor',
@@ -360,32 +364,54 @@ export default {
         path: `/case/${route.params.id}/proposed-endeavor`,
       },
       {
-        title: 'Publication Records',
+        title: 'Publication & Editorial Records',
         description: 'Academic and research publications',
         icon: 'library_books',
         color: 'green',
         path: `/case/${route.params.id}/publications`,
       },
       {
-        title: 'Questionnaire',
-        description: 'Case-related forms and questions',
-        icon: 'assignment',
-        color: 'green',
-        path: `/case/${route.params.id}/questionnaire`,
-      },
-      {
-        title: 'Summary of Contributions',
-        description: 'Professional achievements and impact',
-        icon: 'stars',
-        color: 'green',
-        path: `/case/${route.params.id}/contributions`,
-      },
-      {
-        title: 'I-485 Application',
-        description: 'Track I-485 application status',
+        title: 'Evidence of Extraordinary Abilities',
+        description: 'Track evidence of extraordinary abilities',
         icon: 'description',
         color: 'green',
-        path: `/case/${route.params.id}/i485`,
+        path: `/case/${route.params.id}/extraordinary-abilities`,
+      },
+      {
+        title: 'Recommendation Letters',
+        description: 'Track recommendation letters',
+        icon: 'recommendation',
+        color: 'green',
+        path: `/case/${route.params.id}/recommendation-letters`,
+      },
+      {
+        title: 'Personal Statement',
+        description: 'Track personal statement',
+        icon: 'personal',
+        color: 'green',
+        path: `/case/${route.params.id}/personal-statement`,
+      },
+      {
+        title: 'Documents',
+        description: 'Access case-related documents and files',
+        icon: 'folder',
+        color: 'green',
+        path: `/case/${route.params.id}/documents`,
+      },
+
+      {
+        title: 'Messages',
+        description: 'Communication history and updates',
+        icon: 'message',
+        color: 'green',
+        path: `/case/${route.params.id}/messages`,
+      },
+      {
+        title: 'Billing',
+        description: 'View billing information',
+        icon: 'wallet',
+        color: 'green',
+        path: `/case/${route.params.id}/billing`,
       },
     ]
 
@@ -550,6 +576,7 @@ export default {
       submitCaseStatus,
       updateCaseStatus,
       deleteCaseStatus,
+      sampleDocsDialog,
     }
   },
 }
