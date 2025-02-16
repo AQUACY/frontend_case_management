@@ -51,6 +51,12 @@
                   label="View Case Status"
                   @click="openViewStatusDialog"
                 />
+                <q-btn
+                  color="primary"
+                  icon="folder"
+                  label="Sample Documents"
+                  @click="sampleDocsDialog = true"
+                />
               </div>
             </q-card-section>
           </q-card>
@@ -255,6 +261,8 @@
           </q-card-actions>
         </q-card>
       </q-dialog>
+
+      <SampleDocumentsDialog v-model="sampleDocsDialog" />
     </div>
   </div>
 </template>
@@ -266,10 +274,13 @@ import { useCasesStore } from 'stores/casemanager/casesStore'
 
 import { api } from 'boot/axios'
 import { useQuasar } from 'quasar'
+import SampleDocumentsDialog from './components/SampleDocumentsDialog.vue'
 
 export default {
   name: 'CaseView',
-  components: {},
+  components: {
+    SampleDocumentsDialog,
+  },
   setup() {
     const router = useRouter()
     const route = useRoute()
@@ -320,6 +331,8 @@ export default {
       show: false,
       loading: false,
     })
+
+    const sampleDocsDialog = ref(false)
 
     const sections = [
       {
@@ -563,6 +576,7 @@ export default {
       submitCaseStatus,
       updateCaseStatus,
       deleteCaseStatus,
+      sampleDocsDialog,
     }
   },
 }
