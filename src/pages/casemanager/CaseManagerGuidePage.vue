@@ -122,7 +122,7 @@
             </q-list>
           </q-card-section>
         </q-card>
-        <q-card class="q-mt-md" v-if="roleId === 2">
+        <!-- <q-card class="q-mt-md" v-if="roleId === 2">
           <q-card-section>
             <div class="text-h5 text-weight-bold text-green q-mb-md">Quick Actions</div>
             <div class="row q-col-gutter-sm">
@@ -146,7 +146,7 @@
               </div>
             </div>
           </q-card-section>
-        </q-card>
+        </q-card> -->
         <!-- Quick Actions -->
         <q-card class="q-mt-md" v-if="roleId === 2">
           <q-card-section>
