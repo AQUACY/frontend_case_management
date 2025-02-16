@@ -267,8 +267,8 @@ export default {
           type: 'docx',
         },
         {
-          name: 'CASE MANAGER GUIDE ADVANCED DEGREE REQUIREMENT',
-          path: 'CASE MANAGER GUIDE ADVANCED DEGREE REQUIREMENT.docx',
+          name: 'CASE MANAGER GUIDE ADVISING CLIENTS ON RECOMMENDER SELECTION',
+          path: 'CASE MANAGER GUIDE ADVISING CLIENTS ON RECOMMENDER SELECTION.docx',
           type: 'docx',
         },
         {
