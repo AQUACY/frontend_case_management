@@ -522,7 +522,7 @@ export default {
             label: `${user.name} (${user.email})`,
             roles: user.roles || [],
           }))
-          .filter((user) => Array.isArray(user.roles) && user.roles.includes('Guest'))
+          .filter((user) => Array.isArray(user.roles) && user.roles.includes('Client'))
 
         console.log('Case Managers:', caseManagers.value) // Debug log
         console.log('Clients:', clients.value) // Debug log

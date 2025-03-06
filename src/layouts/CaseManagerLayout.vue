@@ -227,9 +227,9 @@ export default {
               link: '/casemanager',
             },
             {
-              title: 'Clients',
+              title: 'Users',
               icon: 'people',
-              link: '/casemanager/clients',
+              link: '/casemanager/users',
             },
             {
               title: 'Cases',

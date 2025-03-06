@@ -190,7 +190,7 @@ export default {
     const users = ref([])
     const newUserDialog = ref(false)
     const editUserDialog = ref(false)
-    const roles = ['Administrator', 'Case Manager', 'Guest']
+    const roles = ['Case Manager', 'Client']
 
     const columns = [
       { name: 'id', label: 'ID', field: 'id', sortable: true },
