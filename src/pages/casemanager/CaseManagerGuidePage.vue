@@ -157,8 +157,8 @@
                   color="green"
                   class="full-width"
                   icon="person_add"
-                  label="New Client"
-                  to="/casemanager/clients"
+                  label="New User"
+                  to="/casemanager/users"
                 />
               </div>
               <div class="col-6">

@@ -185,7 +185,7 @@ const routes = [
         },
       },
       {
-        path: 'clients',
+        path: 'users',
         name: 'casemanager-clients',
         component: () => import('pages/casemanager/ClientsPage.vue'),
         meta: {
