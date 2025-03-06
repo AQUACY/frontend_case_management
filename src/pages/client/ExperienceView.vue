@@ -33,6 +33,41 @@
                 </div>
                 <div class="col-12 col-md-6">
                   <q-input
+                    v-model="educationForm.location"
+                    label="Location *"
+                    :rules="[(val) => !!val || 'Required']"
+                    outlined
+                  />
+                </div>
+                <div class="col-12 col-md-6">
+                  <q-input
+                    v-model="educationForm.degree_type"
+                    label="Degree Type *"
+                    :rules="[(val) => !!val || 'Required']"
+                    outlined
+                  />
+                </div>
+                <div class="col-12 col-md-6">
+                  <q-input v-model="educationForm.degree_majors" label="Major(s)" outlined />
+                </div>
+                <div class="col-12 col-md-6">
+                  <q-input v-model="educationForm.degree_minors" label="Minor(s)" outlined />
+                </div>
+                <div class="col-12 col-md-6">
+                  <q-input
+                    v-model="educationForm.start_year"
+                    label="Start Year *"
+                    type="number"
+                    :rules="[
+                      (val) => !!val || 'Required',
+                      (val) => val >= 1900 || 'Year must be 1900 or later',
+                      (val) => val <= new Date().getFullYear() + 10 || 'Invalid future year',
+                    ]"
+                    outlined
+                  />
+                </div>
+                <div class="col-12 col-md-6">
+                  <q-input
                     v-model="educationForm.completion_year"
                     label="Completion Year *"
                     type="number"
@@ -51,7 +86,12 @@
               <q-item v-for="edu in education" :key="edu.id">
                 <q-item-section>
                   <q-item-label>{{ edu.university_name }}</q-item-label>
+                  <q-item-label caption>Start Year: {{ edu.start_year }}</q-item-label>
                   <q-item-label caption>Completed: {{ edu.completion_year }}</q-item-label>
+                  <q-item-label caption>Location: {{ edu.location }}</q-item-label>
+                  <q-item-label caption>Degree Type: {{ edu.degree_type }}</q-item-label>
+                  <q-item-label caption>Major(s): {{ edu.degree_majors }}</q-item-label>
+                  <q-item-label caption>Minor(s): {{ edu.degree_minors }}</q-item-label>
                 </q-item-section>
                 <q-item-section side>
                   <div class="row items-center">
@@ -224,6 +264,27 @@
               outlined
             />
             <q-input
+              v-model="educationDialog.form.location"
+              label="Location *"
+              :rules="[(val) => !!val || 'Required']"
+              outlined
+            />
+            <q-input
+              v-model="educationDialog.form.degree_type"
+              label="Degree Type *"
+              :rules="[(val) => !!val || 'Required']"
+              outlined
+            />
+            <q-input v-model="educationDialog.form.degree_majors" label="Major(s)" outlined />
+            <q-input v-model="educationDialog.form.degree_minors" label="Minor(s)" outlined />
+            <q-input
+              v-model="educationDialog.form.start_year"
+              label="Start Year *"
+              type="number"
+              :rules="[(val) => !!val || 'Required']"
+              outlined
+            />
+            <q-input
               v-model="educationDialog.form.completion_year"
               label="Completion Year *"
               type="number"
@@ -377,6 +438,11 @@ export default {
 
     const educationForm = ref({
       university_name: '',
+      location: '',
+      degree_type: '',
+      degree_majors: '',
+      degree_minors: '',
+      start_year: '',
       completion_year: '',
     })
 
@@ -403,6 +469,11 @@ export default {
       form: {
         id: null,
         university_name: '',
+        location: '',
+        degree_type: '',
+        degree_majors: '',
+        degree_minors: '',
+        start_year: '',
         completion_year: '',
       },
     })
