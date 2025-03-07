@@ -15,7 +15,7 @@ const routes = [
         path: '/client/overview',
         component: () => import('src/pages/client/OverView.vue'),
         meta: {
-          title: 'Overview',
+          title: 'Welcome Note',
         },
       },
       {

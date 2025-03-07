@@ -26,19 +26,17 @@
                 <div class="col-12 col-md-6">
                   <q-select
                     v-model="formData.petition_type"
-                    label="Petition Type *"
+                    label="Petition Type"
                     :options="['EB-1A', 'EB-1B', 'EB-2 NIW']"
                     outlined
-                    :rules="[(val) => !!val || 'Required']"
                   />
                 </div>
                 <div class="col-12 col-md-6">
                   <q-select
                     v-model="formData.petitioner"
-                    label="Petitioner *"
+                    label="Petitioner "
                     :options="['Employer', 'Self']"
                     outlined
-                    :rules="[(val) => !!val || 'Required']"
                   />
                 </div>
               </div>
@@ -52,20 +50,10 @@
               <div class="row q-col-gutter-md">
                 <!-- Name Fields -->
                 <div class="col-12 col-md-4">
-                  <q-input
-                    v-model="formData.family_name"
-                    label="Family Name *"
-                    :rules="[(val) => !!val || 'Required']"
-                    outlined
-                  />
+                  <q-input v-model="formData.family_name" label="Family Name" outlined />
                 </div>
                 <div class="col-12 col-md-4">
-                  <q-input
-                    v-model="formData.given_name"
-                    label="Given Name *"
-                    :rules="[(val) => !!val || 'Required']"
-                    outlined
-                  />
+                  <q-input v-model="formData.given_name" label="Given Name " outlined />
                 </div>
                 <div class="col-12 col-md-4">
                   <q-input v-model="formData.full_middle_name" label="Middle Name" outlined />
@@ -80,13 +68,7 @@
                   />
                 </div>
                 <div class="col-12 col-md-6">
-                  <q-input
-                    v-model="formData.dob"
-                    label="Date of Birth *"
-                    type="date"
-                    :rules="[(val) => !!val || 'Required']"
-                    outlined
-                  />
+                  <q-input v-model="formData.dob" label="Date of Birth *" type="date" outlined />
                 </div>
 
                 <!-- Birth Location -->
@@ -94,7 +76,6 @@
                   <q-input
                     v-model="formData.city_town_village_of_birth"
                     label="City/Town/Village of Birth *"
-                    :rules="[(val) => !!val || 'Required']"
                     outlined
                   />
                 </div>
@@ -105,19 +86,13 @@
                   <q-input
                     v-model="formData.country_of_birth"
                     label="Country of Birth *"
-                    :rules="[(val) => !!val || 'Required']"
                     outlined
                   />
                 </div>
 
                 <!-- Identification -->
                 <div class="col-12 col-md-4">
-                  <q-input
-                    v-model="formData.nationality"
-                    label="Nationality *"
-                    :rules="[(val) => !!val || 'Required']"
-                    outlined
-                  />
+                  <q-input v-model="formData.nationality" label="Nationality *" outlined />
                 </div>
                 <div class="col-12 col-md-4">
                   <q-input
@@ -142,7 +117,6 @@
                   <q-input
                     v-model="formData.street_number_name"
                     label="Street Number and Name"
-                    :rules="[(val) => !!val || 'Required']"
                     outlined
                   />
                 </div>
@@ -150,41 +124,20 @@
                   <q-input
                     v-model="formData.type"
                     label="Type of Address [Apt, Str, Flr]"
-                    :rules="[(val) => !!val || 'Required']"
                     outlined
                   />
                 </div>
                 <div class="col-12 col-md-6">
-                  <q-input
-                    v-model="formData.type_detail"
-                    label="Type Details"
-                    :rules="[(val) => !!val || 'Required']"
-                    outlined
-                  />
+                  <q-input v-model="formData.type_detail" label="Type Details" outlined />
                 </div>
                 <div class="col-12 col-md-6">
-                  <q-input
-                    v-model="formData.city_town"
-                    label="City/Town"
-                    :rules="[(val) => !!val || 'Required']"
-                    outlined
-                  />
+                  <q-input v-model="formData.city_town" label="City/Town" outlined />
                 </div>
                 <div class="col-12 col-md-6">
-                  <q-input
-                    v-model="formData.state"
-                    label="State"
-                    :rules="[(val) => !!val || 'Required']"
-                    outlined
-                  />
+                  <q-input v-model="formData.state" label="State" outlined />
                 </div>
                 <div class="col-12 col-md-6">
-                  <q-input
-                    v-model="formData.zip_code"
-                    label="ZIP Code"
-                    :rules="[(val) => !!val || 'Required']"
-                    outlined
-                  />
+                  <q-input v-model="formData.zip_code" label="ZIP Code" outlined />
                 </div>
                 <div class="col-12 col-md-6">
                   <q-input v-model="formData.province" label="Province" outlined />
@@ -499,7 +452,6 @@
                     <q-input
                       v-model="member.family_name_last_name"
                       label="Family Name (Last Name) *"
-                      :rules="[(val) => !!val || 'Required']"
                       outlined
                     />
                   </div>
@@ -507,7 +459,6 @@
                     <q-input
                       v-model="member.given_name_first_name"
                       label="Given Name (First Name) *"
-                      :rules="[(val) => !!val || 'Required']"
                       outlined
                     />
                   </div>
@@ -519,26 +470,14 @@
                       v-model="member.relationship"
                       :options="['Spouse', 'Child']"
                       label="Relationship *"
-                      :rules="[(val) => !!val || 'Required']"
                       outlined
                     />
                   </div>
                   <div class="col-12 col-md-4">
-                    <q-input
-                      v-model="member.dob"
-                      label="Date of Birth *"
-                      type="date"
-                      :rules="[(val) => !!val || 'Required']"
-                      outlined
-                    />
+                    <q-input v-model="member.dob" label="Date of Birth *" type="date" outlined />
                   </div>
                   <div class="col-12 col-md-4">
-                    <q-input
-                      v-model="member.birth_country"
-                      label="Country of Birth *"
-                      :rules="[(val) => !!val || 'Required']"
-                      outlined
-                    />
+                    <q-input v-model="member.birth_country" label="Country of Birth *" outlined />
                   </div>
                   <div class="col-12 col-md-6">
                     <q-select
@@ -612,78 +551,78 @@ export default {
       case_id: null,
 
       // Basic Information
-      petition_type: '',
-      petitioner: '',
+      petition_type: null,
+      petitioner: null,
 
       // Personal Information
-      family_name: '',
-      given_name: '',
-      full_middle_name: '',
-      native_alphabet: '',
-      dob: '',
-      city_town_village_of_birth: '',
-      state_of_birth: '',
-      country_of_birth: '',
-      nationality: '',
-      alien_registration_number: '',
-      ssn: '',
+      family_name: null,
+      given_name: null,
+      full_middle_name: null,
+      native_alphabet: null,
+      dob: null,
+      city_town_village_of_birth: null,
+      state_of_birth: null,
+      country_of_birth: null,
+      nationality: null,
+      alien_registration_number: null,
+      ssn: null,
 
       // Mail Address
-      street_number_name: '',
-      type: '',
-      type_detail: '',
-      city_town: '',
-      state: '',
-      zip_code: '',
-      province: '',
-      country: '',
-      mobile_telephone: '',
-      email_address: '',
+      street_number_name: null,
+      type: null,
+      type_detail: null,
+      city_town: null,
+      state: null,
+      zip_code: null,
+      province: null,
+      country: null,
+      mobile_telephone: null,
+      email_address: null,
 
       // Last Arrival Information
-      last_arrival_date: '',
-      i_94_arrival_record_number: '',
-      expiration_date: '',
-      status_on_form_i_94: '',
-      passport_number: '',
-      travel_document_number: '',
-      country_of_issuance: '',
-      expiration_date_for_passport: '',
+      last_arrival_date: null,
+      i_94_arrival_record_number: null,
+      expiration_date: null,
+      status_on_form_i_94: null,
+      passport_number: null,
+      travel_document_number: null,
+      country_of_issuance: null,
+      expiration_date_for_passport: null,
 
       // Visa Processing
       alien_will_apply_for_visa_abroad: null,
-      visa_processing_city_town: '',
-      visa_processing_country: '',
+      visa_processing_city_town: null,
+      visa_processing_country: null,
       alien_in_us: null,
-      if_now_in_the_us: '',
-      foreign_street_number_name: '',
-      foreign_address_type: '',
-      foreign_city_town: '',
-      foreign_state_province: '',
-      foreign_postal_code: '',
-      foreign_country: '',
+      if_now_in_the_us: null,
+      foreign_street_number_name: null,
+      foreign_address_type: null,
+      foreign_city_town: null,
+      foreign_state_province: null,
+      foreign_postal_code: null,
+      foreign_country: null,
 
       // Employment Information
-      current_employer_name: '',
-      job_title: '',
+      current_employer_name: null,
+      job_title: null,
       full_time_position: null,
       permanent_position: null,
-      occupation: '',
-      annual_income: '',
-      soc_code: '',
-      nontechnical_job_description: '',
-      hours_per_week: '',
+      occupation: null,
+      annual_income: null,
+      soc_code: null,
+      nontechnical_job_description: null,
+      hours_per_week: null,
       new_position: null,
-      wages: '',
-      wages_per: '',
-      worksite_type: '',
-      worksite_street_number_name: '',
-      work_building_type: '',
-      work_site_additional_details: '',
-      work_city_town: '',
-      work_state: '',
-      work_county_township: '',
-      work_zip_code: '',
+      wages: null,
+      wages_per: null,
+      worksite_type: null,
+      worksite_street_number_name: null,
+      work_building_type: null,
+      work_site_additional_details: null,
+      work_city_town: null,
+      work_state: null,
+      work_county_township: null,
+      work_zip_code: null,
 
       // Family Members
       family_members: [],
@@ -716,12 +655,12 @@ export default {
     const addFamilyMember = () => {
       console.log('Adding new family member')
       formData.value.family_members.push({
-        family_name_last_name: '',
-        given_name_first_name: '',
-        middle_name: '',
+        family_name_last_name: null,
+        given_name_first_name: null,
+        middle_name: null,
         relationship: null,
         dob: null,
-        birth_country: '',
+        birth_country: null,
         adjustment_status: 'No',
         visa_abroad: 'No',
       })
