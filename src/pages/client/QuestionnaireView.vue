@@ -121,14 +121,15 @@
                   />
                 </div>
                 <div class="col-12 col-md-6">
-                  <q-input
+                  <q-select
                     v-model="formData.type"
-                    label="Type of Address [Apt, Str, Flr]"
+                    label="Type of Address [Apt, Ste, Flr]"
+                    :options="['Apt', 'Ste', 'Flr']"
                     outlined
                   />
                 </div>
                 <div class="col-12 col-md-6">
-                  <q-input v-model="formData.type_detail" label="Type Details" outlined />
+                  <q-input v-model="formData.type_detail" label="Address Number" outlined />
                 </div>
                 <div class="col-12 col-md-6">
                   <q-input v-model="formData.city_town" label="City/Town" outlined />
@@ -258,14 +259,14 @@
                     outlined
                   />
                 </div>
-                <div class="col-12">
+                <!-- <div class="col-12">
                   <q-select
                     v-model="formData.if_now_in_the_us"
                     :options="['Yes', 'No']"
                     label="Is the alien now in the US?"
                     outlined
                   />
-                </div>
+                </div> -->
                 <div class="col-12">
                   <q-input
                     v-model="formData.foreign_street_number_name"
@@ -274,9 +275,10 @@
                   />
                 </div>
                 <div class="col-12">
-                  <q-input
+                  <q-select
                     v-model="formData.foreign_address_type"
                     label="Foreign Address Type"
+                    :options="['Apt', 'Ste', 'Flr']"
                     outlined
                   />
                 </div>
@@ -357,6 +359,15 @@
                 </div>
                 <div class="col-12 col-md-6">
                   <q-input v-model="formData.soc_code" label="SOC Code" outlined />
+                </div>
+                <div class="col-12 col-md-6">
+                  <q-btn
+                    label="Get Code"
+                    color="primary"
+                    :href="'https://www.bls.gov/oes/'"
+                    target="_blank"
+                    outlined
+                  />
                 </div>
                 <div class="col-12">
                   <q-input
