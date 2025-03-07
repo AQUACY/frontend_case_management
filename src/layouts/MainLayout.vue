@@ -273,15 +273,15 @@ const toggleLeftDrawer = () => {
 
 // List of links to display
 const linksList = [
+{
+    title: 'Welcome Notes',
+    caption: '',
+    link: '/client/overview',
+  },
   {
     title: 'News & Update',
     caption: '',
     link: '/client/news-update',
-  },
-  {
-    title: 'Overview',
-    caption: '',
-    link: '/client/overview',
   },
   {
     title: 'Form I-140 Questionnaire',
