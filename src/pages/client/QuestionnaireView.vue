@@ -411,7 +411,12 @@
                 <div class="col-12 col-md-6">
                   <q-select
                     v-model="formData.worksite_type"
-                    :options="['Office', 'Home', 'Other']"
+                    :options="[
+                      'Business premises',
+                      'Employer private household',
+                      'Own private residence',
+                      'More than one location',
+                    ]"
                     label="Worksite Type"
                     outlined
                   />
@@ -424,7 +429,12 @@
                   />
                 </div>
                 <div class="col-12 col-md-6">
-                  <q-input v-model="formData.work_building_type" label="Building Type" outlined />
+                  <q-input
+                    v-model="formData.work_building_type"
+                    label="Building Type"
+                    :options="['Apt', 'Ste', 'Flr']"
+                    outlined
+                  />
                 </div>
                 <div class="col-12 col-md-6">
                   <q-input
