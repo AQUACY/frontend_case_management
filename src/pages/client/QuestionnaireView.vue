@@ -429,10 +429,10 @@
                   />
                 </div>
                 <div class="col-12 col-md-6">
-                  <q-input
+                  <q-select
                     v-model="formData.work_building_type"
                     label="Building Type"
-                    :options="['Apt', 'Ste', 'Flr']"
+                    :options="['Apt', 'Ste', 'Flr', 'None']"
                     outlined
                   />
                 </div>
