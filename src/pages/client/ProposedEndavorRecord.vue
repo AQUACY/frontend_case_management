@@ -38,12 +38,12 @@
         <!-- Status Display -->
         <div class="row items-center q-mb-md">
           <div class="col">
-            <q-checkbox
+            <!-- <q-checkbox
               v-model="formData.selection"
               label="I am not filing NIW"
               true-value="yes"
               false-value="no"
-            />
+            /> -->
           </div>
           <div class="col text-right">
             <q-badge
@@ -61,7 +61,7 @@
           <q-card-section>
             <div class="text-subtitle1 q-mb-md text-bold">A) Proposed Endeavor</div>
             <div class="text-body2 q-mb-md">
-<p>The Proposed Endeavor is the cornerstone of your NIW petition, as it demonstrates
+<p>The Proposed Endeavor is the cornerstone of your petition, as it demonstrates
 how your future research aligns with U.S. national interests and meets USCIS criteria
 for substantial merit and national importance. A well-crafted statement not only defines
 your research vision but also establishes its broader societal or technological impact.</p>
