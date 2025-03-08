@@ -2,68 +2,103 @@
   <q-page padding>
     <div class="text-h5 text-green q-mb-lg">Referrers</div>
     <div class="q-pa-md bg-grey-1 rounded-borders">
-      <div class="text-subtitle1 q-mb-md">Important Guidelines for Referrers</div>
+      <div class="text-subtitle1 q-mb-md text-bold">Key Principles for Selecting Referrers</div>
+      <div class="">
+        <p>
+          To strengthen your immigration petition, carefully distinguish between independent and
+        dependent recommenders and adhere to case-specific requirements.
+        </p>
 
+      </div>
       <div class="q-mb-md">
         <div class="text-weight-medium q-mb-sm">Independent vs Dependent Referrers:</div>
+        <span class="text-bold"> 1. Independent Referrers:</span> <br /><br />
+
         <p>
-          An independent recommendation letter originates from someone who has never worked with
-          you, collaborated with you, or been professionally or personally affiliated with you. This
-          could be someone who has cited your paper but never worked with you, or someone who
-          attended your conference presentation without any collaboration. Please note that an
-          individual who has worked at the same institution or organization at the same time as you
-          but did not directly collaborate with you might still be considered a dependent
-          recommender by the immigration officer. The officer can review both of your CVs and decide
-          whether the relationship is close enough to be deemed dependent. As such, it is advisable
-          to seek out truly independent recommenders who have no connection to you to strengthen
-          your case.
+         Definition: Experts with no prior professional, academic, or personal ties to you.
         </p>
+        <ul>
+          <li>Includes researchers who cited your work but never collaborated, or
+            scholars familiar with your contributions through conferences/publications.</li>
+          <li>Avoid individuals from the same institution/organization during overlapping
+              tenure, as immigration officers may still deem them &quot;dependent&quot; after
+              reviewing CVs.
+            </li>
+        </ul>
         <p>
-          A dependent recommender is someone with whom you have worked, such as your supervisor or
-          Ph.D. advisor. Please note that recommenders from government organizations can sometimes
-          make good candidates, but some government employees at certain government organizations
-          are subject to restrictions that prevent them from endorsing letters in support of
-          immigration petitions.
+          <span class="text-bold">Best Practice:</span> Prioritize unaffiliated experts (especially U.S.-based) to enhance
+          credibility.
         </p>
-      </div>
+
+        <!-- dependent referrers -->
+            <span class="text-bold"> 2. Dependent Referrers:</span> <br />
+            <ul>
+              <li>Definition: Individuals with direct professional relationships (e.g.,
+                supervisors, thesis advisors, collaborators).</li>
+              <li>Caution: Government-affiliated experts (e.g., federal researchers) may
+                face institutional policies restricting endorsement of immigration petitions.
+                </li>
+            </ul>
+            <p>
+              <span class="text-bold">Best Practice:</span> Prioritize unaffiliated experts (especially U.S.-based) to enhance
+              credibility.
+            </p>
+      </div><br />
 
       <div class="q-mb-md">
-        <div class="text-weight-medium q-mb-sm">
-          For 2 Recommendation Letters (NIW standard case prep):
+        <div class="q-mb-sm text-bold">
+          Case-Specific Referrer Guidelines
         </div>
+        <span class="text-bold"> For NIW (Standard Preparation):</span>
         <ul class="q-mb-md">
           <li>
-            List 1-2 dependent recommender candidates and 2-3 independent recommender candidates
+            <b>Dependent Referrers:</b> 1–2 (e.g., former supervisors).
           </li>
-          <li>Try to include at least 1 US-based independent recommender</li>
-          <li>Focus on established members of the field (professors, senior researchers)</li>
-          <li>Exclude students; postdocs/fellows only if necessary</li>
+          <li><b>Independent Referrers:</b> 2–3 (at least 1 U.S.-based).</li>
+          <li><b>Focus:</b> Senior figures in your field (professors, established researchers).</li>
+          <li><b>Exclude:</b> Students; postdocs/fellows unless critical.</li>
         </ul>
       </div>
 
       <div class="q-mb-md">
-        <div class="text-weight-medium q-mb-sm">
-          For 2 Recommendation Letters (EB1A, EB1B, or O1A):
+        <div class="text-bold q-mb-sm">
+          For EB1A/EB1B:
         </div>
         <ul class="q-mb-md">
-          <li>Include 4-5 independent recommender candidates</li>
-          <li>Prioritize candidates who have cited your work</li>
-          <li>Try to include at least 1 international recommender</li>
-          <li>Exclude students, fellows, and postdocs</li>
-          <li>For O1 cases: Must submit at least 1 US-based independent recommender</li>
+          <li><b>Independent Referrers:</b> 4–5.</li>
+          <li><b>Prioritize:</b> Experts who cited your work or hold international recognition.</li>
+          <li><b>Geographic Mix:</b> Include 1 U.S.-based (required for O1) and 1–2 international
+            referrers.</li>
+          <li><b>Exclude:</b> Students, postdocs, and fellows.</li>
         </ul>
       </div>
 
       <div class="q-mb-md">
-        <div class="text-weight-medium q-mb-sm">
-          For 4 Recommendation Letters (NIW, EB1A, EB1B, O1):
+        <div class="text-bold q-mb-sm">
+          For 4-Letter Cases (NIW/EB1A/EB1B):
         </div>
         <ul class="q-mb-md">
-          <li>List 2-3 dependent candidates and 4-5 independent candidates</li>
-          <li>For NIW: Include 2-3 US-based independent recommenders if possible</li>
-          <li>For EB1A, EB1B, O1: Include mix of international and US-based recommenders</li>
-          <li>Aim for 1-2 independent recommenders who have cited your work</li>
-          <li>Exclude students, fellows, and postdocs (except postdocs for NIW if necessary)</li>
+          <li><b>Dependent Referrers:</b> 2–3.</li>
+          <li><b>Independent Referrers:</b> 4–5.</li>
+          <li><b>NIW:</b> Aim for 2–3 U.S.-based independent referrers.</li>
+          <li><b>EB1A/EB1B:</b> Blend international and U.S. experts.</li>
+          <li><b>Exclude:</b> Early-career researchers (students/postdocs) except for NIW if
+            unavoidable.</li>
+        </ul>
+      </div>
+
+
+      <div class="q-mb-md">
+        <div class="text-bold q-mb-sm">
+          Critical Considerations
+        </div>
+        <ul class="q-mb-md">
+          <li><b>Independence Verification:</b> Officers may scrutinize shared affiliations (e.g.,
+            overlapping institutions) to assess bias.</li>
+          <li><b>Citations Matter:</b> For EB1A/EB1B, prioritize referrers familiar with your work
+            through citations or academic engagement.</li>
+          <li><b>Avoid Red Flags:</b>Exclude recommendations from subordinates (e.g., students)
+            or individuals with restricted endorsement authority (certain government roles).</li>
         </ul>
       </div>
 
