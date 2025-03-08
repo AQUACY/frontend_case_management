@@ -374,12 +374,12 @@ const linksList = [
     icon: '',
     link: '/client/messages',
   },
-  {
-    title: 'VISA FAQ',
-    caption: '',
-    icon: '',
-    link: '/client/visa-faq',
-  },
+  // {
+  //   title: 'VISA FAQ',
+  //   caption: '',
+  //   icon: '',
+  //   link: '/client/visa-faq',
+  // },
   {
     title: 'Tracking',
     caption: '',
