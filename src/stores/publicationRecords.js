@@ -42,13 +42,10 @@ export const usePublicationRecordsStore = defineStore('publicationRecords', {
         }
 
         let response
-        if (this.publicationRecords) {
+       
           // Update existing record
-          response = await api.patch(`/api/auth/cases/${caseId}/publication-records`, formattedData)
-        } else {
-          // Create new record
-          response = await api.post('/api/auth/cases/publication-records', formattedData)
-        }
+          response = await api.post(`/api/auth/cases/${caseId}/publication-records`, formattedData)
+      
 
         this.publicationRecords = response.data.data
         return response.data

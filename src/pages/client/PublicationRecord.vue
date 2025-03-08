@@ -197,10 +197,10 @@
                 hint="e.g., Google Scholar, ResearchGate, or ORCID profile"
               />
             </div>
-            <div class="col-12">
+            <!-- <div class="col-12">
               <q-input v-model="form.research_topic" label="Research Topic" outlined />
-            </div>
-            <div class="col-12">
+            </div> -->
+            <!-- <div class="col-12">
               <q-input
                 v-model="form.significance"
                 type="textarea"
@@ -208,8 +208,8 @@
                 outlined
                 hint="Explain the importance of your research"
               />
-            </div>
-            <div class="col-12">
+            </div> -->
+            <!-- <div class="col-12">
               <q-input
                 v-model="form.funding_sources"
                 type="textarea"
@@ -217,8 +217,8 @@
                 outlined
                 hint="List major funding sources for your research"
               />
-            </div>
-            <div class="col-12">
+            </div> -->
+            <!-- <div class="col-12">
               <q-input
                 v-model="form.others"
                 type="textarea"
@@ -226,7 +226,7 @@
                 outlined
                 hint="Any other relevant publications or contributions"
               />
-            </div>
+            </div> -->
             <div class="col-12">
               <q-input
                 v-model="form.in_preparation_manuscripts"
