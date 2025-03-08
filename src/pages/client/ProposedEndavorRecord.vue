@@ -59,8 +59,73 @@
         <!-- A) Proposed Endeavor Section -->
         <q-card flat bordered>
           <q-card-section>
-            <div class="text-subtitle1 q-mb-md">A) Proposed Endeavor</div>
+            <div class="text-subtitle1 q-mb-md text-bold">A) Proposed Endeavor</div>
             <div class="text-body2 q-mb-md">
+<p>The Proposed Endeavor is the cornerstone of your NIW petition, as it demonstrates
+how your future research aligns with U.S. national interests and meets USCIS criteria
+for substantial merit and national importance. A well-crafted statement not only defines
+your research vision but also establishes its broader societal or technological impact.</p>
+
+<span class="text-bold"> Guidance for Drafting</span><br /><br />
+<span class="text-bold">1. Definition:</span> <br />
+
+<p>Your Proposed Endeavor must describe the specific research area you will
+pursue after obtaining permanent residency and throughout your career. This is
+distinct from your current work unless continuity is explicitly justified.</p>
+ <ul> <li><b>Field Transitions:</b> If shifting focus (e.g., from aerospace engineering to AI-
+driven climate modeling), explain how your expertise transfers. Contact us to
+discuss framing strategies.</li></ul>
+
+<span class="text-bold"> 2. Legal Compliance:</span> <br /> <br />
+<ul><li><span class="text-bold">Employment Alignment:</span> 
+Your job role during green card processing (I-140,
+I-485) must directly support your Proposed Endeavor. For example:
+<ul><li><i>If your endeavor involves cancer immunotherapy research, your
+employment should involve roles in biomedical R&amp;D, not unrelated
+fields like software sales.</i></li></ul></li></ul>
+
+<ul><li><span class="text-bold">USCIS Scrutiny:</span> Inconsistent statements may trigger Requests for Evidence
+(RFEs) or denials.</li></ul>
+
+<span class="text-bold">3. Focus on Research, Not Employment:</span>
+<p>Avoid mentioning job titles, employers, or past roles. Instead, concentrate on
+your scientific goals, methodology, and societal value.</p> <br />
+
+<b class="q-ml-md"> Incorrect: </b> <br />
+<i class="q-ml-md">“I will work as a senior data scientist at XYZ Corp to develop AI tools.”</i><br />
+<b class="q-ml-md"> Correct:</b> <br /> 
+<i class="q-ml-md">“My research will focus on advancing explainable AI algorithms to improve
+transparency in healthcare diagnostics.”</i> <br /> <br />
+
+<span class="text-bold">Structure of the Proposed Endeavor Statement</span>
+
+<p>Condense your vision into one sentence with three interconnected components:</p>
+
+<span class="text-bold">1. Approach:</span>
+<p>Use action verbs to describe your technical or analytical methods.</p>
+<ul> <li>Examples: design, synthesize, model, optimize, innovate, characterize,
+integrate.</li>
+<li>Avoid passive voice (e.g., “will be developed” → “develop”).</li></ul>
+
+<span class="text-bold">2. Subject:</span>
+<p>Specify the scientific challenge, technology, or domain you aim to address.</p>
+<ul><li>Examples: carbon capture materials, quantum computing architectures, AI-
+driven agricultural optimization.</li></ul>
+
+<span class="text-bold">3. Impact:</span>
+<p>Highlight how your work benefits the U.S. national interest. Link to federal
+priorities like:</p>
+<ul><li>Sustainability (e.g., clean energy, climate resilience).</li>
+<li>Public health (e.g., disease treatment, healthcare accessibility).</li>
+<li>Technological leadership (e.g., semiconductor innovation, cybersecurity).</li>
+</ul>
+
+<span class="text-bold">Example:</span>
+“My Proposed Endeavor is to [<span class="text-red">design machine learning frameworks</span>] [<span class="text-red">to predict protein-
+protein interactions</span>] [<span class="text-red">to accelerate drug discovery for antibiotic-resistant infections,
+aligning with U.S. public health initiatives</span>].”
+            </div>
+            <!-- <div class="text-body2 q-mb-md">
               <p>
                 One of the most important parts of a successful NIW petition is clearly describing
                 the petitioner's "proposed endeavor." To ensure that you are able to define your
@@ -121,21 +186,20 @@
               </p>
               <p>Please complete the following three boxes to make one sentence:</p>
               <p>My proposed endeavor is to</p>
-            </div>
+            </div> -->
 
             <!-- Proposed Endeavor Fields -->
             <div class="row q-col-gutter-md">
               <div class="col-12">
                 <q-input
                   v-model="formData.proposed_endavor_field_1"
-                  label="Part One: The active verb(s) describing your methodical approach"
                   type="textarea"
                   outlined
                   :rules="[(val) => !!val || 'This field is required']"
                   color="red-5"
                 />
               </div>
-              <div class="col-12">
+              <!-- <div class="col-12">
                 <q-input
                   v-model="formData.proposed_endavor_field_2"
                   label="Part Two: The main topic/specific subject of your research"
@@ -144,8 +208,8 @@
                   :rules="[(val) => !!val || 'This field is required']"
                   color="yellow-8"
                 />
-              </div>
-              <div class="col-12">
+              </div> -->
+              <!-- <div class="col-12">
                 <q-input
                   v-model="formData.proposed_endavor_field_3"
                   label="Part Three: The impact of your proposed research on the field and/or its real-world applications"
@@ -154,30 +218,41 @@
                   :rules="[(val) => !!val || 'This field is required']"
                   color="green-10"
                 />
-              </div>
+              </div> -->
             </div>
           </q-card-section>
         </q-card>
         <!-- Past Experience Section -->
         <q-card flat bordered class="q-mb-md">
           <q-card-section>
-            <div class="text-subtitle1 q-mb-md">B) Past Experience</div>
+            <div class="text-subtitle1 q-mb-md text-bold">B) Relevant Expertise</div>
 
             <div class="text-body2 q-mb-md">
-              Your proposed endeavor statement should also include a brief summary of the relevant
-              skills and past research experience that will help you to advance your endeavor. This
-              should also be no more than one sentence long.
+              In one sentence, connect your past research experience and technical skills to your
+              Proposed Endeavor. Highlight expertise that directly supports your ability to execute the
+              work.
+              <span class="text-bold">Example :</span>
+              <ul>
+                <li><i>
+                  “My background in CRISPR-Cas9 gene editing and bioinformatics analysis
+                  positions me to advance precision medicine research.”
+                </i></li>
+                <li><i>
+                  “My experience in synthesizing nanomaterials for energy storage systems equips
+                  me to innovate next-generation battery technologies.”
+                </i></li>
+              </ul>
             </div>
 
             <div class="row q-col-gutter-md">
               <div class="col-12">
                 <q-input
                   v-model="formData.past_experience"
-                  label="Past Experience Statement"
+                  
                   type="textarea"
                   outlined
                   :rules="[(val) => !!val || 'This field is required']"
-                  hint="Example: To progress this endeavor, I will utilize my extensive experience in advanced microscopy techniques, chemical composition, crystal structure, and physiography."
+                 
                 />
               </div>
             </div>
@@ -187,22 +262,49 @@
         <!-- Publication Plans Section -->
         <q-card flat bordered class="q-mb-md">
           <q-card-section>
-            <div class="text-subtitle1 q-mb-md">C) Publication Plans</div>
+            <div class="text-subtitle1 q-mb-md text-bold">C) Dissemination Strategy</div>
 
             <div class="text-body2 q-mb-md">
-              Please provide us with a brief list of the plans of publications you plan to produce
-              in order to disseminate your work on your proposed endeavors.
+              Outline how you will share your findings to amplify impact. Include specific, actionable
+              plans such as:
+              <ul>
+                <li><i>
+                
+                <li><i>
+                  Peer-reviewed publications (e.g., “Three articles in journals like Nature Energy or
+                  ACS Nano”).
+                </i></li>
+                <li><i>
+                  Conference presentations (e.g., “Presentations at IEEE, AGU, or Gordon
+                  Research Conferences”).
+                </i></li>
+            
+                </i></li>
+                <li><i>
+                  Patents or industry collaborations (e.g., “Filing patents for scalable carbon
+                  capture technologies”).
+                </i></li>
+                <li><i>
+                  Public outreach (e.g., “Developing open-access datasets or policy white papers”).
+                </i></li>
+              </ul>
+
+              <span class="text-bold">Example :</span> <br /> <br />
+              <p>“I plan to publish findings in high-impact journals, present at international AI ethics
+                conferences, and collaborate with policymakers to draft guidelines for responsible AI
+                deployment.”
+              </p>
             </div>
 
             <div class="row q-col-gutter-md">
               <div class="col-12">
                 <q-input
                   v-model="formData.publication_plans"
-                  label="Publication Plans Statement"
+                 
                   type="textarea"
                   outlined
                   :rules="[(val) => !!val || 'This field is required']"
-                  hint="Example: My work will continue to be circulated in the best through my past research publications (3 planned)."
+                 
                 />
               </div>
             </div>
