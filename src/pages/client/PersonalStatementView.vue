@@ -69,7 +69,7 @@
               <div class="field-group">
                 <div class="text-subtitle2 q-mb-sm">Proposed Endeavor</div>
                 <div class="text-caption q-mb-sm">
-                  State your proposed endeavor as agreed upon with your attorney.
+                  State your proposed endeavor as agreed upon with your Case Manager.
                 </div>
                 <q-input
                   v-model="formData.proposed_endeavor"
