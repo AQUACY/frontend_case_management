@@ -691,15 +691,12 @@ export default {
 
     const openContractViewer = (caseData) => {
       selectedCase.value = caseData
-      // Construct the URL using the base URL from your API configuration
       if (caseData.contract_file) {
-        // Use the full URL if it's provided in the response
         if (caseData.contract_file_url) {
           contractUrl.value = caseData.contract_file_url
         } else {
-          // Construct the URL using your API base URL
-          const baseUrl = process.env.VUE_APP_API_URL || ''
-          contractUrl.value = `${baseUrl}/storage/${caseData.contract_file}`
+          const baseUrl = import.meta.env.VITE_API_URL || 'https://api.greenpathcasemanager.com'
+          contractUrl.value = `${baseUrl}/storage/${caseData.contract_file}?view=1`
         }
 
         console.log('Contract URL:', contractUrl.value) // Debug log
@@ -715,7 +712,10 @@ export default {
 
     const openContractInNewTab = () => {
       if (contractUrl.value) {
-        window.open(contractUrl.value, '_blank')
+        const viewUrl = contractUrl.value.includes('?')
+          ? contractUrl.value
+          : `${contractUrl.value}?view=1`
+        window.open(viewUrl, '_blank')
       }
     }
 
