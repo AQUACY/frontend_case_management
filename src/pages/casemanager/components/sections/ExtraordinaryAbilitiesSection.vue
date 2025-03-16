@@ -96,36 +96,32 @@
                   <q-card-section>
                     <div class="row q-col-gutter-md">
                       <div class="col-12 col-md-6">
-                        <q-input
-                          readonly
-                          :value="award.award_name"
-                          label="Award Name"
-                          outlined
-                          dense
-                          stack-label
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(award.award_name)">
-                              {{ formatValue(award.award_name) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Award Name</q-item-label>
+                              <q-item-label>
+                                <q-badge :color="getBadgeColor(award.award_name)">
+                                  {{ formatValue(award.award_name) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                       <div class="col-12 col-md-6">
-                        <q-input
-                          readonly
-                          :value="award.award_recipient"
-                          label="Award Recipient"
-                          outlined
-                          dense
-                          stack-label
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(award.award_recipient)">
-                              {{ formatValue(award.award_recipient) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Award Recipient</q-item-label>
+                              <q-item-label>
+                                <q-badge :color="getBadgeColor(award.award_recipient)">
+                                  {{ formatValue(award.award_recipient) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                       <!-- Continue with other award fields -->
                     </div>
@@ -151,58 +147,48 @@
                   <q-card-section>
                     <div class="row q-col-gutter-md">
                       <div class="col-12 col-md-6">
-                        <q-input
-                          readonly
-                          :value="membership.membership_level"
-                          label="Membership Level"
-                          outlined
-                          dense
-                          stack-label
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(membership.membership_level)">
-                              {{ formatValue(membership.membership_level) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Membership Level</q-item-label>
+                              <q-item-label>
+                                <q-badge :color="getBadgeColor(membership.membership_level)">
+                                  {{ formatValue(membership.membership_level) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                       <div class="col-12">
-                        <q-input
-                          readonly
-                          :value="membership.membership_requirements"
-                          label="Membership Requirements"
-                          type="textarea"
-                          outlined
-                          dense
-                          stack-label
-                          autogrow
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(membership.membership_requirements)">
-                              {{ formatValue(membership.membership_requirements) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Membership Requirements</q-item-label>
+                              <q-item-label class="text-wrap">
+                                <q-badge :color="getBadgeColor(membership.membership_requirements)">
+                                  {{ formatValue(membership.membership_requirements) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                       <div class="col-12">
-                        <q-input
-                          readonly
-                          :value="membership.fee_and_subscription_details"
-                          label="Fee and Subscription Details"
-                          type="textarea"
-                          outlined
-                          dense
-                          stack-label
-                          autogrow
-                        >
-                          <template #append>
-                            <q-badge
-                              :color="getBadgeColor(membership.fee_and_subscription_details)"
-                            >
-                              {{ formatValue(membership.fee_and_subscription_details) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Fee and Subscription Details</q-item-label>
+                              <q-item-label class="text-wrap">
+                                <q-badge
+                                  :color="getBadgeColor(membership.fee_and_subscription_details)"
+                                >
+                                  {{ formatValue(membership.fee_and_subscription_details) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                     </div>
                   </q-card-section>
@@ -223,120 +209,102 @@
                   <q-card-section>
                     <div class="row q-col-gutter-md">
                       <div class="col-12 col-md-6">
-                        <q-input
-                          readonly
-                          :value="media.media_name"
-                          label="Media Name"
-                          outlined
-                          dense
-                          stack-label
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(media.media_name)">
-                              {{ formatValue(media.media_name) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Media Name</q-item-label>
+                              <q-item-label>
+                                <q-badge :color="getBadgeColor(media.media_name)">
+                                  {{ formatValue(media.media_name) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                       <div class="col-12 col-md-6">
-                        <q-input
-                          readonly
-                          :value="formatDate(media.date_published)"
-                          label="Date Published"
-                          outlined
-                          dense
-                          stack-label
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(media.date_published)">
-                              {{ formatDate(media.date_published) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Date Published</q-item-label>
+                              <q-item-label>
+                                <q-badge :color="getBadgeColor(media.date_published)">
+                                  {{ formatDate(media.date_published) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                       <div class="col-12 col-md-6">
-                        <q-input
-                          readonly
-                          :value="media.author"
-                          label="Author"
-                          outlined
-                          dense
-                          stack-label
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(media.author)">
-                              {{ formatValue(media.author) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Author</q-item-label>
+                              <q-item-label>
+                                <q-badge :color="getBadgeColor(media.author)">
+                                  {{ formatValue(media.author) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                       <div class="col-12 col-md-6">
-                        <q-input
-                          readonly
-                          :value="media.outlet_name"
-                          label="Outlet Name"
-                          outlined
-                          dense
-                          stack-label
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(media.outlet_name)">
-                              {{ formatValue(media.outlet_name) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Outlet Name</q-item-label>
+                              <q-item-label>
+                                <q-badge :color="getBadgeColor(media.outlet_name)">
+                                  {{ formatValue(media.outlet_name) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                       <div class="col-12 col-md-6">
-                        <q-input
-                          readonly
-                          :value="media.circulation_count"
-                          label="Circulation Count"
-                          outlined
-                          dense
-                          stack-label
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(media.circulation_count)">
-                              {{ media.circulation_count || 0 }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Circulation Count</q-item-label>
+                              <q-item-label>
+                                <q-badge :color="getBadgeColor(media.circulation_count)">
+                                  {{ media.circulation_count || 0 }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                       <div class="col-12">
-                        <q-input
-                          readonly
-                          :value="media.article_summary"
-                          label="Article Summary"
-                          type="textarea"
-                          outlined
-                          dense
-                          stack-label
-                          autogrow
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(media.article_summary)">
-                              {{ formatValue(media.article_summary) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Article Summary</q-item-label>
+                              <q-item-label class="text-wrap">
+                                <q-badge :color="getBadgeColor(media.article_summary)">
+                                  {{ formatValue(media.article_summary) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                       <div class="col-12">
-                        <q-input
-                          readonly
-                          :value="media.work_relevance"
-                          label="Work Relevance"
-                          type="textarea"
-                          outlined
-                          dense
-                          stack-label
-                          autogrow
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(media.work_relevance)">
-                              {{ formatValue(media.work_relevance) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Work Relevance</q-item-label>
+                              <q-item-label class="text-wrap">
+                                <q-badge :color="getBadgeColor(media.work_relevance)">
+                                  {{ formatValue(media.work_relevance) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                     </div>
                   </q-card-section>
@@ -365,54 +333,46 @@
                   <q-card-section>
                     <div class="row q-col-gutter-md">
                       <div class="col-12 col-md-6">
-                        <q-input
-                          readonly
-                          :value="engagement.conference_name"
-                          label="Conference Name"
-                          outlined
-                          dense
-                          stack-label
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(engagement.conference_name)">
-                              {{ formatValue(engagement.conference_name) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Conference Name</q-item-label>
+                              <q-item-label>
+                                <q-badge :color="getBadgeColor(engagement.conference_name)">
+                                  {{ formatValue(engagement.conference_name) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                       <div class="col-12 col-md-6">
-                        <q-input
-                          readonly
-                          :value="formatDate(engagement.engagement_date)"
-                          label="Engagement Date"
-                          outlined
-                          dense
-                          stack-label
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(engagement.engagement_date)">
-                              {{ formatDate(engagement.engagement_date) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Engagement Date</q-item-label>
+                              <q-item-label>
+                                <q-badge :color="getBadgeColor(engagement.engagement_date)">
+                                  {{ formatDate(engagement.engagement_date) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                       <div class="col-12">
-                        <q-input
-                          readonly
-                          :value="engagement.details"
-                          label="Engagement Details"
-                          type="textarea"
-                          outlined
-                          dense
-                          stack-label
-                          autogrow
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(engagement.details)">
-                              {{ formatValue(engagement.details) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Engagement Details</q-item-label>
+                              <q-item-label class="text-wrap">
+                                <q-badge :color="getBadgeColor(engagement.details)">
+                                  {{ formatValue(engagement.details) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                     </div>
                   </q-card-section>
@@ -433,104 +393,88 @@
                   <q-card-section>
                     <div class="row q-col-gutter-md">
                       <div class="col-12 col-md-6">
-                        <q-input
-                          readonly
-                          :value="role.role_position"
-                          label="Role Position"
-                          outlined
-                          dense
-                          stack-label
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(role.role_position)">
-                              {{ formatValue(role.role_position) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Role Position</q-item-label>
+                              <q-item-label>
+                                <q-badge :color="getBadgeColor(role.role_position)">
+                                  {{ formatValue(role.role_position) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                       <div class="col-12 col-md-6">
-                        <q-input
-                          readonly
-                          :value="role.organization_name"
-                          label="Organization Name"
-                          outlined
-                          dense
-                          stack-label
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(role.organization_name)">
-                              {{ formatValue(role.organization_name) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Organization Name</q-item-label>
+                              <q-item-label>
+                                <q-badge :color="getBadgeColor(role.organization_name)">
+                                  {{ formatValue(role.organization_name) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                       <div class="col-12 col-md-6">
-                        <q-input
-                          readonly
-                          :value="formatDate(role.service_start_date)"
-                          label="Service Start Date"
-                          outlined
-                          dense
-                          stack-label
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(role.service_start_date)">
-                              {{ formatDate(role.service_start_date) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Service Start Date</q-item-label>
+                              <q-item-label>
+                                <q-badge :color="getBadgeColor(role.service_start_date)">
+                                  {{ formatDate(role.service_start_date) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                       <div class="col-12 col-md-6">
-                        <q-input
-                          readonly
-                          :value="formatDate(role.service_end_date)"
-                          label="Service End Date"
-                          outlined
-                          dense
-                          stack-label
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(role.service_end_date)">
-                              {{ formatDate(role.service_end_date) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Service End Date</q-item-label>
+                              <q-item-label>
+                                <q-badge :color="getBadgeColor(role.service_end_date)">
+                                  {{ formatDate(role.service_end_date) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                       <div class="col-12">
-                        <q-input
-                          readonly
-                          :value="role.organization_prestige"
-                          label="Organization Prestige"
-                          type="textarea"
-                          outlined
-                          dense
-                          stack-label
-                          autogrow
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(role.organization_prestige)">
-                              {{ formatValue(role.organization_prestige) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Organization Prestige</q-item-label>
+                              <q-item-label class="text-wrap">
+                                <q-badge :color="getBadgeColor(role.organization_prestige)">
+                                  {{ formatValue(role.organization_prestige) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                       <div class="col-12">
-                        <q-input
-                          readonly
-                          :value="role.role_summary"
-                          label="Role Summary"
-                          type="textarea"
-                          outlined
-                          dense
-                          stack-label
-                          autogrow
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(role.role_summary)">
-                              {{ formatValue(role.role_summary) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Role Summary</q-item-label>
+                              <q-item-label class="text-wrap">
+                                <q-badge :color="getBadgeColor(role.role_summary)">
+                                  {{ formatValue(role.role_summary) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                     </div>
                   </q-card-section>
@@ -635,7 +579,7 @@ export default {
       color: $grey-8;
     }
 
-    .q-field__label {
+    .q_field__label {
       color: $grey-7;
     }
   }

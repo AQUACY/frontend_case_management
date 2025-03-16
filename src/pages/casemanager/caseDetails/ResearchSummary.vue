@@ -38,22 +38,18 @@
                     <q-icon name="psychology" class="q-mr-sm" />
                     Field of Research
                   </div>
-                  <q-input
-                    readonly
-                    :value="researchData.field_description"
-                    label="Field Description"
-                    type="textarea"
-                    outlined
-                    dense
-                    stack-label
-                    autogrow
-                  >
-                    <template #append>
-                      <q-badge :color="getBadgeColor(researchData.field_description)">
-                        {{ formatValue(researchData.field_description) }}
-                      </q-badge>
-                    </template>
-                  </q-input>
+                  <q-list bordered>
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label caption>Field Description</q-item-label>
+                        <q-item-label class="text-wrap">
+                          <q-badge :color="getBadgeColor(researchData.field_description)">
+                            {{ formatValue(researchData.field_description) }}
+                          </q-badge>
+                        </q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
                 </q-card-section>
               </q-card>
             </div>
@@ -66,22 +62,18 @@
                     <q-icon name="engineering" class="q-mr-sm" />
                     Expertise & Specialization
                   </div>
-                  <q-input
-                    readonly
-                    :value="researchData.expertise_description"
-                    label="Expertise Description"
-                    type="textarea"
-                    outlined
-                    dense
-                    stack-label
-                    autogrow
-                  >
-                    <template #append>
-                      <q-badge :color="getBadgeColor(researchData.expertise_description)">
-                        {{ formatValue(researchData.expertise_description) }}
-                      </q-badge>
-                    </template>
-                  </q-input>
+                  <q-list bordered>
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label caption>Expertise Description</q-item-label>
+                        <q-item-label class="text-wrap">
+                          <q-badge :color="getBadgeColor(researchData.expertise_description)">
+                            {{ formatValue(researchData.expertise_description) }}
+                          </q-badge>
+                        </q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
                 </q-card-section>
               </q-card>
             </div>
@@ -94,22 +86,18 @@
                     <q-icon name="trending_up" class="q-mr-sm" />
                     Research Impact
                   </div>
-                  <q-input
-                    readonly
-                    :value="researchData.work_impact"
-                    label="Work Impact"
-                    type="textarea"
-                    outlined
-                    dense
-                    stack-label
-                    autogrow
-                  >
-                    <template #append>
-                      <q-badge :color="getBadgeColor(researchData.work_impact)">
-                        {{ formatValue(researchData.work_impact) }}
-                      </q-badge>
-                    </template>
-                  </q-input>
+                  <q-list bordered>
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label caption>Work Impact</q-item-label>
+                        <q-item-label class="text-wrap">
+                          <q-badge :color="getBadgeColor(researchData.work_impact)">
+                            {{ formatValue(researchData.work_impact) }}
+                          </q-badge>
+                        </q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
                 </q-card-section>
               </q-card>
             </div>
@@ -135,22 +123,18 @@
                     <q-icon name="assignment" class="q-mr-sm" />
                     Project #{{ index + 1 }}
                   </div>
-                  <q-input
-                    readonly
-                    :value="project.project_description"
-                    label="Project Description"
-                    type="textarea"
-                    outlined
-                    dense
-                    stack-label
-                    autogrow
-                  >
-                    <template #append>
-                      <q-badge :color="getBadgeColor(project.project_description)">
-                        {{ formatValue(project.project_description) }}
-                      </q-badge>
-                    </template>
-                  </q-input>
+                  <q-list bordered>
+                    <q-item>
+                      <q-item-section>
+                        <q-item-label caption>Project Description</q-item-label>
+                        <q-item-label class="text-wrap">
+                          <q-badge :color="getBadgeColor(project.project_description)">
+                            {{ formatValue(project.project_description) }}
+                          </q-badge>
+                        </q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
                 </q-card-section>
               </q-card>
             </div>
@@ -208,9 +192,9 @@ export default {
       researchData,
       loading,
       formatValue,
-      getBadgeColor
+      getBadgeColor,
     }
-  }
+  },
 }
 </script>
 

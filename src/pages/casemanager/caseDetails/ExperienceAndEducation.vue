@@ -30,11 +30,7 @@
         <q-tab-panel name="education">
           <div class="text-h6 q-mb-md">Education History</div>
           <div v-if="educationData" class="row q-col-gutter-md">
-            <div
-              v-for="(education, index) in educationData"
-              :key="education.id"
-              class="col-12"
-            >
+            <div v-for="(education, index) in educationData" :key="education.id" class="col-12">
               <q-card bordered class="q-mb-md">
                 <q-card-section>
                   <div class="text-subtitle1 q-mb-md">
@@ -43,36 +39,32 @@
                   </div>
                   <div class="row q-col-gutter-md">
                     <div class="col-12 col-md-6">
-                      <q-input
-                        readonly
-                        :value="education.university_name"
-                        label="University Name"
-                        outlined
-                        dense
-                        stack-label
-                      >
-                        <template #append>
-                          <q-badge :color="getBadgeColor(education.university_name)">
-                            {{ formatValue(education.university_name) }}
-                          </q-badge>
-                        </template>
-                      </q-input>
+                      <q-list bordered>
+                        <q-item>
+                          <q-item-section>
+                            <q-item-label caption>University Name</q-item-label>
+                            <q-item-label>
+                              <q-badge :color="getBadgeColor(education.university_name)">
+                                {{ formatValue(education.university_name) }}
+                              </q-badge>
+                            </q-item-label>
+                          </q-item-section>
+                        </q-item>
+                      </q-list>
                     </div>
                     <div class="col-12 col-md-6">
-                      <q-input
-                        readonly
-                        :value="education.completion_year"
-                        label="Completion Year"
-                        outlined
-                        dense
-                        stack-label
-                      >
-                        <template #append>
-                          <q-badge :color="getBadgeColor(education.completion_year)">
-                            {{ formatValue(education.completion_year) }}
-                          </q-badge>
-                        </template>
-                      </q-input>
+                      <q-list bordered>
+                        <q-item>
+                          <q-item-section>
+                            <q-item-label caption>Completion Year</q-item-label>
+                            <q-item-label>
+                              <q-badge :color="getBadgeColor(education.completion_year)">
+                                {{ formatValue(education.completion_year) }}
+                              </q-badge>
+                            </q-item-label>
+                          </q-item-section>
+                        </q-item>
+                      </q-list>
                     </div>
                   </div>
                 </q-card-section>
@@ -103,104 +95,92 @@
                   <div class="row q-col-gutter-md">
                     <!-- Company Information -->
                     <div class="col-12 col-md-6">
-                      <q-input
-                        readonly
-                        :value="experience.employer_name"
-                        label="Employer Name"
-                        outlined
-                        dense
-                        stack-label
-                      >
-                        <template #append>
-                          <q-badge :color="getBadgeColor(experience.employer_name)">
-                            {{ formatValue(experience.employer_name) }}
-                          </q-badge>
-                        </template>
-                      </q-input>
+                      <q-list bordered>
+                        <q-item>
+                          <q-item-section>
+                            <q-item-label caption>Employer Name</q-item-label>
+                            <q-item-label>
+                              <q-badge :color="getBadgeColor(experience.employer_name)">
+                                {{ formatValue(experience.employer_name) }}
+                              </q-badge>
+                            </q-item-label>
+                          </q-item-section>
+                        </q-item>
+                      </q-list>
                     </div>
                     <div class="col-12 col-md-6">
-                      <q-input
-                        readonly
-                        :value="experience.business_type"
-                        label="Business Type"
-                        outlined
-                        dense
-                        stack-label
-                      >
-                        <template #append>
-                          <q-badge :color="getBadgeColor(experience.business_type)">
-                            {{ formatValue(experience.business_type) }}
-                          </q-badge>
-                        </template>
-                      </q-input>
+                      <q-list bordered>
+                        <q-item>
+                          <q-item-section>
+                            <q-item-label caption>Business Type</q-item-label>
+                            <q-item-label>
+                              <q-badge :color="getBadgeColor(experience.business_type)">
+                                {{ formatValue(experience.business_type) }}
+                              </q-badge>
+                            </q-item-label>
+                          </q-item-section>
+                        </q-item>
+                      </q-list>
                     </div>
 
                     <!-- Job Details -->
                     <div class="col-12 col-md-6">
-                      <q-input
-                        readonly
-                        :value="experience.job_title"
-                        label="Job Title"
-                        outlined
-                        dense
-                        stack-label
-                      >
-                        <template #append>
-                          <q-badge :color="getBadgeColor(experience.job_title)">
-                            {{ formatValue(experience.job_title) }}
-                          </q-badge>
-                        </template>
-                      </q-input>
+                      <q-list bordered>
+                        <q-item>
+                          <q-item-section>
+                            <q-item-label caption>Job Title</q-item-label>
+                            <q-item-label>
+                              <q-badge :color="getBadgeColor(experience.job_title)">
+                                {{ formatValue(experience.job_title) }}
+                              </q-badge>
+                            </q-item-label>
+                          </q-item-section>
+                        </q-item>
+                      </q-list>
                     </div>
                     <div class="col-12 col-md-6">
-                      <q-input
-                        readonly
-                        :value="experience.hours_worked"
-                        label="Hours Worked"
-                        outlined
-                        dense
-                        stack-label
-                      >
-                        <template #append>
-                          <q-badge :color="getBadgeColor(experience.hours_worked)">
-                            {{ formatValue(experience.hours_worked) }} hrs/week
-                          </q-badge>
-                        </template>
-                      </q-input>
+                      <q-list bordered>
+                        <q-item>
+                          <q-item-section>
+                            <q-item-label caption>Hours Worked</q-item-label>
+                            <q-item-label>
+                              <q-badge :color="getBadgeColor(experience.hours_worked)">
+                                {{ formatValue(experience.hours_worked) }} hrs/week
+                              </q-badge>
+                            </q-item-label>
+                          </q-item-section>
+                        </q-item>
+                      </q-list>
                     </div>
 
                     <!-- Dates -->
                     <div class="col-12 col-md-6">
-                      <q-input
-                        readonly
-                        :value="formatDate(experience.start_date)"
-                        label="Start Date"
-                        outlined
-                        dense
-                        stack-label
-                      >
-                        <template #append>
-                          <q-badge :color="getBadgeColor(experience.start_date)">
-                            {{ formatDate(experience.start_date) }}
-                          </q-badge>
-                        </template>
-                      </q-input>
+                      <q-list bordered>
+                        <q-item>
+                          <q-item-section>
+                            <q-item-label caption>Start Date</q-item-label>
+                            <q-item-label>
+                              <q-badge :color="getBadgeColor(experience.start_date)">
+                                {{ formatDate(experience.start_date) }}
+                              </q-badge>
+                            </q-item-label>
+                          </q-item-section>
+                        </q-item>
+                      </q-list>
                     </div>
                     <div class="col-12 col-md-6">
-                      <q-input
-                        readonly
-                        :value="formatDate(experience.end_date)"
-                        label="End Date"
-                        outlined
-                        dense
-                        stack-label
-                      >
-                        <template #append>
-                          <q-badge :color="getBadgeColor(experience.end_date)">
-                            {{ formatDate(experience.end_date) }}
-                          </q-badge>
-                        </template>
-                      </q-input>
+                      <q-list bordered>
+                        <q-item>
+                          <q-item-section>
+                            <q-item-label caption>End Date</q-item-label>
+                            <q-item-label>
+                              <q-badge :color="getBadgeColor(experience.end_date)">
+                                {{ formatDate(experience.end_date) }}
+                              </q-badge>
+                            </q-item-label>
+                          </q-item-section>
+                        </q-item>
+                      </q-list>
                     </div>
 
                     <!-- Address -->
@@ -210,100 +190,88 @@
                           <div class="text-subtitle2 q-mb-sm">Work Location</div>
                           <div class="row q-col-gutter-md">
                             <div class="col-12 col-md-6">
-                              <q-input
-                                readonly
-                                :value="experience.address_1"
-                                label="Address Line 1"
-                                outlined
-                                dense
-                                stack-label
-                              >
-                                <template #append>
-                                  <q-badge :color="getBadgeColor(experience.address_1)">
-                                    {{ formatValue(experience.address_1) }}
-                                  </q-badge>
-                                </template>
-                              </q-input>
+                              <q-list bordered>
+                                <q-item>
+                                  <q-item-section>
+                                    <q-item-label caption>Address Line 1</q-item-label>
+                                    <q-item-label>
+                                      <q-badge :color="getBadgeColor(experience.address_1)">
+                                        {{ formatValue(experience.address_1) }}
+                                      </q-badge>
+                                    </q-item-label>
+                                  </q-item-section>
+                                </q-item>
+                              </q-list>
                             </div>
                             <div class="col-12 col-md-6">
-                              <q-input
-                                readonly
-                                :value="experience.address_2"
-                                label="Address Line 2"
-                                outlined
-                                dense
-                                stack-label
-                              >
-                                <template #append>
-                                  <q-badge :color="getBadgeColor(experience.address_2)">
-                                    {{ formatValue(experience.address_2) }}
-                                  </q-badge>
-                                </template>
-                              </q-input>
+                              <q-list bordered>
+                                <q-item>
+                                  <q-item-section>
+                                    <q-item-label caption>Address Line 2</q-item-label>
+                                    <q-item-label>
+                                      <q-badge :color="getBadgeColor(experience.address_2)">
+                                        {{ formatValue(experience.address_2) }}
+                                      </q-badge>
+                                    </q-item-label>
+                                  </q-item-section>
+                                </q-item>
+                              </q-list>
                             </div>
                             <div class="col-12 col-md-3">
-                              <q-input
-                                readonly
-                                :value="experience.city"
-                                label="City"
-                                outlined
-                                dense
-                                stack-label
-                              >
-                                <template #append>
-                                  <q-badge :color="getBadgeColor(experience.city)">
-                                    {{ formatValue(experience.city) }}
-                                  </q-badge>
-                                </template>
-                              </q-input>
+                              <q-list bordered>
+                                <q-item>
+                                  <q-item-section>
+                                    <q-item-label caption>City</q-item-label>
+                                    <q-item-label>
+                                      <q-badge :color="getBadgeColor(experience.city)">
+                                        {{ formatValue(experience.city) }}
+                                      </q-badge>
+                                    </q-item-label>
+                                  </q-item-section>
+                                </q-item>
+                              </q-list>
                             </div>
                             <div class="col-12 col-md-3">
-                              <q-input
-                                readonly
-                                :value="experience.state"
-                                label="State"
-                                outlined
-                                dense
-                                stack-label
-                              >
-                                <template #append>
-                                  <q-badge :color="getBadgeColor(experience.state)">
-                                    {{ formatValue(experience.state) }}
-                                  </q-badge>
-                                </template>
-                              </q-input>
+                              <q-list bordered>
+                                <q-item>
+                                  <q-item-section>
+                                    <q-item-label caption>State</q-item-label>
+                                    <q-item-label>
+                                      <q-badge :color="getBadgeColor(experience.state)">
+                                        {{ formatValue(experience.state) }}
+                                      </q-badge>
+                                    </q-item-label>
+                                  </q-item-section>
+                                </q-item>
+                              </q-list>
                             </div>
                             <div class="col-12 col-md-3">
-                              <q-input
-                                readonly
-                                :value="experience.country"
-                                label="Country"
-                                outlined
-                                dense
-                                stack-label
-                              >
-                                <template #append>
-                                  <q-badge :color="getBadgeColor(experience.country)">
-                                    {{ formatValue(experience.country) }}
-                                  </q-badge>
-                                </template>
-                              </q-input>
+                              <q-list bordered>
+                                <q-item>
+                                  <q-item-section>
+                                    <q-item-label caption>Country</q-item-label>
+                                    <q-item-label>
+                                      <q-badge :color="getBadgeColor(experience.country)">
+                                        {{ formatValue(experience.country) }}
+                                      </q-badge>
+                                    </q-item-label>
+                                  </q-item-section>
+                                </q-item>
+                              </q-list>
                             </div>
                             <div class="col-12 col-md-3">
-                              <q-input
-                                readonly
-                                :value="experience.postal_code"
-                                label="Postal Code"
-                                outlined
-                                dense
-                                stack-label
-                              >
-                                <template #append>
-                                  <q-badge :color="getBadgeColor(experience.postal_code)">
-                                    {{ formatValue(experience.postal_code) }}
-                                  </q-badge>
-                                </template>
-                              </q-input>
+                              <q-list bordered>
+                                <q-item>
+                                  <q-item-section>
+                                    <q-item-label caption>Postal Code</q-item-label>
+                                    <q-item-label>
+                                      <q-badge :color="getBadgeColor(experience.postal_code)">
+                                        {{ formatValue(experience.postal_code) }}
+                                      </q-badge>
+                                    </q-item-label>
+                                  </q-item-section>
+                                </q-item>
+                              </q-list>
                             </div>
                           </div>
                         </q-card-section>
@@ -312,21 +280,18 @@
 
                     <!-- Job Details -->
                     <div class="col-12">
-                      <q-input
-                        readonly
-                        :value="experience.job_details"
-                        label="Job Details"
-                        type="textarea"
-                        outlined
-                        dense
-                        stack-label
-                      >
-                        <template #append>
-                          <q-badge :color="getBadgeColor(experience.job_details)">
-                            {{ formatValue(experience.job_details) }}
-                          </q-badge>
-                        </template>
-                      </q-input>
+                      <q-list bordered>
+                        <q-item>
+                          <q-item-section>
+                            <q-item-label caption>Job Details</q-item-label>
+                            <q-item-label>
+                              <q-badge :color="getBadgeColor(experience.job_details)">
+                                {{ formatValue(experience.job_details) }}
+                              </q-badge>
+                            </q-item-label>
+                          </q-item-section>
+                        </q-item>
+                      </q-list>
                     </div>
                   </div>
                 </q-card-section>

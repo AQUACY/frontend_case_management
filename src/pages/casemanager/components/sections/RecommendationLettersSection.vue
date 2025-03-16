@@ -79,150 +79,132 @@
                 <div class="row q-col-gutter-md">
                   <!-- Basic Information -->
                   <div class="col-12 col-md-6">
-                    <q-input
-                      readonly
-                      :value="recommender.title"
-                      label="Title"
-                      outlined
-                      dense
-                      stack-label
-                    >
-                      <template #append>
-                        <q-badge :color="getBadgeColor(recommender.title)">
-                          {{ formatValue(recommender.title) }}
-                        </q-badge>
-                      </template>
-                    </q-input>
+                    <q-list bordered>
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label caption>Title</q-item-label>
+                          <q-item-label>
+                            <q-badge :color="getBadgeColor(recommender.title)">
+                              {{ formatValue(recommender.title) }}
+                            </q-badge>
+                          </q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
                   </div>
 
                   <div class="col-12 col-md-6">
-                    <q-input
-                      readonly
-                      :value="recommender.institution"
-                      label="Institution"
-                      outlined
-                      dense
-                      stack-label
-                    >
-                      <template #append>
-                        <q-badge :color="getBadgeColor(recommender.institution)">
-                          {{ formatValue(recommender.institution) }}
-                        </q-badge>
-                      </template>
-                    </q-input>
+                    <q-list bordered>
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label caption>Institution</q-item-label>
+                          <q-item-label>
+                            <q-badge :color="getBadgeColor(recommender.institution)">
+                              {{ formatValue(recommender.institution) }}
+                            </q-badge>
+                          </q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
                   </div>
 
                   <div class="col-12 col-md-6">
-                    <q-input
-                      readonly
-                      :value="recommender.country"
-                      label="Country"
-                      outlined
-                      dense
-                      stack-label
-                    >
-                      <template #append>
-                        <q-badge :color="getBadgeColor(recommender.country)">
-                          {{ formatValue(recommender.country) }}
-                        </q-badge>
-                      </template>
-                    </q-input>
+                    <q-list bordered>
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label caption>Country</q-item-label>
+                          <q-item-label>
+                            <q-badge :color="getBadgeColor(recommender.country)">
+                              {{ formatValue(recommender.country) }}
+                            </q-badge>
+                          </q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
                   </div>
 
                   <div class="col-12 col-md-6">
-                    <q-input
-                      readonly
-                      :value="recommender.dependent_or_independent"
-                      label="Dependency Status"
-                      outlined
-                      dense
-                      stack-label
-                    >
-                      <template #append>
-                        <q-badge :color="getBadgeColor(recommender.dependent_or_independent)">
-                          {{ formatValue(recommender.dependent_or_independent) }}
-                        </q-badge>
-                      </template>
-                    </q-input>
+                    <q-list bordered>
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label caption>Dependency Status</q-item-label>
+                          <q-item-label>
+                            <q-badge :color="getBadgeColor(recommender.dependent_or_independent)">
+                              {{ formatValue(recommender.dependent_or_independent) }}
+                            </q-badge>
+                          </q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
                   </div>
 
                   <!-- Links -->
                   <div class="col-12 col-md-6">
-                    <q-input
-                      readonly
-                      :value="recommender.faculty_biography_link"
-                      label="Faculty Biography"
-                      outlined
-                      dense
-                      stack-label
-                    >
-                      <template #append>
-                        <q-badge :color="getBadgeColor(recommender.faculty_biography_link)">
-                          {{ formatValue(recommender.faculty_biography_link) }}
-                        </q-badge>
-                      </template>
-                    </q-input>
+                    <q-list bordered>
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label caption>Faculty Biography</q-item-label>
+                          <q-item-label>
+                            <q-badge :color="getBadgeColor(recommender.faculty_biography_link)">
+                              {{ formatValue(recommender.faculty_biography_link) }}
+                            </q-badge>
+                          </q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
                   </div>
 
                   <div class="col-12 col-md-6">
-                    <q-input
-                      readonly
-                      :value="recommender.google_scholar_link"
-                      label="Google Scholar"
-                      outlined
-                      dense
-                      stack-label
-                    >
-                      <template #append>
-                        <q-btn
-                          v-if="recommender.google_scholar_link"
-                          flat
-                          round
-                          icon="launch"
-                          :href="recommender.google_scholar_link"
-                          target="_blank"
-                        />
-                      </template>
-                    </q-input>
+                    <q-list bordered>
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label caption>Google Scholar</q-item-label>
+                          <q-item-label>
+                            {{ formatValue(recommender.google_scholar_link) }}
+                            <q-btn
+                              v-if="recommender.google_scholar_link"
+                              flat
+                              round
+                              icon="launch"
+                              :href="recommender.google_scholar_link"
+                              target="_blank"
+                              size="sm"
+                            />
+                          </q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
                   </div>
 
                   <!-- Project Details -->
                   <div class="col-12">
-                    <q-input
-                      readonly
-                      :value="recommender.projects_discussed"
-                      label="Projects Discussed"
-                      type="textarea"
-                      outlined
-                      dense
-                      stack-label
-                      autogrow
-                    >
-                      <template #append>
-                        <q-badge :color="getBadgeColor(recommender.projects_discussed)">
-                          {{ formatValue(recommender.projects_discussed) }}
-                        </q-badge>
-                      </template>
-                    </q-input>
+                    <q-list bordered>
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label caption>Projects Discussed</q-item-label>
+                          <q-item-label class="text-wrap">
+                            <q-badge :color="getBadgeColor(recommender.projects_discussed)">
+                              {{ formatValue(recommender.projects_discussed) }}
+                            </q-badge>
+                          </q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
                   </div>
 
                   <div class="col-12">
-                    <q-input
-                      readonly
-                      :value="recommender.cited_project_details"
-                      label="Cited Project Details"
-                      type="textarea"
-                      outlined
-                      dense
-                      stack-label
-                      autogrow
-                    >
-                      <template #append>
-                        <q-badge :color="getBadgeColor(recommender.cited_project_details)">
-                          {{ formatValue(recommender.cited_project_details) }}
-                        </q-badge>
-                      </template>
-                    </q-input>
+                    <q-list bordered>
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label caption>Cited Project Details</q-item-label>
+                          <q-item-label class="text-wrap">
+                            <q-badge :color="getBadgeColor(recommender.cited_project_details)">
+                              {{ formatValue(recommender.cited_project_details) }}
+                            </q-badge>
+                          </q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
                   </div>
                 </div>
               </q-card-section>
@@ -407,11 +389,11 @@ export default {
 <style lang="scss" scoped>
 .recommendation-letters-section {
   :deep(.q-field--readonly) {
-    .q-field__native {
+    .q_field__native {
       color: $grey-8;
     }
 
-    .q-field__label {
+    .q_field__label {
       color: $grey-7;
     }
   }

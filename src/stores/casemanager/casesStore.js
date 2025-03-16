@@ -12,6 +12,8 @@ export const useCasesStore = defineStore('cases', {
       status: null,
       type: null,
       date: null,
+      case_manager_id: null,
+      showArchived: false,
     },
     pagination: {
       page: 1,
@@ -28,14 +30,23 @@ export const useCasesStore = defineStore('cases', {
     getFilteredCases: (state) => {
       let filtered = [...state.cases]
 
+      // Filter archived cases unless explicitly shown
+      if (!state.filters.showArchived) {
+        filtered = filtered.filter((caseItem) => caseItem.status !== 'archived')
+      }
+
       // Apply search filter
       if (state.filters.search) {
         const searchTerm = state.filters.search.toLowerCase()
         filtered = filtered.filter(
           (caseItem) =>
-            caseItem.client.toLowerCase().includes(searchTerm) ||
-            caseItem.id.toLowerCase().includes(searchTerm) ||
-            caseItem.type.toLowerCase().includes(searchTerm),
+            (caseItem.client && caseItem.client.toLowerCase().includes(searchTerm)) ||
+            (caseItem.id && caseItem.id.toLowerCase().includes(searchTerm)) ||
+            (caseItem.type && caseItem.type.toLowerCase().includes(searchTerm)) ||
+            (caseItem.order_number && caseItem.order_number.toLowerCase().includes(searchTerm)) ||
+            (caseItem.user &&
+              caseItem.user.name &&
+              caseItem.user.name.toLowerCase().includes(searchTerm)),
         )
       }
 
@@ -51,7 +62,21 @@ export const useCasesStore = defineStore('cases', {
 
       // Apply date filter
       if (state.filters.date) {
-        filtered = filtered.filter((caseItem) => caseItem.date === state.filters.date)
+        const filterDate = new Date(state.filters.date).toISOString().split('T')[0]
+        filtered = filtered.filter((caseItem) => {
+          if (!caseItem.date && !caseItem.created_at) return false
+          const caseDate = new Date(caseItem.date || caseItem.created_at)
+            .toISOString()
+            .split('T')[0]
+          return caseDate === filterDate
+        })
+      }
+
+      // Apply case manager filter
+      if (state.filters.case_manager_id) {
+        filtered = filtered.filter(
+          (caseItem) => caseItem.case_manager_id === state.filters.case_manager_id,
+        )
       }
 
       return filtered
@@ -119,6 +144,8 @@ export const useCasesStore = defineStore('cases', {
         status: null,
         type: null,
         date: null,
+        case_manager_id: null,
+        showArchived: false,
       }
     },
 
