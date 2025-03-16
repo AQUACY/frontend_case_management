@@ -42,11 +42,12 @@
                     <q-item>
                       <q-item-section>
                         <q-item-label caption>Field Description</q-item-label>
-                        <q-item-label class="text-wrap">
+                        <!-- <q-item-label>
                           <q-badge :color="getBadgeColor(researchData.field_description)">
                             {{ formatValue(researchData.field_description) }}
                           </q-badge>
-                        </q-item-label>
+                        </q-item-label> -->
+                        <q-item-label>{{ researchData.field_description }}</q-item-label>
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -66,10 +67,13 @@
                     <q-item>
                       <q-item-section>
                         <q-item-label caption>Expertise Description</q-item-label>
-                        <q-item-label class="text-wrap">
+                        <!-- <q-item-label class="text-wrap">
                           <q-badge :color="getBadgeColor(researchData.expertise_description)">
                             {{ formatValue(researchData.expertise_description) }}
                           </q-badge>
+                        </q-item-label> -->
+                        <q-item-label>
+                          {{ researchData.expertise_description }}
                         </q-item-label>
                       </q-item-section>
                     </q-item>
@@ -90,11 +94,14 @@
                     <q-item>
                       <q-item-section>
                         <q-item-label caption>Work Impact</q-item-label>
-                        <q-item-label class="text-wrap">
+                        <q-item-label>
+                          {{ researchData.work_impact }}
+                        </q-item-label>
+                        <!-- <q-item-label class="text-wrap">
                           <q-badge :color="getBadgeColor(researchData.work_impact)">
                             {{ formatValue(researchData.work_impact) }}
                           </q-badge>
-                        </q-item-label>
+                        </q-item-label> -->
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -127,11 +134,14 @@
                     <q-item>
                       <q-item-section>
                         <q-item-label caption>Project Description</q-item-label>
-                        <q-item-label class="text-wrap">
+                        <q-item-label>
+                          {{ project.project_description }}
+                        </q-item-label>
+                        <!-- <q-item-label class="text-wrap">
                           <q-badge :color="getBadgeColor(project.project_description)">
                             {{ formatValue(project.project_description) }}
                           </q-badge>
-                        </q-item-label>
+                        </q-item-label> -->
                       </q-item-section>
                     </q-item>
                   </q-list>

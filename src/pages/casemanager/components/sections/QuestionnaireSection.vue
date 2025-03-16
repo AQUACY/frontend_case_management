@@ -42,7 +42,14 @@
                   <q-item>
                     <q-item-section>
                       <q-item-label caption>Petition Type</q-item-label>
-                      <q-item-label>{{ questionnaireData.petition_type }}</q-item-label>
+                      <q-item-label>
+                        <q-badge
+                          :color="getBadgeColor(questionnaireData.petition_type)"
+                        >
+                          {{ formatValue(questionnaireData.petition_type) }}
+                        </q-badge>
+                      </q-item-label>
+                     
                     </q-item-section>
                   </q-item>
                 </q-list>
@@ -52,7 +59,14 @@
                   <q-item>
                     <q-item-section>
                       <q-item-label caption>Petitioner</q-item-label>
-                      <q-item-label>{{ questionnaireData.petitioner }}</q-item-label>
+                      <q-item-label>
+                        <q-badge
+                          :color="getBadgeColor(questionnaireData.petitioner)"
+                        >
+                          {{ formatValue(questionnaireData.petitioner) }}
+                        </q-badge>
+                      </q-item-label>
+                     
                     </q-item-section>
                   </q-item>
                 </q-list>
@@ -62,7 +76,14 @@
                   <q-item>
                     <q-item-section>
                       <q-item-label caption>Created At</q-item-label>
-                      <q-item-label>{{ formatDate(questionnaireData.created_at) }}</q-item-label>
+                      <q-item-label>
+                        <q-badge
+                          :color="getBadgeColor(questionnaireData.created_at)"
+                        >
+                          {{ formatDate(questionnaireData.created_at) }}
+                        </q-badge>
+                      </q-item-label>
+                     
                     </q-item-section>
                   </q-item>
                 </q-list>
@@ -72,7 +93,14 @@
                   <q-item>
                     <q-item-section>
                       <q-item-label caption>Last Updated</q-item-label>
-                      <q-item-label>{{ formatDate(questionnaireData.updated_at) }}</q-item-label>
+                      <q-item-label>
+                        <q-badge
+                          :color="getBadgeColor(questionnaireData.updated_at)"
+                        >
+                          {{ formatDate(questionnaireData.updated_at) }}
+                        </q-badge>
+                      </q-item-label>
+                     
                     </q-item-section>
                   </q-item>
                 </q-list>
@@ -89,7 +117,13 @@
                   <q-item>
                     <q-item-section>
                       <q-item-label caption>Family Name</q-item-label>
-                      <q-item-label>{{ questionnaireData.family_name }}</q-item-label>
+                      <q-item-label>
+                        <q-badge
+                          :color="getBadgeColor(questionnaireData.family_name)"
+                        >
+                          {{ formatValue(questionnaireData.family_name) }}
+                        </q-badge>
+                      </q-item-label>
                     </q-item-section>
                   </q-item>
                 </q-list>
@@ -99,7 +133,14 @@
                   <q-item>
                     <q-item-section>
                       <q-item-label caption>Given Name</q-item-label>
-                      <q-item-label>{{ questionnaireData.given_name }}</q-item-label>
+                    
+                      <q-item-label>
+                        <q-badge
+                          :color="getBadgeColor(questionnaireData.given_name)"
+                        >
+                          {{ formatValue(questionnaireData.given_name) }}
+                        </q-badge>
+                      </q-item-label>
                     </q-item-section>
                   </q-item>
                 </q-list>
@@ -109,7 +150,14 @@
                   <q-item>
                     <q-item-section>
                       <q-item-label caption>Middle Name</q-item-label>
-                      <q-item-label>{{ questionnaireData.full_middle_name }}</q-item-label>
+                      <q-item-label>
+                        <q-badge
+                          :color="getBadgeColor(questionnaireData.full_middle_name)"
+                        >
+                          {{ formatValue(questionnaireData.full_middle_name) }}
+                        </q-badge>
+                      </q-item-label>
+                     
                     </q-item-section>
                   </q-item>
                 </q-list>
@@ -119,7 +167,14 @@
                   <q-item>
                     <q-item-section>
                       <q-item-label caption>Native Alphabet</q-item-label>
-                      <q-item-label>{{ questionnaireData.native_alphabet }}</q-item-label>
+                      <q-item-label>
+                        <q-badge
+                          :color="getBadgeColor(questionnaireData.native_alphabet)"
+                        >
+                          {{ formatValue(questionnaireData.native_alphabet) }}
+                        </q-badge>
+                      </q-item-label>
+        
                     </q-item-section>
                   </q-item>
                 </q-list>
@@ -129,7 +184,14 @@
                   <q-item>
                     <q-item-section>
                       <q-item-label caption>Date of Birth</q-item-label>
-                      <q-item-label>{{ formatDate(questionnaireData.dob) }}</q-item-label>
+                      <q-item-label>
+                        <q-badge
+                          :color="getBadgeColor(questionnaireData.dob)"
+                        >
+                          {{ formatValue(questionnaireData.dob) }}
+                        </q-badge>
+                      </q-item-label>
+                   
                     </q-item-section>
                   </q-item>
                 </q-list>
