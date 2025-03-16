@@ -67,12 +67,24 @@
               />
             </div>
 
+            <div class="row q-mt-sm">
+              <div class="col-12">
+                <q-toggle
+                  v-model="casesStore.filters.showArchived"
+                  label="Show Archived Cases"
+                  color="grey"
+                />
+              </div>
+            </div>
+
             <!-- Reset Filters -->
             <div class="col-12 col-md-2">
               <q-btn label="Reset Filters" color="green" flat @click="casesStore.resetFilters" />
             </div>
           </div>
         </template>
+
+        <!-- Show Archived Cases Toggle -->
 
         <!-- Actions Column -->
         <template v-slot:body-cell-actions="props">
@@ -122,6 +134,17 @@
                 <q-tooltip>
                   {{ props.row.contract_file ? 'Update Contract' : 'Upload Contract' }}
                 </q-tooltip>
+              </q-btn>
+              <q-btn
+                flat
+                round
+                size="sm"
+                color="red"
+                icon="archive"
+                @click="archiveCase(props.row)"
+                v-if="user_role === 2 && props.row.status !== 'archived'"
+              >
+                <q-tooltip>Archive Case</q-tooltip>
               </q-btn>
             </q-btn-group>
           </q-td>
@@ -424,6 +447,13 @@ export default {
         align: 'left',
         sortable: true,
       },
+      {
+        name: 'case_manager',
+        label: 'Case Manager',
+        field: (row) => row.case_manager?.name || 'N/A',
+        align: 'left',
+        sortable: true,
+      },
       { name: 'status', label: 'Status', field: 'status', align: 'left', sortable: true },
       {
         name: 'date',
@@ -473,6 +503,18 @@ export default {
 
     // Load cases when component mounts
     onMounted(async () => {
+      // Check if the logged-in user is a case manager (not an admin)
+      // If so, filter cases to only show those assigned to them
+      const currentUser = JSON.parse(localStorage.getItem('user'))
+
+      // Set up case manager filter if user is not an administrator (role_id !== 1)
+      if (currentUser && currentUser.role_id !== 2) {
+        // Filter to only show cases assigned to the current case manager
+        casesStore.filters.case_manager_id = currentUser.id
+      } else {
+        // For administrators, show all cases by default
+        casesStore.filters.case_manager_id = null
+      }
       await casesStore.fetchCases()
       fetchUsers()
     })

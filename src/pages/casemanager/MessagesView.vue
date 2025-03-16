@@ -36,6 +36,7 @@
               :class="{
                 'selected-message': selectedMessage?.id === message.id,
                 'message-item': true,
+                'unread-message': message.unread_count > 0,
               }"
               @click="selectMessage(message)"
               v-ripple
@@ -53,7 +54,7 @@
                     {{ message.unread_count }}
                   </q-badge>
                 </div>
-                <q-item-label caption lines="2">
+                <q-item-label caption lines="2" class="message-preview">
                   {{ message.latest_message }}
                 </q-item-label>
               </q-item-section>
@@ -80,14 +81,24 @@
         <template v-if="selectedMessage">
           <!-- Conversation Header -->
           <div class="conversation-header q-pa-md" style="border-bottom: 1px solid #ddd">
-            <div class="text-h6 text-white text-bold">{{ selectedMessage.subject }}</div>
-            <div class="text-caption text-white">Case #{{ route.params.id }}</div>
+            <div class="row items-center justify-between">
+              <div>
+                <div class="text-h6 text-white text-bold">{{ selectedMessage.subject }}</div>
+                <div class="text-caption text-white">Case #{{ route.params.id }}</div>
+              </div>
+              <div v-if="remoteTyping" class="typing-indicator text-white">
+                <span>Typing</span>
+                <span class="dot">.</span>
+                <span class="dot">.</span>
+                <span class="dot">.</span>
+              </div>
+            </div>
           </div>
 
           <!-- Messages Area -->
           <q-scroll-area
             ref="messageScroll"
-            style="height: calc(100vh - 200px); width: 70%; margin-left: auto"
+            style="height: calc(100vh - 200px); width: 100%"
             class="q-pa-md"
           >
             <div v-if="loadingConversation" class="text-center q-pa-md">
@@ -95,26 +106,60 @@
             </div>
 
             <template v-else>
-              <div v-for="msg in conversation" :key="msg.id" class="q-mb-md">
-                <div
-                  :class="['message-bubble', msg.sender_type === 'user' ? 'user' : 'case_manager']"
-                >
-                  <div class="row items-center no-wrap q-mb-sm">
-                    <div class="text-caption text-weight-medium">
-                      {{ msg.sender.name }}
-                      <span class="text-caption text-white-6" v-if="msg.sender_type === 'user'"
-                        >(Client)</span
-                      >
-                      <span
-                        class="text-caption text-white-6"
-                        v-if="msg.sender_type === 'case_manager'"
-                        >(Case Manager)</span
-                      >
+              <div class="messages-container">
+                <div v-for="(msg, index) in conversation" :key="msg.id" class="message-wrapper">
+                  <!-- Date separator -->
+                  <div v-if="shouldShowDateSeparator(msg, index)" class="date-separator">
+                    {{ formatDateSeparator(msg.created_at) }}
+                  </div>
+
+                  <!-- Message bubble -->
+                  <div
+                    :class="[
+                      'message-bubble',
+                      msg.sender_type === 'user' ? 'user' : 'case_manager',
+                      msg.pending ? 'pending' : '',
+                    ]"
+                  >
+                    <div class="row items-center no-wrap q-mb-sm">
+                      <div class="text-caption text-weight-medium">
+                        {{ msg.sender ? msg.sender.name : 'You' }}
+                        <span
+                          class="text-caption text-white-6"
+                          v-if="msg.sender_type === 'case_manager'"
+                          >(Case Manager)</span
+                        >
+                        <span class="text-caption text-white-6" v-if="msg.sender_type === 'user'"
+                          >(Client)</span
+                        >
+                      </div>
+                    </div>
+                    <div class="message-content">{{ msg.content }}</div>
+                    <div class="message-time text-caption text-white-6">
+                      {{ formatTime(msg.created_at) }}
+                      <q-icon
+                        v-if="msg.sender_type === 'user'"
+                        :name="msg.is_read ? 'done_all' : 'done'"
+                        :color="msg.is_read ? 'green' : 'grey-7'"
+                        size="xs"
+                        class="q-ml-xs"
+                      />
+                      <q-spinner-dots
+                        v-if="msg.pending"
+                        color="grey-7"
+                        size="1em"
+                        class="q-ml-xs"
+                      />
                     </div>
                   </div>
-                  <div class="message-content">{{ msg.content }}</div>
-                  <div class="message-time text-caption text-white-6">
-                    {{ formatDate(msg.created_at) }}
+                </div>
+
+                <!-- Typing indicator at the bottom -->
+                <div v-if="remoteTyping" class="typing-bubble case_manager">
+                  <div class="typing-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                   </div>
                 </div>
               </div>
@@ -132,7 +177,14 @@
               color="green"
               placeholder="Type your message"
               @keypress.enter.prevent="sendMessage"
+              @input="handleTyping"
+              ref="messageInput"
             >
+              <template v-slot:before>
+                <q-btn round flat icon="attach_file" color="grey">
+                  <q-tooltip>Attach file</q-tooltip>
+                </q-btn>
+              </template>
               <template v-slot:after>
                 <q-btn
                   round
@@ -142,7 +194,9 @@
                   :loading="sending"
                   :disable="!newMessage.trim() || sending"
                   @click="sendMessage"
-                />
+                >
+                  <q-tooltip>Send message</q-tooltip>
+                </q-btn>
               </template>
             </q-input>
           </div>
@@ -202,10 +256,58 @@
 </template>
 
 <script>
-import { ref, onMounted, computed, nextTick, onUnmounted } from 'vue'
+import { ref, onMounted, computed, nextTick, onUnmounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { date, useQuasar } from 'quasar'
 import { api } from 'boot/axios'
+import Pusher from 'pusher-js'
+
+// Date helper functions
+/**
+ * Format a date for API requests to ensure consistent format
+ * @param {Date|string} date - The date to format
+ * @returns {string} - Formatted date string
+ */
+function formatDateForApi(date) {
+  if (!date) return null
+
+  // If it's already a string, try to parse it
+  if (typeof date === 'string') {
+    date = new Date(date)
+  }
+
+  // Check if date is valid
+  if (isNaN(date.getTime())) {
+    console.error('Invalid date provided to formatDateForApi:', date)
+    return null
+  }
+
+  // Format as ISO string which is compatible with Laravel's datetime parsing
+  return date.toISOString()
+}
+
+/**
+ * Format a date for display in the UI
+ * @param {Date|string} date - The date to format
+ * @returns {string} - Formatted date string for display
+ */
+function formatDateForDisplay(date) {
+  if (!date) return ''
+
+  // If it's a string, parse it
+  if (typeof date === 'string') {
+    date = new Date(date)
+  }
+
+  // Check if date is valid
+  if (isNaN(date.getTime())) {
+    console.error('Invalid date provided to formatDateForDisplay:', date)
+    return ''
+  }
+
+  // Format for display (customize as needed)
+  return date.toLocaleString()
+}
 
 export default {
   name: 'CaseMessages',
@@ -220,13 +322,21 @@ export default {
     const searchQuery = ref('')
     const unreadCount = ref(0)
     const messageScroll = ref(null)
+    const messageInput = ref(null)
     const loading = ref(false)
     const loadingConversation = ref(false)
     const sending = ref(false)
     const newMessageDialog = ref(false)
     const categories = ref([])
     const isActiveConversation = ref(false)
+    const remoteTyping = ref(false)
+    const typingTimeout = ref(null)
+    const typingIndicatorTimeout = ref(null)
     const caseId = route.params.id
+    const pusher = ref(null)
+    const channel = ref(null)
+    const lastMessageTimestamp = ref(null)
+
     const newMessageForm = ref({
       category_id: null,
       subject: '',
@@ -245,7 +355,49 @@ export default {
     })
 
     const formatDate = (dateStr) => {
-      return date.formatDate(dateStr, 'MMM D, YYYY h:mm A')
+      const messageDate = new Date(dateStr)
+      const today = new Date()
+
+      // If message is from today, just show time
+      if (messageDate.toDateString() === today.toDateString()) {
+        return date.formatDate(dateStr, 'h:mm A')
+      }
+
+      // If message is from this year, show month and day
+      if (messageDate.getFullYear() === today.getFullYear()) {
+        return date.formatDate(dateStr, 'MMM D')
+      }
+
+      // Otherwise show full date
+      return date.formatDate(dateStr, 'MMM D, YYYY')
+    }
+
+    const formatTime = (dateStr) => {
+      return date.formatDate(dateStr, 'h:mm A')
+    }
+
+    const formatDateSeparator = (dateStr) => {
+      const messageDate = new Date(dateStr)
+      const today = new Date()
+      const yesterday = new Date(today)
+      yesterday.setDate(yesterday.getDate() - 1)
+
+      if (messageDate.toDateString() === today.toDateString()) {
+        return 'Today'
+      } else if (messageDate.toDateString() === yesterday.toDateString()) {
+        return 'Yesterday'
+      } else {
+        return date.formatDate(dateStr, 'dddd, MMMM D, YYYY')
+      }
+    }
+
+    const shouldShowDateSeparator = (message, index) => {
+      if (index === 0) return true
+
+      const currentDate = new Date(message.created_at).toDateString()
+      const prevDate = new Date(conversation.value[index - 1].created_at).toDateString()
+
+      return currentDate !== prevDate
     }
 
     const fetchUnreadCount = async () => {
@@ -264,9 +416,8 @@ export default {
         if (response.data.messages && Array.isArray(response.data.messages)) {
           messages.value = response.data.messages.map((message) => ({
             ...message,
-            unread_count: message.unread_count || 0, // Ensure unread_count exists
+            unread_count: message.unread_count || 0,
           }))
-          // Fetch unread count after messages are loaded
           await fetchUnreadCount()
         }
       } catch (error) {
@@ -283,7 +434,6 @@ export default {
 
     const markMessageAsRead = async (messageId) => {
       try {
-        console.log('Marking message as read:', messageId)
         await api.post(`/api/auth/messages/${messageId}/read`)
 
         // Update local read status
@@ -310,99 +460,202 @@ export default {
       }
     }
 
-    const subscribeToConversation = (messageId) => {
-      try {
-        // Clean up previous subscription if exists
-        if (selectedMessage.value && window.Echo) {
-          console.log('Leaving previous channel:', `message.${selectedMessage.value.id}`)
-          window.Echo.leave(`message.${selectedMessage.value.id}`)
+    const addMessageToConversation = (data) => {
+      // Check if message already exists in conversation
+      const exists = conversation.value.some((msg) => msg.id === data.id)
+      if (!exists) {
+        conversation.value.push(data)
+
+        // Update the latest message in the message list
+        const messageIndex = messages.value.findIndex((m) => m.id === selectedMessage.value?.id)
+        if (messageIndex !== -1) {
+          messages.value[messageIndex].latest_message = data.content
+          messages.value[messageIndex].updated_at = data.created_at
         }
 
-        console.log('Subscribing to channel:', `message.${messageId}`)
-        // Subscribe to new conversation channel
-        window.Echo.private(`message.${messageId}`)
-          .listen('.new.message', (data) => {
-            console.log('New message received:', data)
-            conversation.value.push(data)
+        // Scroll to bottom on new message
+        nextTick(() => {
+          scrollToBottom()
+        })
 
-            // Update unread count for this specific message
-            if (data.sender_type !== 'user') {
-              updateMessageUnreadCount(messageId)
-            }
-
-            // Scroll to bottom on new message
-            nextTick(() => {
-              if (messageScroll.value) {
-                messageScroll.value.setScrollPosition('vertical', 99999)
-              }
-            })
-
-            // Show notification for messages from others
-            if (data.sender_type !== 'user') {
-              $q.notify({
-                type: 'info',
-                message: 'New message received',
-                position: 'top',
-              })
-            }
-
-            // Mark as read if conversation is active
-            if (isActiveConversation.value) {
-              markMessageAsRead(data.id)
-            }
+        // Show notification for messages from others
+        if (data.sender_type !== 'case_manager') {
+          $q.notify({
+            type: 'info',
+            message: 'New message received',
+            position: 'top',
           })
-          .listen('.message.read', (data) => {
-            updateMessageReadStatus(data.message_id)
+        }
+
+        // Mark as read if conversation is active
+        if (isActiveConversation.value) {
+          markMessageAsRead(data.id)
+        } else if (data.sender_type !== 'case_manager') {
+          // Update unread count for this specific message thread
+          updateMessageUnreadCount(selectedMessage.value?.id)
+        }
+
+        // Update last message timestamp
+        if (data.created_at) {
+          lastMessageTimestamp.value = data.created_at
+        }
+      }
+    }
+
+    const handleTyping = () => {
+      // Clear previous timeout
+      if (typingTimeout.value) {
+        clearTimeout(typingTimeout.value)
+      }
+
+      // Emit typing event to server via Pusher
+      if (pusher.value && selectedMessage.value) {
+        // Use a client event for typing indicators
+        channel.value.trigger('client-typing', {
+          message_id: selectedMessage.value.id,
+          user: 'case_manager',
+          typing: true,
+        })
+      }
+
+      // Set timeout to clear typing indicator after 2 seconds of inactivity
+      typingTimeout.value = setTimeout(() => {
+        // Emit stopped typing event
+        if (pusher.value && selectedMessage.value) {
+          channel.value.trigger('client-typing', {
+            message_id: selectedMessage.value.id,
+            user: 'case_manager',
+            typing: false,
           })
+        }
+      }, 2000)
+    }
+
+    const initializePusher = () => {
+      try {
+        // Initialize Pusher
+        pusher.value = new Pusher(process.env.PUSHER_APP_KEY, {
+          cluster: process.env.PUSHER_APP_CLUSTER,
+          encrypted: true,
+        })
+
+        // Subscribe to the messages channel
+        channel.value = pusher.value.subscribe('messages')
+
+        // Listen for new messages
+        channel.value.bind('new-message', (data) => {
+          console.log('New message received via Pusher:', data)
+
+          // Check if the message is already in the conversation
+          const exists = conversation.value.some((msg) => msg.id === data.id)
+          if (!exists) {
+            // Add message to conversation
+            addMessageToConversation(data)
+          }
+        })
+
+        // Listen for read receipts
+        channel.value.bind('read-receipt', (data) => {
+          console.log('Read receipt received:', data)
+          // Update UI to show message has been read
+          updateMessageReadStatus(data.message_id)
+        })
+
+        // Listen for typing indicators
+        channel.value.bind('client-typing', (data) => {
+          console.log('Typing indicator received:', data)
+          // Only show typing indicator for other users and for the current conversation
+          if (
+            data.user !== 'case_manager' &&
+            selectedMessage.value &&
+            data.message_id === selectedMessage.value.id
+          ) {
+            remoteTyping.value = data.typing
+
+            // Clear previous timeout if exists
+            if (typingIndicatorTimeout.value) {
+              clearTimeout(typingIndicatorTimeout.value)
+            }
+
+            // Set a safety timeout to clear typing indicator after 5 seconds
+            // in case the "stopped typing" event is missed
+            if (data.typing) {
+              typingIndicatorTimeout.value = setTimeout(() => {
+                remoteTyping.value = false
+              }, 5000)
+            }
+          }
+        })
+
+        console.log('Pusher initialized successfully')
       } catch (error) {
-        console.error('Error subscribing to conversation:', error)
+        console.error('Error initializing Pusher:', error)
+      }
+    }
+
+    const getUpdates = async () => {
+      if (!selectedMessage.value || !lastMessageTimestamp.value) return
+
+      try {
+        // Using formatDateForApi to ensure proper date formatting for the API
+        const response = await api.get(`/api/auth/messages/${selectedMessage.value.id}/updates`, {
+          params: {
+            last_timestamp: formatDateForApi(lastMessageTimestamp.value),
+          },
+        })
+
+        if (response.data.new_messages && response.data.new_messages.length > 0) {
+          // Add new messages to the conversation
+          response.data.new_messages.forEach((message) => {
+            addMessageToConversation(message)
+          })
+
+          // Update last timestamp
+          const lastMessage = response.data.new_messages[response.data.new_messages.length - 1]
+          lastMessageTimestamp.value = lastMessage.created_at
+        }
+      } catch (error) {
+        console.error('Error getting updates:', error)
       }
     }
 
     const selectMessage = async (message) => {
-      console.log('Selecting message:', message)
-
-      if (!message || !message.id) {
-        console.error('Invalid message object:', message)
-        $q.notify({
-          type: 'negative',
-          message: 'Invalid message selected',
-          position: 'top',
-        })
-        return
-      }
-
       selectedMessage.value = message
       isActiveConversation.value = true
       loadingConversation.value = true
 
       try {
-        console.log('Fetching conversation for message ID:', message.id)
         const response = await api.get(`/api/auth/messages/${message.id}/conversation`)
-        console.log('Conversation response:', response.data.conversation)
 
         if (response.data && response.data.conversation) {
           conversation.value = response.data.conversation
+
+          // Set last message timestamp for polling fallback
+          if (conversation.value.length > 0) {
+            lastMessageTimestamp.value =
+              conversation.value[conversation.value.length - 1].created_at
+          }
+
           // Reset unread count when message is selected
           message.unread_count = 0
         } else {
-          console.error('Invalid response format:', response.data)
           throw new Error('Invalid response format')
         }
 
-        // Subscribe to conversation channel
-        subscribeToConversation(message.id)
-
         await nextTick()
-        if (messageScroll.value) {
-          messageScroll.value.setScrollPosition('vertical', 99999)
-        }
+        scrollToBottom()
 
         // Mark conversation as read
         await markMessageAsRead(message.id)
+
+        // Focus on message input
+        nextTick(() => {
+          if (messageInput.value) {
+            messageInput.value.focus()
+          }
+        })
       } catch (error) {
         console.error('Error fetching conversation:', error)
-        console.error('Error response:', error.response)
 
         $q.notify({
           type: 'negative',
@@ -416,19 +669,75 @@ export default {
       }
     }
 
+    const scrollToBottom = () => {
+      if (messageScroll.value) {
+        messageScroll.value.setScrollPosition('vertical', 99999)
+      }
+    }
+
     const sendMessage = async () => {
-      if (!newMessage.value.trim() || !selectedMessage.value) return
+      if (!newMessage.value.trim() || !selectedMessage.value || sending.value) return
 
       sending.value = true
+
+      // Generate a unique temporary ID for the optimistic message
+      const tempId = `temp-${Date.now()}`
+      const optimisticMessage = {
+        id: tempId,
+        content: newMessage.value,
+        created_at: new Date().toISOString(),
+        sender_type: 'case_manager',
+        sender: { name: 'You' }, // Replace with actual user name
+        is_read: false,
+        pending: true, // Initially set as pending
+      }
+
+      conversation.value.push(optimisticMessage)
+      const messageToSend = newMessage.value
+      newMessage.value = ''
+
+      // Scroll to bottom to show new message
+      await nextTick()
+      scrollToBottom()
+
       try {
-        await api.post(`/api/auth/messages/${selectedMessage.value.id}/reply`, {
-          content: newMessage.value,
+        const response = await api.post(`/api/auth/messages/${selectedMessage.value.id}/reply`, {
+          content: messageToSend,
         })
 
-        newMessage.value = ''
-        selectMessage(selectedMessage.value)
+        // Replace optimistic message with real one if response contains the message
+        if (response.data && response.data.id) {
+          const index = conversation.value.findIndex((m) => m.id === tempId)
+          if (index !== -1) {
+            conversation.value[index] = {
+              ...response.data,
+              pending: false, // Set pending to false as it's now confirmed
+            }
+
+            // Update last message timestamp
+            lastMessageTimestamp.value = response.data.created_at
+          }
+        }
+
+        // Update message list to show latest message
+        const messageIndex = messages.value.findIndex((m) => m.id === selectedMessage.value.id)
+        if (messageIndex !== -1) {
+          messages.value[messageIndex].latest_message = messageToSend
+          messages.value[messageIndex].updated_at = new Date().toISOString()
+        }
+
+        // Focus back on the input
+        nextTick(() => {
+          if (messageInput.value) {
+            messageInput.value.focus()
+          }
+        })
       } catch (error) {
         console.error('Error sending message:', error)
+
+        // Remove optimistic message on error
+        conversation.value = conversation.value.filter((m) => m.id !== tempId)
+
         $q.notify({
           type: 'negative',
           message: 'Failed to send message',
@@ -466,7 +775,10 @@ export default {
     const submitNewMessage = async () => {
       sending.value = true
       try {
-        await api.post(`/api/auth/cases/${caseId}/addmessages`, newMessageForm.value)
+        const response = await api.post(
+          `/api/auth/cases/${caseId}/addmessages`,
+          newMessageForm.value,
+        )
 
         $q.notify({
           type: 'positive',
@@ -475,6 +787,17 @@ export default {
         })
 
         newMessageDialog.value = false
+
+        // Refresh messages list to show the new message
+        await fetchMessages()
+
+        // If response contains the new message ID, select it
+        if (response.data && response.data.id) {
+          const newMessageObj = messages.value.find((m) => m.id === response.data.id)
+          if (newMessageObj) {
+            selectMessage(newMessageObj)
+          }
+        }
       } catch (error) {
         console.error('Error sending message:', error)
         $q.notify({
@@ -487,20 +810,92 @@ export default {
       }
     }
 
+    // Watch for changes in the conversation to scroll to bottom
+    watch(conversation, (newVal, oldVal) => {
+      if (newVal.length > oldVal.length) {
+        nextTick(() => scrollToBottom())
+      }
+    })
+
     onMounted(() => {
-      console.log('Component mounted, case ID:', caseId)
       fetchMessages()
       fetchCategories()
-      // Set up polling for unread count (optional)
-      const pollInterval = setInterval(fetchUnreadCount, 30000) // Poll every 30 seconds
+
+      // Initialize Pusher
+      initializePusher()
+
+      // Set up polling for updates (as a fallback)
+      const updatesPollInterval = setInterval(getUpdates, 10000) // Poll every 10 seconds
+
+      // Set up polling for messages list (as a fallback)
+      const messagesPollInterval = setInterval(async () => {
+        // Fetch messages silently in the background
+        try {
+          const oldMessages = JSON.parse(JSON.stringify(messages.value))
+          const oldSelectedMessageId = selectedMessage.value?.id
+
+          // Fetch messages without updating UI
+          const response = await api.get(`/api/cases/${caseId}/messages`)
+          if (response.data.messages && Array.isArray(response.data.messages)) {
+            // Create new messages array without modifying the reference
+            const newMessages = response.data.messages.map((message) => ({
+              ...message,
+              unread_count: message.unread_count || 0,
+            }))
+
+            // Check for new messages
+            const hasNewMessages = newMessages.length > oldMessages.length
+
+            // Only update if there are new messages and not sending
+            if (hasNewMessages && !sending.value) {
+              // Update messages reference without causing UI refresh
+              messages.value = newMessages
+
+              // Silently update unread count
+              await fetchUnreadCount()
+
+              // If user had a message selected, maintain that selection
+              if (oldSelectedMessageId) {
+                const currentSelection = newMessages.find((m) => m.id === oldSelectedMessageId)
+                if (currentSelection && currentSelection !== selectedMessage.value) {
+                  selectedMessage.value = currentSelection
+                }
+              }
+
+              // Silent notification (no UI popup)
+              console.log('New messages received in background')
+            }
+          }
+        } catch (error) {
+          console.error('Background message polling error:', error)
+          // Silent failure - don't notify user of background refresh issues
+        }
+      }, 30000) // Poll every 30 seconds
 
       onUnmounted(() => {
-        clearInterval(pollInterval)
-        // Clean up Echo listener
-        if (selectedMessage.value && window.Echo) {
-          console.log('Cleaning up Echo listener')
-          window.Echo.leave(`message.${selectedMessage.value.id}`)
+        // Clean up intervals
+        clearInterval(updatesPollInterval)
+        clearInterval(messagesPollInterval)
+
+        // Clean up Pusher
+        if (channel.value) {
+          channel.value.unbind_all()
+          pusher.value.unsubscribe('messages')
         }
+
+        if (pusher.value) {
+          pusher.value.disconnect()
+        }
+
+        // Clear any remaining timeouts
+        if (typingTimeout.value) {
+          clearTimeout(typingTimeout.value)
+        }
+
+        if (typingIndicatorTimeout.value) {
+          clearTimeout(typingIndicatorTimeout.value)
+        }
+
         isActiveConversation.value = false
       })
     })
@@ -514,13 +909,20 @@ export default {
       searchQuery,
       unreadCount,
       messageScroll,
+      messageInput,
       loading,
       loadingConversation,
       sending,
+      remoteTyping,
       filteredMessages,
       formatDate,
+      formatTime,
+      formatDateSeparator,
+      shouldShowDateSeparator,
       selectMessage,
       sendMessage,
+      handleTyping,
+      scrollToBottom,
       newMessageDialog,
       newMessageForm,
       categories,
@@ -528,6 +930,7 @@ export default {
       submitNewMessage,
       isActiveConversation,
       updateMessageUnreadCount,
+      formatDateForDisplay,
     }
   },
 }
@@ -540,10 +943,11 @@ export default {
 
 .message-bubble {
   max-width: 80%;
-  margin: 12px 0;
+  margin: 8px 0;
   padding: 12px;
   border-radius: 12px;
   position: relative;
+  animation: fadeIn 0.3s ease;
 
   .message-content {
     font-size: 14px;
@@ -558,11 +962,12 @@ export default {
     opacity: 0.8;
   }
 
-  &.user {
+  &.case_manager {
     margin-left: auto;
-    background: #32cd32;
-    color: white;
+    background: #ffffff;
+    color: #000000;
     border-bottom-right-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 
     &::after {
       content: '';
@@ -572,22 +977,25 @@ export default {
       width: 0;
       height: 0;
       border: 8px solid transparent;
-      border-left-color: #32cd32;
+      border-left-color: #ffffff;
       border-right: 0;
       border-bottom: 0;
     }
 
     .message-time {
-      color: rgba(255, 255, 255, 0.9);
+      color: rgba(0, 0, 0, 0.6);
+    }
+
+    &.pending {
+      opacity: 0.7;
     }
   }
 
-  &.case_manager {
+  &.user {
     margin-right: auto;
-    background: #ffffff;
-    color: #000000;
+    background: #32cd32;
+    color: white;
     border-bottom-left-radius: 4px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 
     &::after {
       content: '';
@@ -597,9 +1005,13 @@ export default {
       width: 0;
       height: 0;
       border: 8px solid transparent;
-      border-right-color: #ffffff;
+      border-right-color: #32cd32;
       border-left: 0;
       border-bottom: 0;
+    }
+
+    .message-time {
+      color: rgba(255, 255, 255, 0.9);
     }
   }
 }
@@ -652,6 +1064,14 @@ export default {
   &:hover {
     background: rgba(21, 187, 90, 0.1);
   }
+
+  &.unread-message {
+    font-weight: bold;
+
+    .message-preview {
+      color: $grey-9;
+    }
+  }
 }
 
 .selected-message {
@@ -671,5 +1091,106 @@ export default {
 .q-badge {
   font-size: 0.8em;
   padding: 2px 6px;
+}
+
+// Date separator
+.date-separator {
+  text-align: center;
+  margin: 16px 0;
+  position: relative;
+  color: $grey-8;
+  font-size: 12px;
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 30%;
+    height: 1px;
+    background: $grey-5;
+  }
+
+  &:before {
+    left: 0;
+  }
+
+  &:after {
+    right: 0;
+  }
+}
+
+.typing-bubble {
+  max-width: 80px;
+  margin: 8px 0;
+  padding: 12px;
+  border-radius: 12px;
+  position: relative;
+  margin-right: auto;
+  background: #32cd32;
+  color: white;
+  border-bottom-left-radius: 4px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: -8px;
+    width: 0;
+    height: 0;
+    border: 8px solid transparent;
+    border-right-color: #32cd32;
+    border-left: 0;
+    border-bottom: 0;
+  }
+
+  .typing-dots {
+    display: flex;
+    justify-content: center;
+
+    span {
+      height: 8px;
+      width: 8px;
+      margin: 0 2px;
+      background-color: white;
+      border-radius: 50%;
+      display: inline-block;
+      opacity: 0.4;
+
+      &:nth-child(1) {
+        animation: bounce 1.5s infinite;
+      }
+
+      &:nth-child(2) {
+        animation: bounce 1.5s infinite 0.3s;
+      }
+
+      &:nth-child(3) {
+        animation: bounce 1.5s infinite 0.6s;
+      }
+    }
+  }
+}
+
+@keyframes bounce {
+  0%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

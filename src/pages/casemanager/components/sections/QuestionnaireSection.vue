@@ -38,68 +38,44 @@
             <div class="text-h6 q-mb-md">Petition Information</div>
             <div class="row q-col-gutter-md">
               <div class="col-12 col-md-6">
-                <q-input
-                  readonly
-                  :value="questionnaireData.petition_type"
-                  label="Petition Type"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.petition_type)">
-                      {{ formatValue(questionnaireData.petition_type) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Petition Type</q-item-label>
+                      <q-item-label>{{ questionnaireData.petition_type }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-6">
-                <q-input
-                  readonly
-                  :value="questionnaireData.petitioner"
-                  label="Petitioner"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.petitioner)">
-                      {{ formatValue(questionnaireData.petitioner) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Petitioner</q-item-label>
+                      <q-item-label>{{ questionnaireData.petitioner }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-6">
-                <q-input
-                  readonly
-                  :value="formatDate(questionnaireData.created_at)"
-                  label="Created At"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.created_at)">
-                      {{ formatDate(questionnaireData.created_at) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Created At</q-item-label>
+                      <q-item-label>{{ formatDate(questionnaireData.created_at) }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-6">
-                <q-input
-                  readonly
-                  :value="formatDate(questionnaireData.updated_at)"
-                  label="Last Updated"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.updated_at)">
-                      {{ formatDate(questionnaireData.updated_at) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Last Updated</q-item-label>
+                      <q-item-label>{{ formatDate(questionnaireData.updated_at) }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
             </div>
           </q-tab-panel>
@@ -109,180 +85,142 @@
             <div class="text-h6 q-mb-md">Personal Information</div>
             <div class="row q-col-gutter-md">
               <div class="col-12 col-md-4">
-                <q-input
-                  readonly
-                  :value="questionnaireData.family_name"
-                  label="Family Name"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.family_name)">
-                      {{ formatValue(questionnaireData.family_name) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Family Name</q-item-label>
+                      <q-item-label>{{ questionnaireData.family_name }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-4">
-                <q-input
-                  readonly
-                  :value="questionnaireData.given_name"
-                  label="Given Name"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.given_name)">
-                      {{ formatValue(questionnaireData.given_name) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Given Name</q-item-label>
+                      <q-item-label>{{ questionnaireData.given_name }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-4">
-                <q-input
-                  readonly
-                  :value="questionnaireData.full_middle_name"
-                  label="Middle Name"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.full_middle_name)">
-                      {{ formatValue(questionnaireData.full_middle_name) }}
-                    </q-badge>
-                  </template>
-                </q-input>
-              </div>
-              <div class="col-12 col-md-6">
-                <q-input
-                  readonly
-                  :value="questionnaireData.native_alphabet"
-                  label="Native Alphabet"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.native_alphabet)">
-                      {{ formatValue(questionnaireData.native_alphabet) }}
-                    </q-badge>
-                  </template>
-                </q-input>
-              </div>
-              <div class="col-12 col-md-6">
-                <q-input
-                  readonly
-                  :value="questionnaireData.dob"
-                  label="Date of Birth"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.dob)">
-                      {{ formatDate(questionnaireData.dob) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Middle Name</q-item-label>
+                      <q-item-label>{{ questionnaireData.full_middle_name }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-4">
-                <q-input
-                  readonly
-                  :value="questionnaireData.city_town_village_of_birth"
-                  label="City/Town/Village of Birth"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.city_town_village_of_birth)">
-                      {{ formatValue(questionnaireData.city_town_village_of_birth) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Native Alphabet</q-item-label>
+                      <q-item-label>{{ questionnaireData.native_alphabet }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-4">
-                <q-input
-                  readonly
-                  :value="questionnaireData.state_of_birth"
-                  label="State of Birth"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.state_of_birth)">
-                      {{ formatValue(questionnaireData.state_of_birth) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Date of Birth</q-item-label>
+                      <q-item-label>{{ formatDate(questionnaireData.dob) }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-4">
-                <q-input
-                  readonly
-                  :value="questionnaireData.country_of_birth"
-                  label="Country of Birth"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.country_of_birth)">
-                      {{ formatValue(questionnaireData.country_of_birth) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>City/Town/Village of Birth</q-item-label>
+                      <q-item-label>
+                        <q-badge
+                          :color="getBadgeColor(questionnaireData.city_town_village_of_birth)"
+                        >
+                          {{ formatValue(questionnaireData.city_town_village_of_birth) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-4">
-                <q-input
-                  readonly
-                  :value="questionnaireData.nationality"
-                  label="Nationality"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.nationality)">
-                      {{ formatValue(questionnaireData.nationality) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>State of Birth</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.state_of_birth)">
+                          {{ formatValue(questionnaireData.state_of_birth) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-4">
-                <q-input
-                  readonly
-                  :value="questionnaireData.alien_registration_number"
-                  label="Alien Registration Number"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.alien_registration_number)">
-                      {{ formatValue(questionnaireData.alien_registration_number) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Country of Birth</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.country_of_birth)">
+                          {{ formatValue(questionnaireData.country_of_birth) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-4">
-                <q-input
-                  readonly
-                  :value="questionnaireData.ssn"
-                  label="SSN"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.ssn)">
-                      {{ formatValue(questionnaireData.ssn) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Nationality</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.nationality)">
+                          {{ formatValue(questionnaireData.nationality) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+              <div class="col-12 col-md-4">
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Alien Registration Number</q-item-label>
+                      <q-item-label>
+                        <q-badge
+                          :color="getBadgeColor(questionnaireData.alien_registration_number)"
+                        >
+                          {{ formatValue(questionnaireData.alien_registration_number) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+              <div class="col-12 col-md-4">
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>SSN</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.ssn)">
+                          {{ formatValue(questionnaireData.ssn) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
             </div>
           </q-tab-panel>
@@ -292,36 +230,339 @@
             <div class="text-h6 q-mb-md">Contact Information</div>
             <div class="row q-col-gutter-md">
               <div class="col-12 col-md-6">
-                <q-input
-                  readonly
-                  :value="questionnaireData.mobile_telephone"
-                  label="Mobile Telephone"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.mobile_telephone)">
-                      {{ formatValue(questionnaireData.mobile_telephone) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Mobile Telephone</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.mobile_telephone)">
+                          {{ formatValue(questionnaireData.mobile_telephone) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-6">
-                <q-input
-                  readonly
-                  :value="questionnaireData.email_address"
-                  label="Email Address"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.email_address)">
-                      {{ formatValue(questionnaireData.email_address) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Email Address</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.email_address)">
+                          {{ formatValue(questionnaireData.email_address) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+            </div>
+          </q-tab-panel>
+
+          <!-- Current Address -->
+          <q-tab-panel name="current_address">
+            <div class="text-h6 q-mb-md">Current Address</div>
+            <div class="row q-col-gutter-md">
+              <div class="col-12">
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Street Number and Name</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.street_number_name)">
+                          {{ formatValue(questionnaireData.street_number_name) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+              <div class="col-12 col-md-6">
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Type</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.type)">
+                          {{ formatValue(questionnaireData.type) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+              <div class="col-12 col-md-6">
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Type Detail</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.type_detail)">
+                          {{ formatValue(questionnaireData.type_detail) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+              <div class="col-12 col-md-6">
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>City/Town</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.city_town)">
+                          {{ formatValue(questionnaireData.city_town) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+              <div class="col-12 col-md-6">
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>State</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.state)">
+                          {{ formatValue(questionnaireData.state) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+              <div class="col-12 col-md-4">
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>ZIP Code</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.zip_code)">
+                          {{ formatValue(questionnaireData.zip_code) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+              <div class="col-12 col-md-4">
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Province</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.province)">
+                          {{ formatValue(questionnaireData.province) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+              <div class="col-12 col-md-4">
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>City/Town/Village of Birth</q-item-label>
+                      <q-item-label>
+                        <q-badge
+                          :color="getBadgeColor(questionnaireData.city_town_village_of_birth)"
+                        >
+                          {{ formatValue(questionnaireData.city_town_village_of_birth) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+              <div class="col-12 col-md-4">
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>State of Birth</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.state_of_birth)">
+                          {{ formatValue(questionnaireData.state_of_birth) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+              <div class="col-12 col-md-4">
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Country</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.country)">
+                          {{ formatValue(questionnaireData.country) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+            </div>
+          </q-tab-panel>
+
+          <!-- Foreign Address -->
+          <q-tab-panel name="foreign_address">
+            <div class="text-h6 q-mb-md">Foreign Address</div>
+            <div class="row q-col-gutter-md">
+              <div class="col-12 col-md-4">
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Country of Birth</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.country_of_birth)">
+                          {{ formatValue(questionnaireData.country_of_birth) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+              <div class="col-12 col-md-4">
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Nationality</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.nationality)">
+                          {{ formatValue(questionnaireData.nationality) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+              <div class="col-12 col-md-4">
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Alien Registration Number</q-item-label>
+                      <q-item-label>
+                        <q-badge
+                          :color="getBadgeColor(questionnaireData.alien_registration_number)"
+                        >
+                          {{ formatValue(questionnaireData.alien_registration_number) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+              <div class="col-12 col-md-4">
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>SSN</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.ssn)">
+                          {{ formatValue(questionnaireData.ssn) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+              <div class="col-12 col-md-4">
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Alien Registration Number</q-item-label>
+                      <q-item-label>
+                        <q-badge
+                          :color="getBadgeColor(questionnaireData.alien_registration_number)"
+                        >
+                          {{ formatValue(questionnaireData.alien_registration_number) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+              <div class="col-12 col-md-4">
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>SSN</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.ssn)">
+                          {{ formatValue(questionnaireData.ssn) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+              <div class="col-12 col-md-4">
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>SSN</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.ssn)">
+                          {{ formatValue(questionnaireData.ssn) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+            </div>
+          </q-tab-panel>
+
+          <!-- Contact Information -->
+          <q-tab-panel name="contact">
+            <div class="text-h6 q-mb-md">Contact Information</div>
+            <div class="row q-col-gutter-md">
+              <div class="col-12 col-md-6">
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Mobile Telephone</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.mobile_telephone)">
+                          {{ formatValue(questionnaireData.mobile_telephone) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+              <div class="col-12 col-md-6">
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Email Address</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.email_address)">
+                          {{ formatValue(questionnaireData.email_address) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+              <div class="col-12 col-md-6">
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Email Address</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.email_address)">
+                          {{ formatValue(questionnaireData.email_address) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
             </div>
           </q-tab-panel>
@@ -438,6 +679,38 @@
                   <template #append>
                     <q-badge :color="getBadgeColor(questionnaireData.province)">
                       {{ formatValue(questionnaireData.province) }}
+                    </q-badge>
+                  </template>
+                </q-input>
+              </div>
+              <div class="col-12 col-md-4">
+                <q-input
+                  readonly
+                  :value="questionnaireData.city_town_village_of_birth"
+                  label="City/Town/Village of Birth"
+                  outlined
+                  dense
+                  stack-label
+                >
+                  <template #append>
+                    <q-badge :color="getBadgeColor(questionnaireData.city_town_village_of_birth)">
+                      {{ formatValue(questionnaireData.city_town_village_of_birth) }}
+                    </q-badge>
+                  </template>
+                </q-input>
+              </div>
+              <div class="col-12 col-md-4">
+                <q-input
+                  readonly
+                  :value="questionnaireData.state_of_birth"
+                  label="State of Birth"
+                  outlined
+                  dense
+                  stack-label
+                >
+                  <template #append>
+                    <q-badge :color="getBadgeColor(questionnaireData.state_of_birth)">
+                      {{ formatValue(questionnaireData.state_of_birth) }}
                     </q-badge>
                   </template>
                 </q-input>
@@ -577,70 +850,62 @@
                 </div>
                 <div class="row q-col-gutter-md">
                   <div class="col-12 col-md-6">
-                    <q-input
-                      readonly
-                      :value="questionnaireData.last_arrival_date"
-                      label="Last Arrival Date"
-                      outlined
-                      dense
-                      stack-label
-                    >
-                      <template #append>
-                        <q-badge :color="getBadgeColor(questionnaireData.last_arrival_date)">
-                          {{ formatDate(questionnaireData.last_arrival_date) }}
-                        </q-badge>
-                      </template>
-                    </q-input>
+                    <q-list bordered>
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label caption>Last Arrival Date</q-item-label>
+                          <q-item-label>
+                            <q-badge :color="getBadgeColor(questionnaireData.last_arrival_date)">
+                              {{ formatDate(questionnaireData.last_arrival_date) }}
+                            </q-badge>
+                          </q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
                   </div>
                   <div class="col-12 col-md-6">
-                    <q-input
-                      readonly
-                      :value="questionnaireData.i_94_arrival_record_number"
-                      label="I-94 Arrival Record Number"
-                      outlined
-                      dense
-                      stack-label
-                    >
-                      <template #append>
-                        <q-badge
-                          :color="getBadgeColor(questionnaireData.i_94_arrival_record_number)"
-                        >
-                          {{ formatValue(questionnaireData.i_94_arrival_record_number) }}
-                        </q-badge>
-                      </template>
-                    </q-input>
+                    <q-list bordered>
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label caption>I-94 Arrival Record Number</q-item-label>
+                          <q-item-label>
+                            <q-badge
+                              :color="getBadgeColor(questionnaireData.i_94_arrival_record_number)"
+                            >
+                              {{ formatValue(questionnaireData.i_94_arrival_record_number) }}
+                            </q-badge>
+                          </q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
                   </div>
                   <div class="col-12 col-md-6">
-                    <q-input
-                      readonly
-                      :value="questionnaireData.expiration_date"
-                      label="Expiration Date"
-                      outlined
-                      dense
-                      stack-label
-                    >
-                      <template #append>
-                        <q-badge :color="getBadgeColor(questionnaireData.expiration_date)">
-                          {{ formatDate(questionnaireData.expiration_date) }}
-                        </q-badge>
-                      </template>
-                    </q-input>
+                    <q-list bordered>
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label caption>Expiration Date</q-item-label>
+                          <q-item-label>
+                            <q-badge :color="getBadgeColor(questionnaireData.expiration_date)">
+                              {{ formatDate(questionnaireData.expiration_date) }}
+                            </q-badge>
+                          </q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
                   </div>
                   <div class="col-12 col-md-6">
-                    <q-input
-                      readonly
-                      :value="questionnaireData.status_on_form_i_94"
-                      label="Status on Form I-94"
-                      outlined
-                      dense
-                      stack-label
-                    >
-                      <template #append>
-                        <q-badge :color="getBadgeColor(questionnaireData.status_on_form_i_94)">
-                          {{ formatValue(questionnaireData.status_on_form_i_94) }}
-                        </q-badge>
-                      </template>
-                    </q-input>
+                    <q-list bordered>
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label caption>Status on Form I-94</q-item-label>
+                          <q-item-label>
+                            <q-badge :color="getBadgeColor(questionnaireData.status_on_form_i_94)">
+                              {{ formatValue(questionnaireData.status_on_form_i_94) }}
+                            </q-badge>
+                          </q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
                   </div>
                 </div>
               </q-card-section>
@@ -655,70 +920,64 @@
                 </div>
                 <div class="row q-col-gutter-md">
                   <div class="col-12 col-md-6">
-                    <q-input
-                      readonly
-                      :value="questionnaireData.passport_number"
-                      label="Passport Number"
-                      outlined
-                      dense
-                      stack-label
-                    >
-                      <template #append>
-                        <q-badge :color="getBadgeColor(questionnaireData.passport_number)">
-                          {{ formatValue(questionnaireData.passport_number) }}
-                        </q-badge>
-                      </template>
-                    </q-input>
+                    <q-list bordered>
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label caption>Passport Number</q-item-label>
+                          <q-item-label>
+                            <q-badge :color="getBadgeColor(questionnaireData.passport_number)">
+                              {{ formatValue(questionnaireData.passport_number) }}
+                            </q-badge>
+                          </q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
                   </div>
                   <div class="col-12 col-md-6">
-                    <q-input
-                      readonly
-                      :value="questionnaireData.travel_document_number"
-                      label="Travel Document Number"
-                      outlined
-                      dense
-                      stack-label
-                    >
-                      <template #append>
-                        <q-badge :color="getBadgeColor(questionnaireData.travel_document_number)">
-                          {{ formatValue(questionnaireData.travel_document_number) }}
-                        </q-badge>
-                      </template>
-                    </q-input>
+                    <q-list bordered>
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label caption>Travel Document Number</q-item-label>
+                          <q-item-label>
+                            <q-badge
+                              :color="getBadgeColor(questionnaireData.travel_document_number)"
+                            >
+                              {{ formatValue(questionnaireData.travel_document_number) }}
+                            </q-badge>
+                          </q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
                   </div>
                   <div class="col-12 col-md-6">
-                    <q-input
-                      readonly
-                      :value="questionnaireData.country_of_issuance"
-                      label="Country of Issuance"
-                      outlined
-                      dense
-                      stack-label
-                    >
-                      <template #append>
-                        <q-badge :color="getBadgeColor(questionnaireData.country_of_issuance)">
-                          {{ formatValue(questionnaireData.country_of_issuance) }}
-                        </q-badge>
-                      </template>
-                    </q-input>
+                    <q-list bordered>
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label caption>Country of Issuance</q-item-label>
+                          <q-item-label>
+                            <q-badge :color="getBadgeColor(questionnaireData.country_of_issuance)">
+                              {{ formatValue(questionnaireData.country_of_issuance) }}
+                            </q-badge>
+                          </q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
                   </div>
                   <div class="col-12 col-md-6">
-                    <q-input
-                      readonly
-                      :value="questionnaireData.expiration_date_for_passport"
-                      label="Passport Expiration Date"
-                      outlined
-                      dense
-                      stack-label
-                    >
-                      <template #append>
-                        <q-badge
-                          :color="getBadgeColor(questionnaireData.expiration_date_for_passport)"
-                        >
-                          {{ formatDate(questionnaireData.expiration_date_for_passport) }}
-                        </q-badge>
-                      </template>
-                    </q-input>
+                    <q-list bordered>
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label caption>Passport Expiration Date</q-item-label>
+                          <q-item-label>
+                            <q-badge
+                              :color="getBadgeColor(questionnaireData.expiration_date_for_passport)"
+                            >
+                              {{ formatDate(questionnaireData.expiration_date_for_passport) }}
+                            </q-badge>
+                          </q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
                   </div>
                 </div>
               </q-card-section>
@@ -733,89 +992,82 @@
                 </div>
                 <div class="row q-col-gutter-md">
                   <div class="col-12 col-md-6">
-                    <q-input
-                      readonly
-                      :value="questionnaireData.alien_will_apply_for_visa_abroad"
-                      label="Will Apply for Visa Abroad"
-                      outlined
-                      dense
-                      stack-label
-                    >
-                      <template #append>
-                        <q-badge
-                          :color="getBadgeColor(questionnaireData.alien_will_apply_for_visa_abroad)"
-                        >
-                          {{ formatValue(questionnaireData.alien_will_apply_for_visa_abroad) }}
-                        </q-badge>
-                      </template>
-                    </q-input>
+                    <q-list bordered>
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label caption>Will Apply for Visa Abroad</q-item-label>
+                          <q-item-label>
+                            <q-badge
+                              :color="
+                                getBadgeColor(questionnaireData.alien_will_apply_for_visa_abroad)
+                              "
+                            >
+                              {{ formatValue(questionnaireData.alien_will_apply_for_visa_abroad) }}
+                            </q-badge>
+                          </q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
                   </div>
                   <div class="col-12 col-md-6">
-                    <q-input
-                      readonly
-                      :value="questionnaireData.alien_in_us"
-                      label="Currently in US"
-                      outlined
-                      dense
-                      stack-label
-                    >
-                      <template #append>
-                        <q-badge :color="getBadgeColor(questionnaireData.alien_in_us)">
-                          {{ formatValue(questionnaireData.alien_in_us) }}
-                        </q-badge>
-                      </template>
-                    </q-input>
+                    <q-list bordered>
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label caption>Currently in US</q-item-label>
+                          <q-item-label>
+                            <q-badge :color="getBadgeColor(questionnaireData.alien_in_us)">
+                              {{ formatValue(questionnaireData.alien_in_us) }}
+                            </q-badge>
+                          </q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
                   </div>
                   <div class="col-12 col-md-6">
-                    <q-input
-                      readonly
-                      :value="questionnaireData.visa_processing_city_town"
-                      label="Visa Processing City/Town"
-                      outlined
-                      dense
-                      stack-label
-                    >
-                      <template #append>
-                        <q-badge
-                          :color="getBadgeColor(questionnaireData.visa_processing_city_town)"
-                        >
-                          {{ formatValue(questionnaireData.visa_processing_city_town) }}
-                        </q-badge>
-                      </template>
-                    </q-input>
+                    <q-list bordered>
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label caption>Visa Processing City/Town</q-item-label>
+                          <q-item-label>
+                            <q-badge
+                              :color="getBadgeColor(questionnaireData.visa_processing_city_town)"
+                            >
+                              {{ formatValue(questionnaireData.visa_processing_city_town) }}
+                            </q-badge>
+                          </q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
                   </div>
                   <div class="col-12 col-md-6">
-                    <q-input
-                      readonly
-                      :value="questionnaireData.visa_processing_country"
-                      label="Visa Processing Country"
-                      outlined
-                      dense
-                      stack-label
-                    >
-                      <template #append>
-                        <q-badge :color="getBadgeColor(questionnaireData.visa_processing_country)">
-                          {{ formatValue(questionnaireData.visa_processing_country) }}
-                        </q-badge>
-                      </template>
-                    </q-input>
+                    <q-list bordered>
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label caption>Visa Processing Country</q-item-label>
+                          <q-item-label>
+                            <q-badge
+                              :color="getBadgeColor(questionnaireData.visa_processing_country)"
+                            >
+                              {{ formatValue(questionnaireData.visa_processing_country) }}
+                            </q-badge>
+                          </q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
                   </div>
                   <div class="col-12">
-                    <q-input
-                      readonly
-                      :value="questionnaireData.if_now_in_the_us"
-                      label="If Now in the US"
-                      type="textarea"
-                      outlined
-                      dense
-                      stack-label
-                    >
-                      <template #append>
-                        <q-badge :color="getBadgeColor(questionnaireData.if_now_in_the_us)">
-                          {{ formatValue(questionnaireData.if_now_in_the_us) }}
-                        </q-badge>
-                      </template>
-                    </q-input>
+                    <q-list bordered>
+                      <q-item>
+                        <q-item-section>
+                          <q-item-label caption>If Now in the US</q-item-label>
+                          <q-item-label>
+                            <q-badge :color="getBadgeColor(questionnaireData.if_now_in_the_us)">
+                              {{ formatValue(questionnaireData.if_now_in_the_us) }}
+                            </q-badge>
+                          </q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </q-list>
                   </div>
                 </div>
               </q-card-section>
@@ -827,181 +1079,160 @@
             <div class="text-h6 q-mb-md">Employment Information</div>
             <div class="row q-col-gutter-md">
               <div class="col-12 col-md-6">
-                <q-input
-                  readonly
-                  :value="questionnaireData.current_employer_name"
-                  label="Current Employer"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.current_employer_name)">
-                      {{ formatValue(questionnaireData.current_employer_name) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Current Employer</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.current_employer_name)">
+                          {{ formatValue(questionnaireData.current_employer_name) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-6">
-                <q-input
-                  readonly
-                  :value="questionnaireData.job_title"
-                  label="Job Title"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.job_title)">
-                      {{ formatValue(questionnaireData.job_title) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Job Title</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.job_title)">
+                          {{ formatValue(questionnaireData.job_title) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-4">
-                <q-input
-                  readonly
-                  :value="questionnaireData.full_time_position"
-                  label="Full Time Position"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.full_time_position)">
-                      {{ formatValue(questionnaireData.full_time_position) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Full Time Position</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.full_time_position)">
+                          {{ formatValue(questionnaireData.full_time_position) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-4">
-                <q-input
-                  readonly
-                  :value="questionnaireData.permanent_position"
-                  label="Permanent Position"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.permanent_position)">
-                      {{ formatValue(questionnaireData.permanent_position) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Permanent Position</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.permanent_position)">
+                          {{ formatValue(questionnaireData.permanent_position) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-4">
-                <q-input
-                  readonly
-                  :value="questionnaireData.new_position"
-                  label="New Position"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.new_position)">
-                      {{ formatValue(questionnaireData.new_position) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>New Position</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.new_position)">
+                          {{ formatValue(questionnaireData.new_position) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-4">
-                <q-input
-                  readonly
-                  :value="questionnaireData.occupation"
-                  label="Occupation"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.occupation)">
-                      {{ formatValue(questionnaireData.occupation) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Occupation</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.occupation)">
+                          {{ formatValue(questionnaireData.occupation) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-4">
-                <q-input
-                  readonly
-                  :value="questionnaireData.annual_income"
-                  label="Annual Income"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.annual_income)">
-                      {{ formatValue(questionnaireData.annual_income) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Annual Income</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.annual_income)">
+                          {{ formatValue(questionnaireData.annual_income) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-4">
-                <q-input
-                  readonly
-                  :value="questionnaireData.soc_code"
-                  label="SOC Code"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.soc_code)">
-                      {{ formatValue(questionnaireData.soc_code) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>SOC Code</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.soc_code)">
+                          {{ formatValue(questionnaireData.soc_code) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12">
-                <q-input
-                  readonly
-                  :value="questionnaireData.nontechnical_job_description"
-                  label="Job Description"
-                  type="textarea"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.nontechnical_job_description)">
-                      {{ formatValue(questionnaireData.nontechnical_job_description) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Job Description</q-item-label>
+                      <q-item-label>
+                        <q-badge
+                          :color="getBadgeColor(questionnaireData.nontechnical_job_description)"
+                        >
+                          {{ formatValue(questionnaireData.nontechnical_job_description) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-6">
-                <q-input
-                  readonly
-                  :value="questionnaireData.hours_per_week"
-                  label="Hours per Week"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.hours_per_week)">
-                      {{ formatValue(questionnaireData.hours_per_week) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Hours per Week</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.hours_per_week)">
+                          {{ formatValue(questionnaireData.hours_per_week) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-6">
-                <q-input
-                  readonly
-                  :value="questionnaireData.wages_per"
-                  label="Wages Per"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.wages_per)">
-                      {{ formatValue(questionnaireData.wages_per) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Wages Per</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.wages_per)">
+                          {{ formatValue(questionnaireData.wages_per) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
             </div>
           </q-tab-panel>
@@ -1011,132 +1242,120 @@
             <div class="text-h6 q-mb-md">Work Location</div>
             <div class="row q-col-gutter-md">
               <div class="col-12 col-md-6">
-                <q-input
-                  readonly
-                  :value="questionnaireData.worksite_type"
-                  label="Worksite Type"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.worksite_type)">
-                      {{ formatValue(questionnaireData.worksite_type) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Worksite Type</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.worksite_type)">
+                          {{ formatValue(questionnaireData.worksite_type) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12">
-                <q-input
-                  readonly
-                  :value="questionnaireData.worksite_street_number_name"
-                  label="Street Number and Name"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.worksite_street_number_name)">
-                      {{ formatValue(questionnaireData.worksite_street_number_name) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Street Number and Name</q-item-label>
+                      <q-item-label>
+                        <q-badge
+                          :color="getBadgeColor(questionnaireData.worksite_street_number_name)"
+                        >
+                          {{ formatValue(questionnaireData.worksite_street_number_name) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-6">
-                <q-input
-                  readonly
-                  :value="questionnaireData.work_building_type"
-                  label="Building Type"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.work_building_type)">
-                      {{ formatValue(questionnaireData.work_building_type) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Building Type</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.work_building_type)">
+                          {{ formatValue(questionnaireData.work_building_type) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-6">
-                <q-input
-                  readonly
-                  :value="questionnaireData.work_site_additional_details"
-                  label="Additional Details"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.work_site_additional_details)">
-                      {{ formatValue(questionnaireData.work_site_additional_details) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>Additional Details</q-item-label>
+                      <q-item-label>
+                        <q-badge
+                          :color="getBadgeColor(questionnaireData.work_site_additional_details)"
+                        >
+                          {{ formatValue(questionnaireData.work_site_additional_details) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-3">
-                <q-input
-                  readonly
-                  :value="questionnaireData.work_city_town"
-                  label="City/Town"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.work_city_town)">
-                      {{ formatValue(questionnaireData.work_city_town) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>City/Town</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.work_city_town)">
+                          {{ formatValue(questionnaireData.work_city_town) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-3">
-                <q-input
-                  readonly
-                  :value="questionnaireData.work_state"
-                  label="State"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.work_state)">
-                      {{ formatValue(questionnaireData.work_state) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>State</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.work_state)">
+                          {{ formatValue(questionnaireData.work_state) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-3">
-                <q-input
-                  readonly
-                  :value="questionnaireData.work_county_township"
-                  label="County/Township"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.work_county_township)">
-                      {{ formatValue(questionnaireData.work_county_township) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>County/Township</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.work_county_township)">
+                          {{ formatValue(questionnaireData.work_county_township) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
               <div class="col-12 col-md-3">
-                <q-input
-                  readonly
-                  :value="questionnaireData.work_zip_code"
-                  label="ZIP Code"
-                  outlined
-                  dense
-                  stack-label
-                >
-                  <template #append>
-                    <q-badge :color="getBadgeColor(questionnaireData.work_zip_code)">
-                      {{ formatValue(questionnaireData.work_zip_code) }}
-                    </q-badge>
-                  </template>
-                </q-input>
+                <q-list bordered>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label caption>ZIP Code</q-item-label>
+                      <q-item-label>
+                        <q-badge :color="getBadgeColor(questionnaireData.work_zip_code)">
+                          {{ formatValue(questionnaireData.work_zip_code) }}
+                        </q-badge>
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
               </div>
             </div>
           </q-tab-panel>
@@ -1163,122 +1382,108 @@
                     </div>
                     <div class="row q-col-gutter-md">
                       <div class="col-12 col-md-4">
-                        <q-input
-                          readonly
-                          :value="member.family_name_last_name"
-                          label="Family Name"
-                          outlined
-                          dense
-                          stack-label
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(member.family_name_last_name)">
-                              {{ formatValue(member.family_name_last_name) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Family Name</q-item-label>
+                              <q-item-label>
+                                <q-badge :color="getBadgeColor(member.family_name_last_name)">
+                                  {{ formatValue(member.family_name_last_name) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                       <div class="col-12 col-md-4">
-                        <q-input
-                          readonly
-                          :value="member.given_name_first_name"
-                          label="Given Name"
-                          outlined
-                          dense
-                          stack-label
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(member.given_name_first_name)">
-                              {{ formatValue(member.given_name_first_name) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Given Name</q-item-label>
+                              <q-item-label>
+                                <q-badge :color="getBadgeColor(member.given_name_first_name)">
+                                  {{ formatValue(member.given_name_first_name) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                       <div class="col-12 col-md-4">
-                        <q-input
-                          readonly
-                          :value="member.middle_name"
-                          label="Middle Name"
-                          outlined
-                          dense
-                          stack-label
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(member.middle_name)">
-                              {{ formatValue(member.middle_name) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Middle Name</q-item-label>
+                              <q-item-label>
+                                <q-badge :color="getBadgeColor(member.middle_name)">
+                                  {{ formatValue(member.middle_name) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                       <div class="col-12 col-md-4">
-                        <q-input
-                          readonly
-                          :value="member.dob"
-                          label="Date of Birth"
-                          outlined
-                          dense
-                          stack-label
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(member.dob)">
-                              {{ formatDate(member.dob) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Date of Birth</q-item-label>
+                              <q-item-label>
+                                <q-badge :color="getBadgeColor(member.dob)">
+                                  {{ formatDate(member.dob) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                       <div class="col-12 col-md-4">
-                        <q-input
-                          readonly
-                          :value="member.birth_country"
-                          label="Country of Birth"
-                          outlined
-                          dense
-                          stack-label
-                        >
-                          <template #append>
-                            <q-badge :color="getBadgeColor(member.birth_country)">
-                              {{ formatValue(member.birth_country) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Country of Birth</q-item-label>
+                              <q-item-label>
+                                <q-badge :color="getBadgeColor(member.birth_country)">
+                                  {{ formatValue(member.birth_country) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                       <div class="col-12 col-md-4">
-                        <q-input
-                          readonly
-                          :value="member.adjustment_status"
-                          label="Adjustment Status"
-                          outlined
-                          dense
-                          stack-label
-                        >
-                          <template #append>
-                            <q-badge
-                              :color="member.adjustment_status === 'Yes' ? 'positive' : 'grey'"
-                              v-if="member.adjustment_status"
-                            >
-                              {{ formatValue(member.adjustment_status) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Adjustment Status</q-item-label>
+                              <q-item-label>
+                                <q-badge
+                                  :color="member.adjustment_status === 'Yes' ? 'positive' : 'grey'"
+                                  v-if="member.adjustment_status"
+                                >
+                                  {{ formatValue(member.adjustment_status) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                       <div class="col-12 col-md-4">
-                        <q-input
-                          readonly
-                          :value="member.visa_abroad"
-                          label="Visa Abroad"
-                          outlined
-                          dense
-                          stack-label
-                        >
-                          <template #append>
-                            <q-badge
-                              :color="member.visa_abroad === 'Yes' ? 'positive' : 'grey'"
-                              v-if="member.visa_abroad"
-                            >
-                              {{ formatValue(member.visa_abroad) }}
-                            </q-badge>
-                          </template>
-                        </q-input>
+                        <q-list bordered>
+                          <q-item>
+                            <q-item-section>
+                              <q-item-label caption>Visa Abroad</q-item-label>
+                              <q-item-label>
+                                <q-badge
+                                  :color="member.visa_abroad === 'Yes' ? 'positive' : 'grey'"
+                                  v-if="member.visa_abroad"
+                                >
+                                  {{ formatValue(member.visa_abroad) }}
+                                </q-badge>
+                              </q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
                       </div>
                     </div>
                   </q-card-section>
@@ -1337,7 +1542,7 @@ export default {
     }
 
     const getBadgeColor = (value) => {
-      return value ? 'primary' : 'grey-7'
+      return value ? 'none' : 'grey-7'
     }
 
     const safeGet = (field, defaultValue = '') => {
