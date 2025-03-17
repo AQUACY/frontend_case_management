@@ -162,7 +162,7 @@
           {{ error }}
         </q-card-section>
         <q-card-actions align="right">
-          <q-btn flat label="Dismiss" color="primary" v-close-popup />
+          <q-btn flat label="Dismiss" color="red" v-close-popup />
           <q-btn flat label="Retry" color="primary" @click="fetchPersonalStatement" v-close-popup />
         </q-card-actions>
       </q-card>
@@ -171,7 +171,7 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useQuasar } from 'quasar'
 import { api } from 'boot/axios'
 
@@ -189,7 +189,7 @@ export default {
     const $q = useQuasar()
     const loading = ref(false)
     const error = ref(null)
-    const showError = computed(() => !!error.value)
+    const showError = ref(false)
     const statementData = ref({})
     const showPrintDialog = ref(false)
 
@@ -263,6 +263,7 @@ export default {
     const fetchPersonalStatement = async () => {
       loading.value = true
       error.value = null
+      showError.value = false
 
       try {
         const response = await api.get(`/api/auth/cases/${props.caseId}/personal-statement`)
@@ -270,6 +271,7 @@ export default {
       } catch (err) {
         console.error(err)
         error.value = 'Error loading personal statement. Please try again.'
+        showError.value = true
         $q.notify({
           type: 'negative',
           message: 'Failed to load personal statement',

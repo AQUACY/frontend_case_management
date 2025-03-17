@@ -60,12 +60,8 @@
                     <q-item>
                       <q-item-section>
                         <q-item-label caption>Notes on Journal Articles</q-item-label>
-                        <q-item-label class="text-wrap">
-                          <q-badge
-                            :color="getBadgeColor(publicationData.notes_peer_reviewed_journal)"
-                          >
-                            {{ formatValue(publicationData.notes_peer_reviewed_journal) }}
-                          </q-badge>
+                        <q-item-label class="scrollable-text">
+                          <div v-html="formatValue(publicationData.notes_peer_reviewed_journal).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
                         </q-item-label>
                       </q-item-section>
                     </q-item>
@@ -101,13 +97,10 @@
                     <q-item>
                       <q-item-section>
                         <q-item-label caption>Notes on Conference Articles</q-item-label>
-                        <q-item-label class="text-wrap">
-                          <q-badge
-                            :color="getBadgeColor(publicationData.notes_peer_reviewed_conference)"
-                          >
-                            {{ formatValue(publicationData.notes_peer_reviewed_conference) }}
-                          </q-badge>
+                        <q-item-label class="scrollable-text">
+                          <div v-html="formatValue(publicationData.notes_peer_reviewed_conference).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
                         </q-item-label>
+
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -131,13 +124,10 @@
                     <q-item>
                       <q-item-section>
                         <q-item-label caption>Notes on Conference Abstracts</q-item-label>
-                        <q-item-label class="text-wrap">
-                          <q-badge
-                            :color="getBadgeColor(publicationData.notes_conference_abstracts)"
-                          >
-                            {{ formatValue(publicationData.notes_conference_abstracts) }}
-                          </q-badge>
+                        <q-item-label class="scrollable-text">
+                          <div v-html="formatValue(publicationData.notes_conference_abstracts).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
                         </q-item-label>
+
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -182,11 +172,10 @@
                     <q-item>
                       <q-item-section>
                         <q-item-label caption>Notes on Book Chapters</q-item-label>
-                        <q-item-label class="text-wrap">
-                          <q-badge :color="getBadgeColor(publicationData.notes_book_chapters)">
-                            {{ formatValue(publicationData.notes_book_chapters) }}
-                          </q-badge>
+                        <q-item-label class="scrollable-text">
+                          <div v-html="formatValue(publicationData.notes_book_chapters).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
                         </q-item-label>
+
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -210,11 +199,10 @@
                     <q-item>
                       <q-item-section>
                         <q-item-label caption>Notes on Books</q-item-label>
-                        <q-item-label class="text-wrap">
-                          <q-badge :color="getBadgeColor(publicationData.notes_books)">
-                            {{ formatValue(publicationData.notes_books) }}
-                          </q-badge>
+                        <q-item-label class="scrollable-text">
+                          <div v-html="formatValue(publicationData.notes_books).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
                         </q-item-label>
+
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -238,11 +226,11 @@
                     <q-item>
                       <q-item-section>
                         <q-item-label caption>Notes on Technical Reports</q-item-label>
-                        <q-item-label class="text-wrap">
-                          <q-badge :color="getBadgeColor(publicationData.notes_technical_reports)">
-                            {{ formatValue(publicationData.notes_technical_reports) }}
-                          </q-badge>
+                        <q-item-label class="scrollable-text">
+                          <div v-html="formatValue(publicationData.notes_technical_reports).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
                         </q-item-label>
+
+
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -266,11 +254,10 @@
                     <q-item>
                       <q-item-section>
                         <q-item-label caption>Notes on Granted Patents</q-item-label>
-                        <q-item-label class="text-wrap">
-                          <q-badge :color="getBadgeColor(publicationData.notes_granted_patents)">
-                            {{ formatValue(publicationData.notes_granted_patents) }}
-                          </q-badge>
+                        <q-item-label class="scrollable-text">
+                          <div v-html="formatValue(publicationData.notes_granted_patents).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
                         </q-item-label>
+
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -294,13 +281,10 @@
                     <q-item>
                       <q-item-section>
                         <q-item-label caption>Notes on Others</q-item-label>
-                        <q-item-label class="text-wrap">
-                          <q-badge
-                            :color="getBadgeColor(publicationData.in_preparation_manuscripts)"
-                          >
-                            {{ formatValue(publicationData.in_preparation_manuscripts) }}
-                          </q-badge>
+                        <q-item-label class="scrollable-text">
+                          <div v-html="formatValue(publicationData.in_preparation_manuscripts).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
                         </q-item-label>
+
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -337,11 +321,10 @@
                   <q-item>
                     <q-item-section>
                       <q-item-label caption>Editor Journals</q-item-label>
-                      <q-item-label class="text-wrap">
-                        <q-badge :color="getBadgeColor(publicationData.editor_journals)">
-                          {{ formatValue(publicationData.editor_journals) }}
-                        </q-badge>
+                      <q-item-label class="scrollable-text">
+                        <div v-html="formatValue(publicationData.editor_journals).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
                       </q-item-label>
+
                     </q-item-section>
                   </q-item>
                 </q-list>
@@ -581,6 +564,7 @@ export default {
     margin: 0 auto;
   }
 
+
   :deep(.q-field--readonly) {
     .q-field__native {
       color: $grey-8;
@@ -595,5 +579,27 @@ export default {
     color: $primary;
     font-weight: 500;
   }
+
+  .scrollable-text {
+  max-height: 200px; /* Set a maximum height for the label */
+  overflow-y: auto;  /* Adds vertical scrollbar if the content overflows */
+  word-wrap: break-word; /* Ensures that long words break to fit inside */
+  overflow-wrap: break-word; /* Prevents overflow of long words or URLs */
+  white-space: normal; /* Ensures text wraps to the next line */
+  padding: 8px; /* Adds padding to avoid text touching edges */
+  background-color: #f9f9f9; /* Optional: Gives a nice background to the label */
+  border-radius: 4px; /* Optional: Adds rounded corners */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds subtle shadow for better aesthetics */
+}
+
+
+
+
+
+
+
+
+
+
 }
 </style>
