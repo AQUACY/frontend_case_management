@@ -129,6 +129,7 @@
                         <q-item>
                           <q-item-section>
                             <q-item-label caption>Job Title</q-item-label>
+
                             <q-item-label>
                               <q-badge :color="getBadgeColor(experience.job_title)">
                                 {{ formatValue(experience.job_title) }}
@@ -284,11 +285,10 @@
                         <q-item>
                           <q-item-section>
                             <q-item-label caption>Job Details</q-item-label>
-                            <q-item-label>
-                              <q-badge :color="getBadgeColor(experience.job_details)">
-                                {{ formatValue(experience.job_details) }}
-                              </q-badge>
+                            <q-item-label class="scrollable-text">
+                              <div v-html="formatValue(experience.job_details).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
                             </q-item-label>
+
                           </q-item-section>
                         </q-item>
                       </q-list>
@@ -375,3 +375,16 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+ .scrollable-text {
+  max-height: 150px;
+  overflow-y: auto;
+  word-wrap: break-word;
+  padding: 8px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+</style>

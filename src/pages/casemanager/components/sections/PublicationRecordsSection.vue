@@ -61,10 +61,8 @@
                       <q-item-section>
                         <q-item-label caption>Notes on Journal Articles</q-item-label>
                         <q-item-label class="scrollable-text">
-                      {{ formatValue(publicationData.notes_peer_reviewed_journal) }}
-                    </q-item-label>
-
-
+                          <div v-html="formatValue(publicationData.notes_peer_reviewed_journal).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
+                        </q-item-label>
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -100,9 +98,9 @@
                       <q-item-section>
                         <q-item-label caption>Notes on Conference Articles</q-item-label>
                         <q-item-label class="scrollable-text">
-                      {{ formatValue(publicationData.notes_peer_reviewed_conference) }}
-                    </q-item-label>
-                       
+                          <div v-html="formatValue(publicationData.notes_peer_reviewed_conference).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
+                        </q-item-label>
+
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -127,9 +125,9 @@
                       <q-item-section>
                         <q-item-label caption>Notes on Conference Abstracts</q-item-label>
                         <q-item-label class="scrollable-text">
-                      {{ formatValue(publicationData.notes_conference_abstracts) }}
-                    </q-item-label>
-                  
+                          <div v-html="formatValue(publicationData.notes_conference_abstracts).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
+                        </q-item-label>
+
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -175,9 +173,9 @@
                       <q-item-section>
                         <q-item-label caption>Notes on Book Chapters</q-item-label>
                         <q-item-label class="scrollable-text">
-                      {{ formatValue(publicationData.notes_book_chapters) }}
-                    </q-item-label>
-                       
+                          <div v-html="formatValue(publicationData.notes_book_chapters).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
+                        </q-item-label>
+
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -202,9 +200,9 @@
                       <q-item-section>
                         <q-item-label caption>Notes on Books</q-item-label>
                         <q-item-label class="scrollable-text">
-                      {{ formatValue(publicationData.notes_books) }}
-                    </q-item-label>
-                       
+                          <div v-html="formatValue(publicationData.notes_books).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
+                        </q-item-label>
+
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -229,10 +227,10 @@
                       <q-item-section>
                         <q-item-label caption>Notes on Technical Reports</q-item-label>
                         <q-item-label class="scrollable-text">
-                      {{ formatValue(publicationData.notes_technical_reports) }}
-                    </q-item-label>
-                       
-                       
+                          <div v-html="formatValue(publicationData.notes_technical_reports).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
+                        </q-item-label>
+
+
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -257,9 +255,9 @@
                       <q-item-section>
                         <q-item-label caption>Notes on Granted Patents</q-item-label>
                         <q-item-label class="scrollable-text">
-                      {{ formatValue(publicationData.notes_granted_patents) }}
-                    </q-item-label>
-                        
+                          <div v-html="formatValue(publicationData.notes_granted_patents).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
+                        </q-item-label>
+
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -284,9 +282,9 @@
                       <q-item-section>
                         <q-item-label caption>Notes on Others</q-item-label>
                         <q-item-label class="scrollable-text">
-                      {{ formatValue(publicationData.in_preparation_manuscripts) }}
-                    </q-item-label>
-                        
+                          <div v-html="formatValue(publicationData.in_preparation_manuscripts).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
+                        </q-item-label>
+
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -324,9 +322,9 @@
                     <q-item-section>
                       <q-item-label caption>Editor Journals</q-item-label>
                       <q-item-label class="scrollable-text">
-                      {{ formatValue(publicationData.editor_journals) }}
-                    </q-item-label>
-                     
+                        <div v-html="formatValue(publicationData.editor_journals).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
+                      </q-item-label>
+
                     </q-item-section>
                   </q-item>
                 </q-list>
@@ -565,8 +563,8 @@ export default {
     max-width: 1200px;
     margin: 0 auto;
   }
- 
- 
+
+
   :deep(.q-field--readonly) {
     .q-field__native {
       color: $grey-8;
@@ -602,6 +600,6 @@ export default {
 
 
 
-  
+
 }
 </style>

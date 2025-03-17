@@ -47,7 +47,15 @@
                             {{ formatValue(researchData.field_description) }}
                           </q-badge>
                         </q-item-label> -->
-                        <q-item-label>{{ researchData.field_description }}</q-item-label>
+                        <q-item-label class="scrollable-text">
+                          <div
+                            v-html="
+                              formatValue(researchData.field_description)
+                                .replace(/•/g, '<br>•')
+                                .replace(/\\n/g, '<br>')
+                            "
+                          ></div>
+                        </q-item-label>
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -72,9 +80,18 @@
                             {{ formatValue(researchData.expertise_description) }}
                           </q-badge>
                         </q-item-label> -->
-                        <q-item-label>
-                          {{ researchData.expertise_description }}
+                        <q-item-label class="scrollable-text">
+                          <div
+                            v-html="
+                              formatValue(researchData.expertise_description)
+                                .replace(/•/g, '<br>•')
+                                .replace(/\\n/g, '<br>')
+                            "
+                          ></div>
                         </q-item-label>
+                        <!-- <q-item-label>
+                          {{ researchData.expertise_description }}
+                        </q-item-label> -->
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -94,9 +111,18 @@
                     <q-item>
                       <q-item-section>
                         <q-item-label caption>Work Impact</q-item-label>
-                        <q-item-label>
-                          {{ researchData.work_impact }}
+                        <q-item-label class="scrollable-text">
+                          <div
+                            v-html="
+                              formatValue(researchData.work_impact)
+                                .replace(/•/g, '<br>•')
+                                .replace(/\\n/g, '<br>')
+                            "
+                          ></div>
                         </q-item-label>
+                        <!-- <q-item-label>
+                          {{ researchData.work_impact }}
+                        </q-item-label> -->
                         <!-- <q-item-label class="text-wrap">
                           <q-badge :color="getBadgeColor(researchData.work_impact)">
                             {{ formatValue(researchData.work_impact) }}
@@ -134,8 +160,14 @@
                     <q-item>
                       <q-item-section>
                         <q-item-label caption>Project Description</q-item-label>
-                        <q-item-label>
-                          {{ project.project_description }}
+                        <q-item-label class="scrollable-text">
+                          <div
+                            v-html="
+                              formatValue(project.project_description)
+                                .replace(/•/g, '<br>•')
+                                .replace(/\\n/g, '<br>')
+                            "
+                          ></div>
                         </q-item-label>
                         <!-- <q-item-label class="text-wrap">
                           <q-badge :color="getBadgeColor(project.project_description)">
