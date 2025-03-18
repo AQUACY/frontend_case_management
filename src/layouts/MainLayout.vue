@@ -44,7 +44,7 @@
           round
           icon="list"
           aria-label="Case Status"
-          @click="rightDrawerOpen = !rightDrawerOpen"
+          @click="layoutStore.toggleRightDrawer"
         >
           <q-tooltip>Toggle Case Status</q-tooltip>
         </q-btn>
@@ -75,7 +75,7 @@
     </q-drawer>
 
     <q-drawer
-      v-model="rightDrawerOpen"
+      v-model="layoutStore.rightDrawerOpen"
       side="right"
       bordered
       :width="300"
@@ -146,12 +146,13 @@ import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { api } from 'boot/axios'
 import { date } from 'quasar'
+import { useLayoutStore } from 'stores/layout'
 
 const router = useRouter()
 const $q = useQuasar()
 const announcementStore = useAnnouncementStore()
+const layoutStore = useLayoutStore()
 const leftDrawerOpen = ref(false)
-const rightDrawerOpen = ref(true)
 const currentUser = ref(null)
 const caseDetails = ref(null)
 const caseStatuses = ref([])
@@ -273,7 +274,7 @@ const toggleLeftDrawer = () => {
 
 // List of links to display
 const linksList = [
-{
+  {
     title: 'Welcome Notes',
     caption: '',
     link: '/client/overview',
