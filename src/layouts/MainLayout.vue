@@ -285,6 +285,12 @@ const linksList = [
     link: '/client/news-update',
   },
   {
+    title: 'Case Preparation',
+    caption: '',
+    icon: '',
+    link: '/client/casepreparation',
+  },
+  {
     title: 'Form I-140 Questionnaire',
     caption: '',
     icon: '',
@@ -357,12 +363,7 @@ const linksList = [
   //   icon: '',
   //   link: '/client/i-485',
   // },
-  {
-    title: 'Case Preparation',
-    caption: '',
-    icon: '',
-    link: '/client/casepreparation',
-  },
+
   {
     title: 'Billing',
     caption: '',
@@ -381,12 +382,12 @@ const linksList = [
   //   icon: '',
   //   link: '/client/visa-faq',
   // },
-  {
-    title: 'Tracking',
-    caption: '',
-    icon: '',
-    link: '/client/packagetracking',
-  },
+  // {
+  //   title: 'Tracking',
+  //   caption: '',
+  //   icon: '',
+  //   link: '/client/packagetracking',
+  // },
 ]
 
 // Format date helper

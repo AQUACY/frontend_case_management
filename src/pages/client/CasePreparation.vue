@@ -1,7 +1,7 @@
 <template>
   <q-page class="q-pa-md">
     <!-- Header Section -->
-    <div class="text-h5 q-mb-lg">NIW Case Preparation Steps</div>
+    <!-- <div class="text-h5 q-mb-lg">NIW Case Preparation Steps</div> -->
 
     <!-- Color Legend -->
     <div class="text-caption q-mb-md">

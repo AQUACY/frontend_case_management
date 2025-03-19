@@ -581,7 +581,7 @@
         </q-card-section>
 
         <q-card-section class="text-caption text-grey">
-          Notes: Maximum upload file size: 128MB.
+          Notes: Maximum upload file size: 20MB.
         </q-card-section>
 
         <q-card-section class="text-caption text-red">

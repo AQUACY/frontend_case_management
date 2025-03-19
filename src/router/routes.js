@@ -35,12 +35,15 @@ const routes = [
       {
         path: '/client/referrers',
         component: () => import('src/pages/client/RecommenderView.vue'),
+        meta: {
+          title: 'Referrers',
+        },
       },
       {
         path: '/client/pubrecords',
         component: () => import('src/pages/client/PublicationRecord.vue'),
         meta: {
-          title: 'Referrers',
+          title: 'Publication Records',
         },
       },
       {
