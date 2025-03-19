@@ -3,6 +3,7 @@
     <div class="row full-height">
       <!-- Left Panel - Message List -->
       <div class="col-4 messages-list q-pa-sm" style="border-right: 1px solid #ddd">
+        <q-btn icon="arrow_back" flat round @click="$router.back()" />
         <div class="row items-center q-pa-sm">
           <div class="text-h6 q-mr-auto text-green">Case Messages</div>
           <!-- Add New Message Button -->

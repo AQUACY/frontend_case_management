@@ -8,13 +8,23 @@
             <q-select
               v-model="selectedCategory"
               :options="availableCategories"
-              label="Document Category"
+              label="Filter by Category"
               outlined
               dense
+              class="category-select"
               emit-value
               map-options
-              :rules="[(val) => !!val || 'Category is required']"
-            />
+              clearable
+            >
+              <template v-slot:prepend>
+                <q-icon name="folder" />
+              </template>
+              <template v-slot:no-option>
+                <q-item>
+                  <q-item-section class="text-grey"> No categories found </q-item-section>
+                </q-item>
+              </template>
+            </q-select>
           </div>
         </div>
 
@@ -89,7 +99,11 @@
           <div v-else class="text-center q-pa-xl">
             <q-icon name="folder_open" size="4em" color="grey-4" />
             <div class="text-h6 text-grey q-mt-md">
-              {{ selectedCategory ? 'No documents in this category' : 'No documents available' }}
+              {{
+                selectedCategory === null
+                  ? 'No documents available'
+                  : 'No documents in this category'
+              }}
             </div>
           </div>
         </template>
@@ -230,8 +244,9 @@ export default {
     const uploading = ref(false)
     const selectedCategory = ref(null)
 
-    // Define categories based on the store's mapping
+    // Modified categoryOptions to include "All" at the beginning
     const categoryOptions = [
+      { label: 'All Documents', value: null },
       { label: 'My CV', value: 1 },
       { label: 'My List of Recommenders', value: 2 },
       { label: 'My Citation Report', value: 3 },
@@ -246,28 +261,29 @@ export default {
       { label: 'USCIS Notice Section', value: 12 },
     ]
 
-    // Get category name helper
+    // Modified availableCategories to always include "All" option
+    const availableCategories = computed(() => {
+      const allDocs = Object.values(documentsStore.documents).flat()
+      const usedCategories = new Set(allDocs.map((doc) => doc.category_id))
+      const filteredCategories = categoryOptions.filter(
+        (cat) => cat.value === null || usedCategories.has(cat.value),
+      )
+      return filteredCategories
+    })
+
+    // Modified filteredDocuments to handle null value for "All"
+    const filteredDocuments = computed(() => {
+      const allDocs = Object.values(documentsStore.documents).flat()
+      if (selectedCategory.value === null) return allDocs
+      return allDocs.filter((doc) => doc.category_id === selectedCategory.value)
+    })
+
+    // Modified getCategoryName to handle null value
     const getCategoryName = (categoryId) => {
+      if (categoryId === null) return 'All Documents'
       const category = categoryOptions.find((cat) => cat.value === categoryId)
       return category ? category.label : 'Other'
     }
-
-    // Available categories based on documents that exist
-    const availableCategories = computed(() => {
-      // Get all documents from all categories
-      const allDocs = Object.values(documentsStore.documents).flat()
-      // Get unique category IDs that have documents
-      const usedCategories = new Set(allDocs.map((doc) => doc.category_id))
-      return categoryOptions.filter((cat) => usedCategories.has(cat.value))
-    })
-
-    // Filter documents based on selected category
-    const filteredDocuments = computed(() => {
-      // Get all documents from all categories
-      const allDocs = Object.values(documentsStore.documents).flat()
-      if (!selectedCategory.value) return allDocs
-      return allDocs.filter((doc) => doc.category_id === selectedCategory.value)
-    })
 
     // Get unique categories from filtered documents
     const filteredCategories = computed(() => {
