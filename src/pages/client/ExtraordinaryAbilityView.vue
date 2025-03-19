@@ -853,11 +853,21 @@ export default {
         const data = await store.fetchExtraordinary()
         if (data) {
           formData.value = {
-            has_awards: data.has_awards ? 'Yes' : 'No',
-            has_memberships: data.has_memberships ? 'Yes' : 'No',
-            has_media_coverage: data.has_media_coverage ? 'Yes' : 'No',
-            has_speaking_engagements: data.has_speaking_engagements ? 'Yes' : 'No',
-            has_leadership_roles: data.has_leadership_roles ? 'Yes' : 'No',
+            // Set 'Yes' if there's data in the corresponding arrays, otherwise use the API value or 'No'
+            has_awards: data.awards?.length > 0 ? 'Yes' : data.has_awards ? 'Yes' : 'No',
+            has_memberships:
+              data.memberships?.length > 0 ? 'Yes' : data.has_memberships ? 'Yes' : 'No',
+            has_media_coverage:
+              data.media_coverages?.length > 0 ? 'Yes' : data.has_media_coverage ? 'Yes' : 'No',
+            has_speaking_engagements:
+              data.speaking_engagements?.length > 0
+                ? 'Yes'
+                : data.has_speaking_engagements
+                  ? 'Yes'
+                  : 'No',
+            has_leadership_roles:
+              data.leadership_roles?.length > 0 ? 'Yes' : data.has_leadership_roles ? 'Yes' : 'No',
+            // Store the actual data arrays
             awards: data.awards || [],
             memberships: data.memberships || [],
             media_coverages: data.media_coverages || [],
@@ -878,13 +888,34 @@ export default {
     const handleSectionToggle = async (section) => {
       try {
         const hasField = `has_${section}`
+
+        // Only clear the data if explicitly set to 'No'
+        if (formData.value[hasField] === 'No') {
+          // Check if there's existing data before clearing
+          if (formData.value[section]?.length > 0) {
+            // Ask for confirmation before clearing data
+            const confirm = await $q
+              .dialog({
+                title: 'Confirm Action',
+                message: `Setting this to No will clear all existing ${formatLabel(section)}. Are you sure?`,
+                cancel: true,
+                persistent: true,
+              })
+              .onOk(() => true)
+              .onCancel(() => false)
+
+            if (!confirm) {
+              // If user cancels, revert the toggle
+              formData.value[hasField] = 'Yes'
+              return
+            }
+          }
+          formData.value[section] = []
+        }
+
         await store.saveExtraordinary({
           [hasField]: formData.value[hasField],
         })
-
-        if (formData.value[hasField] === 'No') {
-          formData.value[section] = []
-        }
       } catch (error) {
         console.error(`Error toggling ${section}:`, error)
         $q.notify({

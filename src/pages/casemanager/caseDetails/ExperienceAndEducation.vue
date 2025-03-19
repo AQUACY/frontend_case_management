@@ -38,6 +38,7 @@
                     Education #{{ index + 1 }}
                   </div>
                   <div class="row q-col-gutter-md">
+                    <!-- University and Location -->
                     <div class="col-12 col-md-6">
                       <q-list bordered>
                         <q-item>
@@ -53,6 +54,82 @@
                       </q-list>
                     </div>
                     <div class="col-12 col-md-6">
+                      <q-list bordered>
+                        <q-item>
+                          <q-item-section>
+                            <q-item-label caption>Location</q-item-label>
+                            <q-item-label>
+                              <q-badge :color="getBadgeColor(education.location)">
+                                {{ formatValue(education.location) }}
+                              </q-badge>
+                            </q-item-label>
+                          </q-item-section>
+                        </q-item>
+                      </q-list>
+                    </div>
+
+                    <!-- Degree Type and Major -->
+                    <div class="col-12 col-md-6">
+                      <q-list bordered>
+                        <q-item>
+                          <q-item-section>
+                            <q-item-label caption>Degree Type</q-item-label>
+                            <q-item-label>
+                              <q-badge :color="getBadgeColor(education.degree_type)">
+                                {{ formatValue(education.degree_type) }}
+                              </q-badge>
+                            </q-item-label>
+                          </q-item-section>
+                        </q-item>
+                      </q-list>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <q-list bordered>
+                        <q-item>
+                          <q-item-section>
+                            <q-item-label caption>Major</q-item-label>
+                            <q-item-label>
+                              <q-badge :color="getBadgeColor(education.degree_majors)">
+                                {{ formatValue(education.degree_majors) }}
+                              </q-badge>
+                            </q-item-label>
+                          </q-item-section>
+                        </q-item>
+                      </q-list>
+                    </div>
+
+                    <!-- Minor -->
+                    <div class="col-12 col-md-6">
+                      <q-list bordered>
+                        <q-item>
+                          <q-item-section>
+                            <q-item-label caption>Minor</q-item-label>
+                            <q-item-label>
+                              <q-badge :color="getBadgeColor(education.degree_minors)">
+                                {{ formatValue(education.degree_minors) }}
+                              </q-badge>
+                            </q-item-label>
+                          </q-item-section>
+                        </q-item>
+                      </q-list>
+                    </div>
+
+                    <!-- Start and Completion Year -->
+                    <div class="col-12 col-md-3">
+                      <q-list bordered>
+                        <q-item>
+                          <q-item-section>
+                            <q-item-label caption>Start Year</q-item-label>
+                            <q-item-label>
+                              <q-badge :color="getBadgeColor(education.start_year)">
+                                {{ formatValue(education.start_year) }}
+                              </q-badge>
+                            </q-item-label>
+                          </q-item-section>
+                        </q-item>
+                      </q-list>
+                    </div>
+                    <div class="col-12 col-md-3">
                       <q-list bordered>
                         <q-item>
                           <q-item-section>
@@ -286,9 +363,14 @@
                           <q-item-section>
                             <q-item-label caption>Job Details</q-item-label>
                             <q-item-label class="scrollable-text">
-                              <div v-html="formatValue(experience.job_details).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
+                              <div
+                                v-html="
+                                  formatValue(experience.job_details)
+                                    .replace(/•/g, '<br>•')
+                                    .replace(/\\n/g, '<br>')
+                                "
+                              ></div>
                             </q-item-label>
-
                           </q-item-section>
                         </q-item>
                       </q-list>
@@ -377,7 +459,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
- .scrollable-text {
+.scrollable-text {
   max-height: 150px;
   overflow-y: auto;
   word-wrap: break-word;
@@ -386,5 +468,4 @@ export default {
   border-radius: 4px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
-
 </style>

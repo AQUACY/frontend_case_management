@@ -50,7 +50,7 @@
           <div class="row q-col-gutter-md">
             <!-- Type Selection -->
             <div class="col-12">
-              <div class="text-subtitle2 text-weight-medium">Selected Visa Types</div>
+              <!-- <div class="text-subtitle2 text-weight-medium">Selected Visa Types</div>
               <div class="q-mt-sm">
                 <q-chip
                   v-for="type in parsedTypes"
@@ -61,35 +61,32 @@
                 >
                   {{ type }}
                 </q-chip>
-              </div>
+              </div> -->
             </div>
 
             <!-- Proposed Endeavor Fields -->
             <div class="col-12">
-              <div class="text-subtitle2 text-weight-medium q-mb-sm">Proposed Endeavor Details</div>
+              <div class="text-subtitle2 text-weight-medium q-mb-sm">Proposed Endeavor</div>
               <q-card flat bordered>
                 <q-list>
                   <q-item>
                     <q-item-section>
-                      <q-item-label caption
-                        >Part One : The active verb(s) describing your methodical approach
-                      </q-item-label>
                       <q-item-label>{{ endeavorData.proposed_endavor_field_1 }}</q-item-label>
                     </q-item-section>
                   </q-item>
 
                   <q-separator />
 
-                  <q-item>
+                  <!-- <q-item>
                     <q-item-section>
                       <q-item-label caption
                         >Part Two: The main topic/specific subject of your research</q-item-label
                       >
                       <q-item-label>{{ endeavorData.proposed_endavor_field_2 }}</q-item-label>
                     </q-item-section>
-                  </q-item>
+                  </q-item> -->
 
-                  <q-separator />
+                  <!-- <q-separator />
 
                   <q-item>
                     <q-item-section>
@@ -99,23 +96,21 @@
                       >
                       <q-item-label>{{ endeavorData.proposed_endavor_field_3 }}</q-item-label>
                     </q-item-section>
-                  </q-item>
+                  </q-item> -->
                 </q-list>
               </q-card>
             </div>
 
             <!-- Experience and Plans -->
-            <div class="col-12 col-md-6">
-              <div class="text-subtitle2 text-weight-medium q-mb-sm">Past Experience Statement</div>
+            <div class="col-12 col-md-12">
+              <div class="text-subtitle2 text-weight-medium q-mb-sm">Relevant Expertise</div>
               <q-card flat bordered class="q-pa-md">
                 {{ endeavorData.past_experience }}
               </q-card>
             </div>
 
-            <div class="col-12 col-md-6">
-              <div class="text-subtitle2 text-weight-medium q-mb-sm">
-                Publication Plans Statement
-              </div>
+            <div class="col-12 col-md-12">
+              <div class="text-subtitle2 text-weight-medium q-mb-sm">Dissemination Strategy</div>
               <q-card flat bordered class="q-pa-md">
                 {{ endeavorData.publication_plans }}
               </q-card>

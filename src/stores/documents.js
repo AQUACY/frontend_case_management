@@ -10,15 +10,14 @@ export const useDocumentsStore = defineStore('documents', {
     },
     loading: false,
     error: null,
-    cases: JSON.parse(localStorage.getItem('caseDetails')),
   }),
 
   actions: {
-    async fetchDocuments() {
+    async fetchDocuments(caseId) {
       this.loading = true
       try {
-        console.log('Fetching documents for case:', this.cases.data.id)
-        const response = await api.get(`/api/cases/${this.cases.data.id}/documents`)
+        console.log('Fetching documents for case:', caseId)
+        const response = await api.get(`/api/cases/${caseId}/documents`)
         console.log('Raw response data:', response.data.documents)
 
         // Check if response.data is an array
@@ -90,14 +89,17 @@ export const useDocumentsStore = defineStore('documents', {
           'My Employment-Related Documents': groupedDocs['My Employment-Related Documents'] || [],
           'My Degree-Related Documents': groupedDocs['My Degree-Related Documents'] || [],
           'Identity Documents and Forms': groupedDocs['Identity Documents and Forms'] || [],
-          'Signed Letters and Recommenders CVs': groupedDocs['Signed Letters and Recommenders CVs'] || [],
+          'Signed Letters and Recommenders CVs':
+            groupedDocs['Signed Letters and Recommenders CVs'] || [],
           'Additional Documents': groupedDocs['Additional Documents'] || [],
-          'Approved Letters and Recommenders CVs (to be used in Petition Letter)': groupedDocs['Approved Letters and Recommenders CVs (to be used in Petition Letter)'] || [],
-          'Drafted Documents Revised by Customers': groupedDocs['Drafted Documents Revised by Customers'] || [],
+          'Approved Letters and Recommenders CVs (to be used in Petition Letter)':
+            groupedDocs['Approved Letters and Recommenders CVs (to be used in Petition Letter)'] ||
+            [],
+          'Drafted Documents Revised by Customers':
+            groupedDocs['Drafted Documents Revised by Customers'] || [],
           'Drafted Documents by Our Team': groupedDocs['Drafted Documents by Our Team'] || [],
           'USCIS Notice Section': groupedDocs['USCIS Notice Section'] || [],
         }
-
 
         return response.data
       } catch (error) {
@@ -109,28 +111,23 @@ export const useDocumentsStore = defineStore('documents', {
       }
     },
 
-    async uploadDocument(formData) {
+    async uploadDocument(formData, caseId) {
       this.loading = true
       try {
         console.log('Uploading document with formData:', {
           category_id: formData.get('category_id'),
-          case_id: formData.get('case_id'),
           name: formData.get('name'),
           note: formData.get('note'),
         })
 
-        const response = await api.post(
-          `/api/cases/${this.cases.data.id}/documents/upload`,
-          formData,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
+        const response = await api.post(`/api/cases/${caseId}/documents/upload`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
           },
-        )
+        })
 
         // Refresh documents after successful upload
-        await this.fetchDocuments()
+        await this.fetchDocuments(caseId)
         return response.data
       } catch (error) {
         console.error('Upload error details:', error.response?.data)
@@ -141,12 +138,12 @@ export const useDocumentsStore = defineStore('documents', {
       }
     },
 
-    async deleteDocument(documentId) {
+    async deleteDocument(documentId, caseId) {
       this.loading = true
       try {
-        await api.delete(`/api/cases/${this.cases.data.id}/documents/${documentId}`)
+        await api.delete(`/api/cases/${caseId}/documents/${documentId}`)
         // Update local state after successful deletion
-        await this.fetchDocuments()
+        await this.fetchDocuments(caseId)
       } catch (error) {
         this.error = error.message
         throw error
@@ -155,18 +152,15 @@ export const useDocumentsStore = defineStore('documents', {
       }
     },
 
-    async downloadDocument(documentId) {
+    async downloadDocument(documentId, caseId) {
       try {
-        const response = await api.get(
-          `/api/cases/${this.cases.data.id}/documents/${documentId}/download`,
-          {
-            responseType: 'blob', // Important for file downloads
-            headers: {
-              Accept: 'application/octet-stream',
-              'Content-Type': 'application/json',
-            },
+        const response = await api.get(`/api/cases/${caseId}/documents/${documentId}/download`, {
+          responseType: 'blob', // Important for file downloads
+          headers: {
+            Accept: 'application/octet-stream',
+            'Content-Type': 'application/json',
           },
-        )
+        })
 
         // Check if response is valid
         if (!response.data) {

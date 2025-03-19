@@ -7,11 +7,13 @@
           <div class="col-12">
             <q-select
               v-model="selectedCategory"
-              :options="categoryOptions"
-              label="Category"
+              :options="availableCategories"
+              label="Document Category"
               outlined
               dense
-              class="category-select"
+              emit-value
+              map-options
+              :rules="[(val) => !!val || 'Category is required']"
             />
           </div>
         </div>
@@ -35,13 +37,16 @@
         </div>
 
         <!-- Documents Display -->
-        <template v-else>
-          <div v-for="(docs, category) in groupedDocuments" :key="category" class="q-mb-xl">
-            <template v-if="!selectedCategory || selectedCategory === category">
-              <div class="text-h6 q-mb-md">{{ category }}</div>
-
+        <template v-if="!loading">
+          <div v-if="filteredDocuments.length > 0">
+            <div v-for="categoryId in filteredCategories" :key="categoryId" class="q-mb-xl">
+              <div class="text-h6 q-mb-md">{{ getCategoryName(categoryId) }}</div>
               <div class="row q-col-gutter-md">
-                <div v-for="doc in docs" :key="doc.id" class="col-12 col-md-6">
+                <div
+                  v-for="doc in getDocumentsByCategory(categoryId)"
+                  :key="doc.id"
+                  class="col-12 col-md-6"
+                >
                   <q-card class="document-card cursor-pointer" @click="downloadDocument(doc)">
                     <q-card-section>
                       <div class="row items-center no-wrap">
@@ -77,13 +82,15 @@
                   </q-card>
                 </div>
               </div>
-            </template>
+            </div>
           </div>
 
           <!-- Empty State -->
-          <div v-if="Object.keys(groupedDocuments).length === 0" class="text-center q-pa-xl">
+          <div v-else class="text-center q-pa-xl">
             <q-icon name="folder_open" size="4em" color="grey-4" />
-            <div class="text-h6 text-grey q-mt-md">No documents available</div>
+            <div class="text-h6 text-grey q-mt-md">
+              {{ selectedCategory ? 'No documents in this category' : 'No documents available' }}
+            </div>
           </div>
         </template>
       </q-card-section>
@@ -93,13 +100,31 @@
     <q-dialog v-model="showUploadDialog" persistent>
       <q-card style="min-width: 400px">
         <q-card-section class="row items-center">
-          <div class="text-h6">Upload Team Document</div>
+          <div class="text-h6">Upload Document</div>
           <q-space />
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
 
         <q-card-section>
           <div class="row q-col-gutter-md">
+            <!-- Category Selection -->
+            <div class="col-12">
+              <q-select
+                v-model="selectedCategory"
+                :options="categoryOptions"
+                label="Document Category"
+                outlined
+                dense
+                emit-value
+                map-options
+                :rules="[(val) => !!val || 'Category is required']"
+              >
+                <template v-slot:prepend>
+                  <q-icon name="folder" />
+                </template>
+              </q-select>
+            </div>
+
             <!-- File Upload -->
             <div class="col-12">
               <q-file
@@ -182,51 +207,150 @@
 import { ref, computed, onMounted } from 'vue'
 import { useQuasar } from 'quasar'
 import { api } from 'boot/axios'
+import { useDocumentsStore } from 'src/stores/documents'
 
 export default {
   name: 'DocumentsSection',
 
   props: {
     caseId: {
-      type: String,
+      type: [String, Number],
       required: true,
     },
   },
 
   setup(props) {
     const $q = useQuasar()
+    const documentsStore = useDocumentsStore()
     const loading = ref(false)
-    const documents = ref([])
-    const selectedCategory = ref(null)
     const showUploadDialog = ref(false)
     const selectedFile = ref(null)
     const documentName = ref('')
     const documentNote = ref('')
     const uploading = ref(false)
+    const selectedCategory = ref(null)
 
+    // Define categories based on the store's mapping
     const categoryOptions = [
-      'All Documents',
-      'Personal Documents',
-      'Academic Records',
-      'Professional Documents',
-      'Immigration Forms',
-      'Reference Letters',
-      'Publications',
-      'Citations',
+      { label: 'My CV', value: 1 },
+      { label: 'My List of Recommenders', value: 2 },
+      { label: 'My Citation Report', value: 3 },
+      { label: 'My Employment-Related Documents', value: 4 },
+      { label: 'My Degree-Related Documents', value: 5 },
+      { label: 'Identity Documents and Forms', value: 6 },
+      { label: 'Signed Letters and Recommenders CVs', value: 7 },
+      { label: 'Additional Documents', value: 8 },
+      { label: 'Approved Letters and Recommenders CVs (to be used in Petition Letter)', value: 9 },
+      { label: 'Drafted Documents Revised by Customers', value: 10 },
+      { label: 'Drafted Documents by Our Team', value: 11 },
+      { label: 'USCIS Notice Section', value: 12 },
     ]
 
-    const acceptedFileTypes = ['pdf', 'doc', 'docx', 'ppt', 'pptx']
+    // Get category name helper
+    const getCategoryName = (categoryId) => {
+      const category = categoryOptions.find((cat) => cat.value === categoryId)
+      return category ? category.label : 'Other'
+    }
 
-    const groupedDocuments = computed(() => {
-      const grouped = {}
-      documents.value.forEach((doc) => {
-        if (!grouped[doc.category]) {
-          grouped[doc.category] = []
-        }
-        grouped[doc.category].push(doc)
-      })
-      return grouped
+    // Available categories based on documents that exist
+    const availableCategories = computed(() => {
+      // Get all documents from all categories
+      const allDocs = Object.values(documentsStore.documents).flat()
+      // Get unique category IDs that have documents
+      const usedCategories = new Set(allDocs.map((doc) => doc.category_id))
+      return categoryOptions.filter((cat) => usedCategories.has(cat.value))
     })
+
+    // Filter documents based on selected category
+    const filteredDocuments = computed(() => {
+      // Get all documents from all categories
+      const allDocs = Object.values(documentsStore.documents).flat()
+      if (!selectedCategory.value) return allDocs
+      return allDocs.filter((doc) => doc.category_id === selectedCategory.value)
+    })
+
+    // Get unique categories from filtered documents
+    const filteredCategories = computed(() => {
+      const categories = new Set(filteredDocuments.value.map((doc) => doc.category_id))
+      return Array.from(categories).sort((a, b) => a - b) // Sort by category ID
+    })
+
+    // Get documents for a specific category
+    const getDocumentsByCategory = (categoryId) => {
+      return filteredDocuments.value.filter((doc) => doc.category_id === categoryId)
+    }
+
+    // Modified upload document function
+    const uploadDocument = async () => {
+      if (!selectedFile.value || !documentName.value) {
+        $q.notify({
+          type: 'negative',
+          message: 'Please fill in all required fields',
+        })
+        return
+      }
+
+      const fileValidation = validateFile(selectedFile.value)
+      if (fileValidation !== true) {
+        $q.notify({
+          type: 'negative',
+          message: fileValidation,
+        })
+        return
+      }
+
+      uploading.value = true
+      const formData = new FormData()
+
+      try {
+        formData.append('document', selectedFile.value)
+        formData.append('category_id', selectedCategory.value || 8)
+        formData.append('name', documentName.value.trim())
+        formData.append('additional_notes', documentNote.value?.trim() || '')
+
+        await documentsStore.uploadDocument(formData, props.caseId)
+
+        $q.notify({
+          type: 'positive',
+          message: 'Document uploaded successfully',
+        })
+
+        // Reset form
+        selectedFile.value = null
+        documentName.value = ''
+        documentNote.value = ''
+        showUploadDialog.value = false
+
+        // Refresh documents list
+        await documentsStore.fetchDocuments(props.caseId)
+      } catch (error) {
+        console.error('Upload error:', error)
+        $q.notify({
+          type: 'negative',
+          message: error.message || 'Failed to upload document',
+        })
+      } finally {
+        uploading.value = false
+      }
+    }
+
+    // Initialize data
+    onMounted(async () => {
+      try {
+        loading.value = true
+        await documentsStore.fetchDocuments(props.caseId)
+      } catch (error) {
+        console.error('Error loading documents:', error)
+        $q.notify({
+          type: 'negative',
+          message: 'Failed to load documents',
+        })
+      } finally {
+        loading.value = false
+      }
+    })
+
+    const acceptedFileTypes = ['pdf', 'doc', 'docx', 'ppt', 'pptx']
 
     const getFileIcon = (fileType) => {
       const icons = {
@@ -247,22 +371,6 @@ export default {
         month: 'long',
         day: 'numeric',
       })
-    }
-
-    const fetchDocuments = async () => {
-      loading.value = true
-      try {
-        const response = await api.get(`/api/cases/${props.caseId}/documents`)
-        documents.value = response.data.documents
-      } catch (error) {
-        console.error('Error fetching documents:', error)
-        $q.notify({
-          type: 'negative',
-          message: 'Failed to load documents',
-        })
-      } finally {
-        loading.value = false
-      }
     }
 
     const downloadDocument = async (doc) => {
@@ -311,72 +419,6 @@ export default {
       return true
     }
 
-    const uploadDocument = async () => {
-      if (!selectedFile.value || !documentName.value) {
-        $q.notify({
-          type: 'negative',
-          message: 'Please fill in all required fields',
-        })
-        return
-      }
-
-      // Validate file before upload
-      const fileValidation = validateFile(selectedFile.value)
-      if (fileValidation !== true) {
-        $q.notify({
-          type: 'negative',
-          message: fileValidation,
-        })
-        return
-      }
-
-      uploading.value = true
-      const formData = new FormData()
-
-      try {
-        formData.append('document', selectedFile.value)
-        formData.append('category_id', 11) // Team category ID
-        formData.append('name', documentName.value.trim())
-        formData.append('additional_notes', documentNote.value?.trim() || '')
-
-        await api.post(`/api/cases/${props.caseId}/documents/upload`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
-
-        $q.notify({
-          type: 'positive',
-          message: 'Document uploaded successfully',
-        })
-
-        // Reset form
-        selectedFile.value = null
-        documentName.value = ''
-        documentNote.value = ''
-        showUploadDialog.value = false
-
-        // Refresh documents list
-        await fetchDocuments()
-      } catch (error) {
-        console.error('Upload error:', error)
-        let errorMessage = 'Failed to upload document'
-
-        // Handle validation errors from backend
-        if (error.response?.data?.errors) {
-          const firstError = Object.values(error.response.data.errors)[0]
-          errorMessage = Array.isArray(firstError) ? firstError[0] : firstError
-        }
-
-        $q.notify({
-          type: 'negative',
-          message: errorMessage,
-        })
-      } finally {
-        uploading.value = false
-      }
-    }
-
     const onFileSelected = (file) => {
       if (file) {
         // Validate file immediately on selection
@@ -395,28 +437,27 @@ export default {
       }
     }
 
-    onMounted(() => {
-      fetchDocuments()
-    })
-
     return {
       loading,
-      documents,
       selectedCategory,
       categoryOptions,
-      groupedDocuments,
-      getFileIcon,
-      formatDate,
-      downloadDocument,
+      availableCategories,
+      filteredDocuments,
+      filteredCategories,
+      getDocumentsByCategory,
+      getCategoryName,
       showUploadDialog,
       selectedFile,
       documentName,
       documentNote,
       uploading,
-      onFileSelected,
       uploadDocument,
-      acceptedFileTypes,
+      onFileSelected,
       validateFile,
+      acceptedFileTypes,
+      getFileIcon,
+      formatDate,
+      downloadDocument,
     }
   },
 }
@@ -440,6 +481,12 @@ export default {
   .text-subtitle1 {
     font-size: 1.1rem;
     line-height: 1.2;
+  }
+
+  .category-header {
+    border-bottom: 2px solid $green;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
   }
 }
 </style>
