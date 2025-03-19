@@ -19,14 +19,18 @@
         <!-- Summary Badges -->
         <div class="row q-col-gutter-md q-mb-lg">
           <div class="col-12 col-md text-center">
-            <q-badge color="green" class="full-width q-pa-sm" v-if="abilitiesData.has_awards">
+            <q-badge color="green" class="full-width q-pa-sm" v-if="abilitiesData.awards?.length">
               <q-icon name="emoji_events" class="q-mr-xs" />
               Has Awards
             </q-badge>
             <q-badge color="grey" class="full-width q-pa-sm" v-else>No Awards</q-badge>
           </div>
           <div class="col-12 col-md text-center">
-            <q-badge color="green" class="full-width q-pa-sm" v-if="abilitiesData.has_memberships">
+            <q-badge
+              color="green"
+              class="full-width q-pa-sm"
+              v-if="abilitiesData.memberships?.length"
+            >
               <q-icon name="card_membership" class="q-mr-xs" />
               Has Memberships
             </q-badge>
@@ -36,7 +40,7 @@
             <q-badge
               color="green"
               class="full-width q-pa-sm"
-              v-if="abilitiesData.has_media_coverage"
+              v-if="abilitiesData.media_coverages?.length"
             >
               <q-icon name="newspaper" class="q-mr-xs" />
               Has Media Coverage
@@ -47,7 +51,7 @@
             <q-badge
               color="green"
               class="full-width q-pa-sm"
-              v-if="abilitiesData.has_speaking_engagements"
+              v-if="abilitiesData.speaking_engagements?.length"
             >
               <q-icon name="record_voice_over" class="q-mr-xs" />
               Has Speaking Engagements
@@ -60,7 +64,7 @@
             <q-badge
               color="green"
               class="full-width q-pa-sm"
-              v-if="abilitiesData.has_leadership_roles"
+              v-if="abilitiesData.leadership_roles?.length"
             >
               <q-icon name="psychology" class="q-mr-xs" />
               Has Leadership Roles
@@ -165,10 +169,22 @@
                           <q-item>
                             <q-item-section>
                               <q-item-label caption>Membership Requirements</q-item-label>
-                              <q-item-label class="text-wrap">
-                                <q-badge :color="getBadgeColor(membership.membership_requirements)">
-                                  {{ formatValue(membership.membership_requirements) }}
-                                </q-badge>
+                              <q-item-label class="publication-notes">
+                                <template v-if="membership.membership_requirements">
+                                  <div
+                                    v-for="(requirement, index) in formatCitations(
+                                      membership.membership_requirements,
+                                    )"
+                                    :key="index"
+                                    class="citation-item"
+                                  >
+                                    <div class="citation-number">{{ index + 1 }}.</div>
+                                    <div class="citation-text" v-html="requirement"></div>
+                                  </div>
+                                </template>
+                                <div v-else class="no-citations">
+                                  No membership requirements provided
+                                </div>
                               </q-item-label>
                             </q-item-section>
                           </q-item>
@@ -179,12 +195,20 @@
                           <q-item>
                             <q-item-section>
                               <q-item-label caption>Fee and Subscription Details</q-item-label>
-                              <q-item-label class="text-wrap">
-                                <q-badge
-                                  :color="getBadgeColor(membership.fee_and_subscription_details)"
-                                >
-                                  {{ formatValue(membership.fee_and_subscription_details) }}
-                                </q-badge>
+                              <q-item-label class="publication-notes">
+                                <template v-if="membership.fee_and_subscription_details">
+                                  <div
+                                    v-for="(detail, index) in formatCitations(
+                                      membership.fee_and_subscription_details,
+                                    )"
+                                    :key="index"
+                                    class="citation-item"
+                                  >
+                                    <div class="citation-number">{{ index + 1 }}.</div>
+                                    <div class="citation-text" v-html="detail"></div>
+                                  </div>
+                                </template>
+                                <div v-else class="no-citations">No fee details provided</div>
                               </q-item-label>
                             </q-item-section>
                           </q-item>
@@ -283,10 +307,20 @@
                           <q-item>
                             <q-item-section>
                               <q-item-label caption>Article Summary</q-item-label>
-                              <q-item-label class="text-wrap">
-                                <q-badge :color="getBadgeColor(media.article_summary)">
-                                  {{ formatValue(media.article_summary) }}
-                                </q-badge>
+                              <q-item-label class="publication-notes">
+                                <template v-if="media.article_summary">
+                                  <div
+                                    v-for="(summary, index) in formatCitations(
+                                      media.article_summary,
+                                    )"
+                                    :key="index"
+                                    class="citation-item"
+                                  >
+                                    <div class="citation-number">{{ index + 1 }}.</div>
+                                    <div class="citation-text" v-html="summary"></div>
+                                  </div>
+                                </template>
+                                <div v-else class="no-citations">No article summary provided</div>
                               </q-item-label>
                             </q-item-section>
                           </q-item>
@@ -297,10 +331,20 @@
                           <q-item>
                             <q-item-section>
                               <q-item-label caption>Work Relevance</q-item-label>
-                              <q-item-label class="text-wrap">
-                                <q-badge :color="getBadgeColor(media.work_relevance)">
-                                  {{ formatValue(media.work_relevance) }}
-                                </q-badge>
+                              <q-item-label class="publication-notes">
+                                <template v-if="media.work_relevance">
+                                  <div
+                                    v-for="(relevance, index) in formatCitations(
+                                      media.work_relevance,
+                                    )"
+                                    :key="index"
+                                    class="citation-item"
+                                  >
+                                    <div class="citation-number">{{ index + 1 }}.</div>
+                                    <div class="citation-text" v-html="relevance"></div>
+                                  </div>
+                                </template>
+                                <div v-else class="no-citations">No work relevance provided</div>
                               </q-item-label>
                             </q-item-section>
                           </q-item>
@@ -365,10 +409,20 @@
                           <q-item>
                             <q-item-section>
                               <q-item-label caption>Engagement Details</q-item-label>
-                              <q-item-label class="text-wrap">
-                                <q-badge :color="getBadgeColor(engagement.details)">
-                                  {{ formatValue(engagement.details) }}
-                                </q-badge>
+                              <q-item-label class="publication-notes">
+                                <template v-if="engagement.details">
+                                  <div
+                                    v-for="(detail, index) in formatCitations(engagement.details)"
+                                    :key="index"
+                                    class="citation-item"
+                                  >
+                                    <div class="citation-number">{{ index + 1 }}.</div>
+                                    <div class="citation-text" v-html="detail"></div>
+                                  </div>
+                                </template>
+                                <div v-else class="no-citations">
+                                  No engagement details provided
+                                </div>
                               </q-item-label>
                             </q-item-section>
                           </q-item>
@@ -453,10 +507,22 @@
                           <q-item>
                             <q-item-section>
                               <q-item-label caption>Organization Prestige</q-item-label>
-                              <q-item-label class="text-wrap">
-                                <q-badge :color="getBadgeColor(role.organization_prestige)">
-                                  {{ formatValue(role.organization_prestige) }}
-                                </q-badge>
+                              <q-item-label class="publication-notes">
+                                <template v-if="role.organization_prestige">
+                                  <div
+                                    v-for="(prestige, index) in formatCitations(
+                                      role.organization_prestige,
+                                    )"
+                                    :key="index"
+                                    class="citation-item"
+                                  >
+                                    <div class="citation-number">{{ index + 1 }}.</div>
+                                    <div class="citation-text" v-html="prestige"></div>
+                                  </div>
+                                </template>
+                                <div v-else class="no-citations">
+                                  No organization prestige details provided
+                                </div>
                               </q-item-label>
                             </q-item-section>
                           </q-item>
@@ -467,10 +533,18 @@
                           <q-item>
                             <q-item-section>
                               <q-item-label caption>Role Summary</q-item-label>
-                              <q-item-label class="text-wrap">
-                                <q-badge :color="getBadgeColor(role.role_summary)">
-                                  {{ formatValue(role.role_summary) }}
-                                </q-badge>
+                              <q-item-label class="publication-notes">
+                                <template v-if="role.role_summary">
+                                  <div
+                                    v-for="(summary, index) in formatCitations(role.role_summary)"
+                                    :key="index"
+                                    class="citation-item"
+                                  >
+                                    <div class="citation-number">{{ index + 1 }}.</div>
+                                    <div class="citation-text" v-html="summary"></div>
+                                  </div>
+                                </template>
+                                <div v-else class="no-citations">No role summary provided</div>
                               </q-item-label>
                             </q-item-section>
                           </q-item>
@@ -531,6 +605,18 @@ export default {
       })
     }
 
+    const formatCitations = (text) => {
+      if (!text) return []
+
+      // Split by line breaks or bullet points
+      const citations = text.split(/[•\n]/).filter((citation) => citation.trim())
+
+      // Clean and format each citation
+      return citations.map((citation) => {
+        return citation.trim()
+      })
+    }
+
     const fetchAbilitiesData = async () => {
       loading.value = true
       error.value = null
@@ -567,6 +653,7 @@ export default {
       formatValue,
       getBadgeColor,
       formatDate,
+      formatCitations,
     }
   },
 }
@@ -586,6 +673,45 @@ export default {
 
   .q-badge {
     font-size: 0.9em;
+  }
+
+  .publication-notes {
+    max-height: none !important;
+    padding: 16px !important;
+    background-color: #fff !important;
+
+    .citation-item {
+      display: flex;
+      margin-bottom: 20px;
+      padding: 16px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      border-left: 4px solid #4caf50;
+      transition: all 0.3s ease;
+
+      &:hover {
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        transform: translateX(4px);
+      }
+
+      .citation-number {
+        min-width: 28px;
+        font-weight: 600;
+        color: #4caf50;
+      }
+
+      .citation-text {
+        flex: 1;
+        line-height: 1.6;
+      }
+    }
+
+    .no-citations {
+      text-align: center;
+      color: #666;
+      font-style: italic;
+      padding: 20px;
+    }
   }
 }
 </style>

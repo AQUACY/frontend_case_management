@@ -60,8 +60,20 @@
                     <q-item>
                       <q-item-section>
                         <q-item-label caption>Notes on Journal Articles</q-item-label>
-                        <q-item-label class="scrollable-text">
-                          <div v-html="formatValue(publicationData.notes_peer_reviewed_journal).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
+                        <q-item-label class="publication-notes">
+                          <template v-if="publicationData.notes_peer_reviewed_journal">
+                            <div
+                              v-for="(citation, index) in formatCitations(
+                                publicationData.notes_peer_reviewed_journal,
+                              )"
+                              :key="index"
+                              class="citation-item"
+                            >
+                              <div class="citation-number">{{ index + 1 }}.</div>
+                              <div class="citation-text" v-html="citation"></div>
+                            </div>
+                          </template>
+                          <div v-else class="no-citations">No journal articles provided</div>
                         </q-item-label>
                       </q-item-section>
                     </q-item>
@@ -97,10 +109,21 @@
                     <q-item>
                       <q-item-section>
                         <q-item-label caption>Notes on Conference Articles</q-item-label>
-                        <q-item-label class="scrollable-text">
-                          <div v-html="formatValue(publicationData.notes_peer_reviewed_conference).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
+                        <q-item-label class="publication-notes">
+                          <template v-if="publicationData.notes_peer_reviewed_conference">
+                            <div
+                              v-for="(citation, index) in formatCitations(
+                                publicationData.notes_peer_reviewed_conference,
+                              )"
+                              :key="index"
+                              class="citation-item"
+                            >
+                              <div class="citation-number">{{ index + 1 }}.</div>
+                              <div class="citation-text" v-html="citation"></div>
+                            </div>
+                          </template>
+                          <div v-else class="no-citations">No conference articles provided</div>
                         </q-item-label>
-
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -115,19 +138,6 @@
                             {{ publicationData.conference_abstracts || 0 }}
                           </q-badge>
                         </q-item-label>
-                      </q-item-section>
-                    </q-item>
-                  </q-list>
-                </div>
-                <div class="col-12">
-                  <q-list bordered>
-                    <q-item>
-                      <q-item-section>
-                        <q-item-label caption>Notes on Conference Abstracts</q-item-label>
-                        <q-item-label class="scrollable-text">
-                          <div v-html="formatValue(publicationData.notes_conference_abstracts).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
-                        </q-item-label>
-
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -172,10 +182,21 @@
                     <q-item>
                       <q-item-section>
                         <q-item-label caption>Notes on Book Chapters</q-item-label>
-                        <q-item-label class="scrollable-text">
-                          <div v-html="formatValue(publicationData.notes_book_chapters).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
+                        <q-item-label class="publication-notes">
+                          <template v-if="publicationData.notes_book_chapters">
+                            <div
+                              v-for="(citation, index) in formatCitations(
+                                publicationData.notes_book_chapters,
+                              )"
+                              :key="index"
+                              class="citation-item"
+                            >
+                              <div class="citation-number">{{ index + 1 }}.</div>
+                              <div class="citation-text" v-html="citation"></div>
+                            </div>
+                          </template>
+                          <div v-else class="no-citations">No book chapters provided</div>
                         </q-item-label>
-
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -199,10 +220,21 @@
                     <q-item>
                       <q-item-section>
                         <q-item-label caption>Notes on Books</q-item-label>
-                        <q-item-label class="scrollable-text">
-                          <div v-html="formatValue(publicationData.notes_books).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
+                        <q-item-label class="publication-notes">
+                          <template v-if="publicationData.notes_books">
+                            <div
+                              v-for="(citation, index) in formatCitations(
+                                publicationData.notes_books,
+                              )"
+                              :key="index"
+                              class="citation-item"
+                            >
+                              <div class="citation-number">{{ index + 1 }}.</div>
+                              <div class="citation-text" v-html="citation"></div>
+                            </div>
+                          </template>
+                          <div v-else class="no-citations">No books provided</div>
                         </q-item-label>
-
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -226,11 +258,21 @@
                     <q-item>
                       <q-item-section>
                         <q-item-label caption>Notes on Technical Reports</q-item-label>
-                        <q-item-label class="scrollable-text">
-                          <div v-html="formatValue(publicationData.notes_technical_reports).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
+                        <q-item-label class="publication-notes">
+                          <template v-if="publicationData.notes_technical_reports">
+                            <div
+                              v-for="(citation, index) in formatCitations(
+                                publicationData.notes_technical_reports,
+                              )"
+                              :key="index"
+                              class="citation-item"
+                            >
+                              <div class="citation-number">{{ index + 1 }}.</div>
+                              <div class="citation-text" v-html="citation"></div>
+                            </div>
+                          </template>
+                          <div v-else class="no-citations">No technical reports provided</div>
                         </q-item-label>
-
-
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -254,10 +296,21 @@
                     <q-item>
                       <q-item-section>
                         <q-item-label caption>Notes on Granted Patents</q-item-label>
-                        <q-item-label class="scrollable-text">
-                          <div v-html="formatValue(publicationData.notes_granted_patents).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
+                        <q-item-label class="publication-notes">
+                          <template v-if="publicationData.notes_granted_patents">
+                            <div
+                              v-for="(citation, index) in formatCitations(
+                                publicationData.notes_granted_patents,
+                              )"
+                              :key="index"
+                              class="citation-item"
+                            >
+                              <div class="citation-number">{{ index + 1 }}.</div>
+                              <div class="citation-text" v-html="citation"></div>
+                            </div>
+                          </template>
+                          <div v-else class="no-citations">No granted patents provided</div>
                         </q-item-label>
-
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -281,10 +334,21 @@
                     <q-item>
                       <q-item-section>
                         <q-item-label caption>Notes on Others</q-item-label>
-                        <q-item-label class="scrollable-text">
-                          <div v-html="formatValue(publicationData.in_preparation_manuscripts).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
+                        <q-item-label class="publication-notes">
+                          <template v-if="publicationData.in_preparation_manuscripts">
+                            <div
+                              v-for="(citation, index) in formatCitations(
+                                publicationData.in_preparation_manuscripts,
+                              )"
+                              :key="index"
+                              class="citation-item"
+                            >
+                              <div class="citation-number">{{ index + 1 }}.</div>
+                              <div class="citation-text" v-html="citation"></div>
+                            </div>
+                          </template>
+                          <div v-else class="no-citations">No other publications provided</div>
                         </q-item-label>
-
                       </q-item-section>
                     </q-item>
                   </q-list>
@@ -321,10 +385,21 @@
                   <q-item>
                     <q-item-section>
                       <q-item-label caption>Editor Journals</q-item-label>
-                      <q-item-label class="scrollable-text">
-                        <div v-html="formatValue(publicationData.editor_journals).replace(/•/g, '<br>•').replace(/\\n/g, '<br>')"></div>
+                      <q-item-label class="publication-notes">
+                        <template v-if="publicationData.editor_journals">
+                          <div
+                            v-for="(citation, index) in formatCitations(
+                              publicationData.editor_journals,
+                            )"
+                            :key="index"
+                            class="citation-item"
+                          >
+                            <div class="citation-number">{{ index + 1 }}.</div>
+                            <div class="citation-text" v-html="citation"></div>
+                          </div>
+                        </template>
+                        <div v-else class="no-citations">No editor journals provided</div>
                       </q-item-label>
-
                     </q-item-section>
                   </q-item>
                 </q-list>
@@ -538,6 +613,25 @@ export default {
       }
     }
 
+    const formatCitations = (text) => {
+      if (!text) return []
+
+      // Split by line breaks or bullet points
+      const citations = text.split(/[•\n]/).filter((citation) => citation.trim())
+
+      // Clean and format each citation
+      return citations.map((citation) => {
+        return citation
+          .trim()
+          .replace(/\((\d{4})\)/g, '<span class="year">($1)</span>') // Style years
+          .replace(/doi:/i, '<span class="doi">doi:</span>') // Style DOIs
+          .replace(
+            /(https?:\/\/[^\s]+)/g,
+            '<a href="$1" target="_blank" class="citation-link">$1</a>',
+          ) // Make URLs clickable
+      })
+    }
+
     onMounted(() => {
       if (props.caseId) {
         fetchPublicationData()
@@ -552,6 +646,7 @@ export default {
       fetchPublicationData,
       formatValue,
       getBadgeColor,
+      formatCitations,
     }
   },
 }
@@ -563,7 +658,6 @@ export default {
     max-width: 1200px;
     margin: 0 auto;
   }
-
 
   :deep(.q-field--readonly) {
     .q-field__native {
@@ -580,26 +674,70 @@ export default {
     font-weight: 500;
   }
 
-  .scrollable-text {
-  max-height: 200px; /* Set a maximum height for the label */
-  overflow-y: auto;  /* Adds vertical scrollbar if the content overflows */
-  word-wrap: break-word; /* Ensures that long words break to fit inside */
-  overflow-wrap: break-word; /* Prevents overflow of long words or URLs */
-  white-space: normal; /* Ensures text wraps to the next line */
-  padding: 8px; /* Adds padding to avoid text touching edges */
-  background-color: #f9f9f9; /* Optional: Gives a nice background to the label */
-  border-radius: 4px; /* Optional: Adds rounded corners */
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds subtle shadow for better aesthetics */
-}
+  .publication-notes {
+    max-height: none !important; // Remove the scrollable constraint
+    padding: 16px !important;
+    background-color: #fff !important;
 
+    .citation-item {
+      display: flex;
+      margin-bottom: 20px;
+      padding: 16px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      border-left: 4px solid #4caf50;
+      transition: all 0.3s ease;
 
+      &:hover {
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        transform: translateX(4px);
+      }
 
+      .citation-number {
+        min-width: 28px;
+        font-weight: 600;
+        color: #4caf50;
+      }
 
+      .citation-text {
+        flex: 1;
+        line-height: 1.6;
 
+        :deep(.year) {
+          color: #1976d2;
+          font-weight: 500;
+        }
 
+        :deep(.doi) {
+          color: #e65100;
+          font-weight: 500;
+        }
 
+        :deep(.citation-link) {
+          color: #1976d2;
+          text-decoration: none;
 
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
 
+    .no-citations {
+      text-align: center;
+      color: #666;
+      font-style: italic;
+      padding: 20px;
+    }
+  }
 
+  // Remove the existing scrollable-text class styles for this component
+  :deep(.scrollable-text) {
+    &.publication-notes {
+      max-height: none;
+      overflow: visible;
+    }
+  }
 }
 </style>
