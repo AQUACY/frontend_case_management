@@ -6,54 +6,53 @@
       <div class="">
         <p>
           To strengthen your immigration petition, carefully distinguish between independent and
-        dependent recommenders and adhere to case-specific requirements.
+          dependent recommenders and adhere to case-specific requirements.
         </p>
-
       </div>
       <div class="q-mb-md">
         <div class="text-weight-medium q-mb-sm">Independent vs Dependent Referrers:</div>
         <span class="text-bold"> 1. Independent Referrers:</span> <br /><br />
 
-        <p>
-         Definition: Experts with no prior professional, academic, or personal ties to you.
-        </p>
+        <p>Definition: Experts with no prior professional, academic, or personal ties to you.</p>
         <ul>
-          <li>Includes researchers who cited your work but never collaborated, or
-            scholars familiar with your contributions through conferences/publications.</li>
-          <li>Avoid individuals from the same institution/organization during overlapping
-              tenure, as immigration officers may still deem them &quot;dependent&quot; after
-              reviewing CVs.
-            </li>
+          <li>
+            Includes researchers who cited your work but never collaborated, or scholars familiar
+            with your contributions through conferences/publications.
+          </li>
+          <li>
+            Avoid individuals from the same institution/organization during overlapping tenure, as
+            immigration officers may still deem them &quot;dependent&quot; after reviewing CVs.
+          </li>
         </ul>
         <p>
-          <span class="text-bold">Best Practice:</span> Prioritize unaffiliated experts (especially U.S.-based) to enhance
-          credibility.
+          <span class="text-bold">Best Practice:</span> Prioritize unaffiliated experts (especially
+          U.S.-based) to enhance credibility.
         </p>
 
         <!-- dependent referrers -->
-            <span class="text-bold"> 2. Dependent Referrers:</span> <br />
-            <ul>
-              <li>Definition: Individuals with direct professional relationships (e.g.,
-                supervisors, thesis advisors, collaborators).</li>
-              <li>Caution: Government-affiliated experts (e.g., federal researchers) may
-                face institutional policies restricting endorsement of immigration petitions.
-                </li>
-            </ul>
-            <p>
-              <span class="text-bold">Best Practice:</span> Prioritize unaffiliated experts (especially U.S.-based) to enhance
-              credibility.
-            </p>
-      </div><br />
+        <span class="text-bold"> 2. Dependent Referrers:</span> <br />
+        <ul>
+          <li>
+            Definition: Individuals with direct professional relationships (e.g., supervisors,
+            thesis advisors, collaborators).
+          </li>
+          <li>
+            Caution: Government-affiliated experts (e.g., federal researchers) may face
+            institutional policies restricting endorsement of immigration petitions.
+          </li>
+        </ul>
+        <p>
+          <span class="text-bold">Best Practice:</span> Prioritize unaffiliated experts (especially
+          U.S.-based) to enhance credibility.
+        </p>
+      </div>
+      <br />
 
       <div class="q-mb-md">
-        <div class="q-mb-sm text-bold">
-          Case-Specific Referrer Guidelines
-        </div>
+        <div class="q-mb-sm text-bold">Case-Specific Referrer Guidelines</div>
         <span class="text-bold"> For NIW (Standard Preparation):</span>
         <ul class="q-mb-md">
-          <li>
-            <b>Dependent Referrers:</b> 1–2 (e.g., former supervisors).
-          </li>
+          <li><b>Dependent Referrers:</b> 1–2 (e.g., former supervisors).</li>
           <li><b>Independent Referrers:</b> 2–3 (at least 1 U.S.-based).</li>
           <li><b>Focus:</b> Senior figures in your field (professors, established researchers).</li>
           <li><b>Exclude:</b> Students; postdocs/fellows unless critical.</li>
@@ -61,44 +60,47 @@
       </div>
 
       <div class="q-mb-md">
-        <div class="text-bold q-mb-sm">
-          For EB1A/EB1B:
-        </div>
+        <div class="text-bold q-mb-sm">For EB1A/EB1B:</div>
         <ul class="q-mb-md">
           <li><b>Independent Referrers:</b> 4–5.</li>
           <li><b>Prioritize:</b> Experts who cited your work or hold international recognition.</li>
-          <li><b>Geographic Mix:</b> Include 1 U.S.-based (required for O1) and 1–2 international
-            referrers.</li>
+          <li>
+            <b>Geographic Mix:</b> Include 1 U.S.-based (required for O1) and 1–2 international
+            referrers.
+          </li>
           <li><b>Exclude:</b> Students, postdocs, and fellows.</li>
         </ul>
       </div>
 
       <div class="q-mb-md">
-        <div class="text-bold q-mb-sm">
-          For 4-Letter Cases (NIW/EB1A/EB1B):
-        </div>
+        <div class="text-bold q-mb-sm">For 4-Letter Cases (NIW/EB1A/EB1B):</div>
         <ul class="q-mb-md">
           <li><b>Dependent Referrers:</b> 2–3.</li>
           <li><b>Independent Referrers:</b> 4–5.</li>
           <li><b>NIW:</b> Aim for 2–3 U.S.-based independent referrers.</li>
           <li><b>EB1A/EB1B:</b> Blend international and U.S. experts.</li>
-          <li><b>Exclude:</b> Early-career researchers (students/postdocs) except for NIW if
-            unavoidable.</li>
+          <li>
+            <b>Exclude:</b> Early-career researchers (students/postdocs) except for NIW if
+            unavoidable.
+          </li>
         </ul>
       </div>
 
-
       <div class="q-mb-md">
-        <div class="text-bold q-mb-sm">
-          Critical Considerations
-        </div>
+        <div class="text-bold q-mb-sm">Critical Considerations</div>
         <ul class="q-mb-md">
-          <li><b>Independence Verification:</b> Officers may scrutinize shared affiliations (e.g.,
-            overlapping institutions) to assess bias.</li>
-          <li><b>Citations Matter:</b> For EB1A/EB1B, prioritize referrers familiar with your work
-            through citations or academic engagement.</li>
-          <li><b>Avoid Red Flags:</b>Exclude recommendations from subordinates (e.g., students)
-            or individuals with restricted endorsement authority (certain government roles).</li>
+          <li>
+            <b>Independence Verification:</b> Officers may scrutinize shared affiliations (e.g.,
+            overlapping institutions) to assess bias.
+          </li>
+          <li>
+            <b>Citations Matter:</b> For EB1A/EB1B, prioritize referrers familiar with your work
+            through citations or academic engagement.
+          </li>
+          <li>
+            <b>Avoid Red Flags:</b>Exclude recommendations from subordinates (e.g., students) or
+            individuals with restricted endorsement authority (certain government roles).
+          </li>
         </ul>
       </div>
 
@@ -151,7 +153,7 @@
               </div>
               <div class="col-12 col-md-6">
                 <div class="text-weight-medium">Dependent or Independent:</div>
-                <div>{{ recommender.dependent_or_independent }}</div>
+                <div>{{ capitalizeFirstLetter(recommender.dependent_or_independent) }}</div>
               </div>
               <div class="col-12 col-md-6">
                 <div class="text-weight-medium">Title/Position:</div>
@@ -200,8 +202,16 @@
                   <q-input v-model="recommender.name" label="Name of recommender" outlined />
                 </div>
                 <div class="col-12 col-md-6">
-                  <q-input
+                  <q-select
                     v-model="recommender.dependent_or_independent"
+                    :options="[
+                      { label: 'Dependent', value: 'dependent' },
+                      { label: 'Independent', value: 'independent' },
+                    ]"
+                    option-label="label"
+                    option-value="value"
+                    emit-value
+                    map-options
                     label="Dependent or Independent"
                     outlined
                   />
@@ -315,8 +325,16 @@
               />
             </div>
             <div class="col-12 col-md-6">
-              <q-input
+              <q-select
                 v-model="form.dependent_or_independent"
+                :options="[
+                  { label: 'Dependent', value: 'dependent' },
+                  { label: 'Independent', value: 'independent' },
+                ]"
+                option-label="label"
+                option-value="value"
+                emit-value
+                map-options
                 label="Dependent or Independent"
                 outlined
                 :readonly="isFinalized"
@@ -480,7 +498,7 @@ export default {
     const isFinalized = ref(false)
     const form = ref({
       name: '',
-      dependent_or_independent: '',
+      dependent_or_independent: 'dependent',
       title: '',
       institution: '',
       country: '',
@@ -499,22 +517,19 @@ export default {
     })
 
     const onSubmit = async () => {
-      console.log('onSubmit function called')
       loading.value = true
       try {
         const payload = {
           ...form.value,
+          dependent_or_independent: form.value.dependent_or_independent?.toLowerCase(),
           cited_project: form.value.cited_project === 'Yes',
         }
 
         const response = await store.addRecommender(payload)
-        console.log('thi si functino log', response)
-        // Check if the response indicates success
         if (response) {
-          // Reset form after successful submission
           form.value = {
             name: '',
-            dependent_or_independent: '',
+            dependent_or_independent: 'dependent',
             title: '',
             institution: '',
             country: '',
@@ -547,17 +562,16 @@ export default {
     }
 
     const startEditing = (recommender) => {
-      // Convert boolean or number to yes/no before editing
+      // Convert the value to the object format expected by q-select
       const convertedRecommender = {
         ...recommender,
+        dependent_or_independent: recommender.dependent_or_independent?.toLowerCase(),
         cited_project: convertToYesNo(recommender.cited_project),
       }
 
       convertedRecommender.isEditing = true
-      // Create a backup of the original data in case of cancellation
       convertedRecommender._original = { ...convertedRecommender }
 
-      // Update the recommender in the list
       const index = store.recommenders.findIndex((r) => r.id === recommender.id)
       if (index !== -1) {
         store.recommenders[index] = convertedRecommender
@@ -585,7 +599,6 @@ export default {
     const updateRecommender = async (recommender) => {
       loading.value = true
       try {
-        // Convert cited_project to boolean explicitly
         let citedProjectValue = false
         if (recommender.cited_project && recommender.cited_project.toLowerCase() === 'yes') {
           citedProjectValue = true
@@ -593,7 +606,7 @@ export default {
 
         const payload = {
           name: recommender.name,
-          dependent_or_independent: recommender.dependent_or_independent,
+          dependent_or_independent: recommender.dependent_or_independent?.toLowerCase(),
           title: recommender.title,
           institution: recommender.institution,
           country: recommender.country,
@@ -601,12 +614,10 @@ export default {
           google_scholar_link: recommender.google_scholar_link,
           relationship: recommender.relationship,
           projects_discussed: recommender.projects_discussed,
-          cited_project: citedProjectValue, // Use the explicitly converted boolean
+          cited_project: citedProjectValue,
           cited_project_details: recommender.cited_project_details,
           status: recommender.status,
         }
-
-        console.log('Updating recommender with payload:', payload) // Debug log
 
         await store.updateRecommender(recommender.id, payload)
         recommender.isEditing = false
@@ -627,6 +638,11 @@ export default {
       }
     }
 
+    const capitalizeFirstLetter = (string) => {
+      if (!string) return ''
+      return string.charAt(0).toUpperCase() + string.slice(1)
+    }
+
     return {
       isFinalized,
       form,
@@ -636,6 +652,7 @@ export default {
       startEditing,
       cancelEditing,
       updateRecommender,
+      capitalizeFirstLetter,
     }
   },
 }
