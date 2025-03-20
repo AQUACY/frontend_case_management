@@ -247,6 +247,11 @@ export default {
               link: '/casemanager/documents',
             },
             {
+              title: 'News & Update',
+              icon: 'newspaper',
+              link: '/casemanager/news-update',
+            },
+            {
               title: 'Message Categories',
               icon: 'category',
               link: '/casemanager/messagecategories',
