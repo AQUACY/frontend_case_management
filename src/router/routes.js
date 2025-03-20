@@ -332,6 +332,11 @@ const routes = [
           requiresAuth: true,
         },
       },
+      {
+        path: '/casemanager/news-update',
+        component: () => import('pages/casemanager/NewsAndUpdates.vue'),
+        meta: { requiresAuth: true },
+      },
     ],
   },
 

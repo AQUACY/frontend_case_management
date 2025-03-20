@@ -22,6 +22,10 @@
                 label="Peer-reviewed Journal Articles"
                 outlined
                 min="0"
+                :rules="[
+                  (val) => (val !== null && val !== undefined) || 'Please enter a number',
+                  (val) => val >= 0 || 'Number must be 0 or greater',
+                ]"
               />
             </div>
             <div class="col-12 col-md-8">
@@ -249,6 +253,22 @@
             class="full-width"
           />
         </div>
+
+        <!-- Add this somewhere in your template for debugging -->
+        <q-btn
+          label="Debug Value"
+          @click="
+            () =>
+              console.log(
+                'Current value:',
+                form.peer_reviewed_journal_articles,
+                'Type:',
+                typeof form.peer_reviewed_journal_articles,
+              )
+          "
+          color="grey"
+          flat
+        />
       </q-form>
     </q-card>
   </q-page>
@@ -309,10 +329,12 @@ export default {
         const data = await store.fetchPublicationRecords()
         console.log('Fetched data:', data) // Debug log
         if (data) {
-          // Convert null values to appropriate defaults
+          // Explicitly handle number conversions
           Object.keys(form.value).forEach((key) => {
             if (typeof form.value[key] === 'number') {
-              form.value[key] = data[key] ?? 0
+              // Ensure proper number conversion
+              form.value[key] =
+                data[key] !== null && data[key] !== undefined ? Number(data[key]) : 0
             } else if (
               [
                 'editor_role',
@@ -351,7 +373,22 @@ export default {
           throw new Error('Please answer all required questions')
         }
 
-        await store.savePublicationRecords(form.value)
+        // Ensure numbers are properly converted before saving
+        const formData = {
+          ...form.value,
+          peer_reviewed_journal_articles: Number(form.value.peer_reviewed_journal_articles),
+          peer_reviewed_conference_articles: Number(form.value.peer_reviewed_conference_articles),
+          conference_abstracts: Number(form.value.conference_abstracts),
+          pre_prints: Number(form.value.pre_prints),
+          books: Number(form.value.books),
+          book_chapters: Number(form.value.book_chapters),
+          technical_reports: Number(form.value.technical_reports),
+          granted_patents: Number(form.value.granted_patents),
+          number_of_peer_reviews: Number(form.value.number_of_peer_reviews),
+        }
+
+        console.log('Submitting form data:', formData) // Debug log
+        await store.savePublicationRecords(formData)
         $q.notify({
           type: 'positive',
           message: 'Publication record saved successfully',
