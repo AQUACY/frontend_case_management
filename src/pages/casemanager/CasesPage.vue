@@ -143,8 +143,27 @@
                 icon="archive"
                 @click="archiveCase(props.row)"
                 v-if="user_role === 2 && props.row.status !== 'archived'"
+                :loading="archiving"
               >
+                <template v-slot:loading>
+                  <q-spinner-dots color="red" />
+                </template>
                 <q-tooltip>Archive Case</q-tooltip>
+              </q-btn>
+              <q-btn
+                flat
+                round
+                size="sm"
+                color="orange"
+                icon="unarchive"
+                @click="activateCase(props.row)"
+                v-if="user_role === 2 && props.row.status === 'archived'"
+                :loading="activating"
+              >
+                <template v-slot:loading>
+                  <q-spinner-dots color="orange" />
+                </template>
+                <q-tooltip>Activate Case</q-tooltip>
               </q-btn>
             </q-btn-group>
           </q-td>
@@ -501,6 +520,9 @@ export default {
     const contractViewerDialog = ref(false)
     const contractUrl = ref(null)
 
+    const archiving = ref(false)
+    const activating = ref(false)
+
     // Load cases when component mounts
     onMounted(async () => {
       // Check if the logged-in user is a case manager (not an admin)
@@ -761,6 +783,56 @@ export default {
       }
     }
 
+    const archiveCase = async (caseData) => {
+      archiving.value = true
+      try {
+        await api.patch(`/api/admin/archivecase/${caseData.id}`)
+
+        $q.notify({
+          type: 'positive',
+          message: 'Case archived successfully',
+          position: 'top',
+        })
+
+        // Refresh the cases list
+        await casesStore.fetchCases()
+      } catch (error) {
+        console.error('Error archiving case:', error)
+        $q.notify({
+          type: 'negative',
+          message: error.response?.data?.message || 'Failed to archive case',
+          position: 'top',
+        })
+      } finally {
+        archiving.value = false
+      }
+    }
+
+    const activateCase = async (caseData) => {
+      activating.value = true
+      try {
+        await api.patch(`/api/admin/activatecase/${caseData.id}`)
+
+        $q.notify({
+          type: 'positive',
+          message: 'Case activated successfully',
+          position: 'top',
+        })
+
+        // Refresh the cases list
+        await casesStore.fetchCases()
+      } catch (error) {
+        console.error('Error activating case:', error)
+        $q.notify({
+          type: 'negative',
+          message: error.response?.data?.message || 'Failed to activate case',
+          position: 'top',
+        })
+      } finally {
+        activating.value = false
+      }
+    }
+
     return {
       casesStore,
       role_id,
@@ -795,6 +867,10 @@ export default {
       openContractViewer,
       openContractInNewTab,
       user_role,
+      archiveCase,
+      archiving,
+      activating,
+      activateCase,
     }
   },
 }
