@@ -78,7 +78,7 @@
             </div>
 
             <!-- Reset Filters -->
-            <div class="col-12 col-md-2">
+            <div class="col-12 col-md-2" v-if="!(user_role === 3)">
               <q-btn label="Reset Filters" color="green" flat @click="casesStore.resetFilters" />
             </div>
           </div>
@@ -90,7 +90,9 @@
         <template v-slot:body-cell-actions="props">
           <q-td :props="props">
             <q-btn-group flat>
+              <!-- View button - visible to both admin and case managers, even when archived -->
               <q-btn
+                v-if="!(props.row.status === 'archived' && user_role === 3)"
                 flat
                 round
                 size="sm"
@@ -100,6 +102,8 @@
               >
                 <q-tooltip>View Case</q-tooltip>
               </q-btn>
+
+              <!-- Contract view button - visible to both if contract exists -->
               <q-btn
                 v-if="props.row.contract_file"
                 flat
@@ -111,60 +115,71 @@
               >
                 <q-tooltip>View Contract</q-tooltip>
               </q-btn>
-              <q-btn
-                flat
-                round
-                size="sm"
-                color="warning"
-                icon="edit"
-                @click="openEditCaseDialog(props.row)"
-                v-if="user_role === 2"
-              >
-                <q-tooltip>Edit Case</q-tooltip>
-              </q-btn>
-              <q-btn
-                flat
-                round
-                size="sm"
-                :color="props.row.contract_file ? 'positive' : 'negative'"
-                :icon="props.row.contract_file ? 'file_upload' : 'upload_file'"
-                @click="openContractUploadDialog(props.row)"
-                v-if="user_role === 2"
-              >
-                <q-tooltip>
-                  {{ props.row.contract_file ? 'Update Contract' : 'Upload Contract' }}
-                </q-tooltip>
-              </q-btn>
-              <q-btn
-                flat
-                round
-                size="sm"
-                color="red"
-                icon="archive"
-                @click="archiveCase(props.row)"
-                v-if="user_role === 2 && props.row.status !== 'archived'"
-                :loading="archiving"
-              >
-                <template v-slot:loading>
-                  <q-spinner-dots color="red" />
-                </template>
-                <q-tooltip>Archive Case</q-tooltip>
-              </q-btn>
-              <q-btn
-                flat
-                round
-                size="sm"
-                color="orange"
-                icon="unarchive"
-                @click="activateCase(props.row)"
-                v-if="user_role === 2 && props.row.status === 'archived'"
-                :loading="activating"
-              >
-                <template v-slot:loading>
-                  <q-spinner-dots color="orange" />
-                </template>
-                <q-tooltip>Activate Case</q-tooltip>
-              </q-btn>
+
+              <!-- The following buttons are only visible to admin -->
+              <template v-if="user_role === 2">
+                <!-- Edit button - only when not archived -->
+                <q-btn
+                  v-if="props.row.status !== 'archived'"
+                  flat
+                  round
+                  size="sm"
+                  color="warning"
+                  icon="edit"
+                  @click="openEditCaseDialog(props.row)"
+                >
+                  <q-tooltip>Edit Case</q-tooltip>
+                </q-btn>
+
+                <!-- Contract upload button - only when not archived -->
+                <q-btn
+                  v-if="props.row.status !== 'archived'"
+                  flat
+                  round
+                  size="sm"
+                  :color="props.row.contract_file ? 'positive' : 'negative'"
+                  :icon="props.row.contract_file ? 'file_upload' : 'upload_file'"
+                  @click="openContractUploadDialog(props.row)"
+                >
+                  <q-tooltip>
+                    {{ props.row.contract_file ? 'Update Contract' : 'Upload Contract' }}
+                  </q-tooltip>
+                </q-btn>
+
+                <!-- Archive button - only when not archived -->
+                <q-btn
+                  v-if="props.row.status !== 'archived'"
+                  flat
+                  round
+                  size="sm"
+                  color="red"
+                  icon="archive"
+                  @click="archiveCase(props.row)"
+                  :loading="archiving"
+                >
+                  <template v-slot:loading>
+                    <q-spinner-dots color="red" />
+                  </template>
+                  <q-tooltip>Archive Case</q-tooltip>
+                </q-btn>
+
+                <!-- Activate button - only when archived -->
+                <q-btn
+                  v-if="props.row.status === 'archived'"
+                  flat
+                  round
+                  size="sm"
+                  color="orange"
+                  icon="unarchive"
+                  @click="activateCase(props.row)"
+                  :loading="activating"
+                >
+                  <template v-slot:loading>
+                    <q-spinner-dots color="orange" />
+                  </template>
+                  <q-tooltip>Activate Case</q-tooltip>
+                </q-btn>
+              </template>
             </q-btn-group>
           </q-td>
         </template>
